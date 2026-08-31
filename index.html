@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
 
-```
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<title>SpicyTiers</title>
+    <title>SpicyTiers</title>
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-```
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 </head>
 
@@ -24,60 +23,58 @@
 
 <div class="container">
 
-```
-<div class="header">
+    <div class="header">
 
-    <h1>
-        <span class="red">⚡ Spicy</span>Tiers
-    </h1>
+        <h1>
+            <span class="red">⚡ Spicy</span>Tiers
+        </h1>
 
-    <p>
-        Official PvP Leaderboard
-    </p>
+        <p>
+            Official PvP Leaderboard
+        </p>
 
-</div>
-
-
-<div class="title-box">
-
-    🏆 GLOBAL LEADERBOARD
-
-</div>
+    </div>
 
 
-<div class="leaderboard-header">
-
-    <span>RANK</span>
-    <span>PLAYER</span>
-    <span>TIER</span>
-    <span>ELO</span>
-
-</div>
+    <div class="title-box">
+        🏆 GLOBAL LEADERBOARD
+    </div>
 
 
-<div id="leaderboard">
+    <div class="leaderboard-header">
 
-    <div class="loading">
-        Loading leaderboard...
+        <span>RANK</span>
+        <span>PLAYER</span>
+        <span>TIER</span>
+        <span>ELO</span>
+
+    </div>
+
+
+    <div id="leaderboard">
+
+        <div class="loading">
+            Loading leaderboard...
+        </div>
+
+    </div>
+
+
+    <div class="footer">
+
+        <a href="admin.html">
+            Admin Panel
+        </a>
+
     </div>
 
 </div>
 
-
-<div class="footer">
-
-    <a href="admin.html">
-        Admin Panel
-    </a>
-
-</div>
-```
-
-</div>
 
 <script src="firebase-config.js"></script>
 
 <script src="app.js"></script>
 
 </body>
+
 </html>
