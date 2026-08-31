@@ -1,5 +1,4 @@
 let currentMode = "sword";
-
 let allPlayers = [];
 
 const leaderboardList =
@@ -7,21 +6,6 @@ const leaderboardList =
 
 const searchInput =
     document.getElementById("searchInput");
-
-const modeButton =
-    document.getElementById("modeButton");
-
-const modeSelector =
-    document.querySelector(".mode-selector");
-
-const selectedMode =
-    document.getElementById("selectedMode");
-
-const selectedModeIcon =
-    document.getElementById("selectedModeIcon");
-
-const currentModeText =
-    document.getElementById("currentModeText");
 
 
 /* =========================
@@ -66,6 +50,59 @@ async function loadPlayers() {
 
 
 /* =========================
+GET PLAYER STATS
+========================= */
+
+function getPlayerStats(player) {
+
+    /*
+        Ako Firebase ima:
+
+        sword: {
+            elo: 1200,
+            tier: "LT4"
+        }
+
+        koristi podatke za izabrani gamemode.
+    */
+
+    if (
+        player[currentMode] &&
+        typeof player[currentMode] === "object"
+    ) {
+
+        return {
+
+            elo:
+                Number(player[currentMode].elo) || 0,
+
+            tier:
+                player[currentMode].tier || "UNRANKED"
+
+        };
+
+    }
+
+
+    /*
+        Ako player još nema gamemode podatke,
+        koristimo stare elo/tier vrednosti
+        koje admin trenutno upisuje.
+    */
+
+    return {
+
+        elo:
+            Number(player.elo) || 0,
+
+        tier:
+            player.tier || "UNRANKED"
+
+    };
+}
+
+
+/* =========================
 RENDER LEADERBOARD
 ========================= */
 
@@ -92,26 +129,27 @@ function renderLeaderboard() {
             .map(player => {
 
                 const stats =
-                    player[currentMode] || {};
+                    getPlayerStats(player);
 
                 return {
 
                     ...player,
 
-                    elo:
-                        Number(stats.elo) || 0,
+                    elo: stats.elo,
 
-                    tier:
-                        stats.tier || "UNRANKED"
+                    tier: stats.tier
 
                 };
 
             });
 
 
+    /*
+        Najveći ELO ide prvi.
+    */
+
     players.sort(
-        (a, b) =>
-            b.elo - a.elo
+        (a, b) => b.elo - a.elo
     );
 
 
@@ -136,7 +174,9 @@ function renderLeaderboard() {
             "player-row";
 
 
-        /* RANK */
+        /* =========================
+        RANK
+        ========================= */
 
         const rank =
             document.createElement("div");
@@ -148,7 +188,9 @@ function renderLeaderboard() {
             "#" + (index + 1);
 
 
-        /* PLAYER */
+        /* =========================
+        PLAYER NAME
+        ========================= */
 
         const name =
             document.createElement("div");
@@ -177,11 +219,12 @@ function renderLeaderboard() {
 
 
         name.appendChild(avatar);
-
         name.appendChild(username);
 
 
-        /* TIER */
+        /* =========================
+        TIER
+        ========================= */
 
         const tier =
             document.createElement("div");
@@ -194,7 +237,9 @@ function renderLeaderboard() {
             player.tier;
 
 
-        /* ELO */
+        /* =========================
+        ELO
+        ========================= */
 
         const elo =
             document.createElement("div");
@@ -206,16 +251,19 @@ function renderLeaderboard() {
             player.elo + " ELO";
 
 
+        /* =========================
+        ADD TO ROW
+        ========================= */
+
         row.appendChild(rank);
-
         row.appendChild(name);
-
         row.appendChild(tier);
-
         row.appendChild(elo);
 
 
-        /* CLICK PLAYER */
+        /* =========================
+        CLICK PLAYER
+        ========================= */
 
         row.addEventListener(
             "click",
@@ -253,79 +301,41 @@ function getTierClass(tier) {
         "tier-" +
         tier
             .toLowerCase()
-            .replace(" ", "-")
+            .replace(/\s+/g, "-")
     );
 }
 
 
 /* =========================
-OPEN / CLOSE MODE MENU
-========================= */
-
-modeButton.addEventListener(
-    "click",
-    (event) => {
-
-        event.stopPropagation();
-
-        modeSelector.classList.toggle(
-            "open"
-        );
-
-    }
-);
-
-
-/* =========================
-MODE OPTIONS
+GAME MODE BUTTONS
 ========================= */
 
 document
-    .querySelectorAll(".mode-option")
-    .forEach(option => {
+    .querySelectorAll(".mode")
+    .forEach(button => {
 
-        option.addEventListener(
+        button.addEventListener(
             "click",
             () => {
 
                 document
-                    .querySelectorAll(".mode-option")
-                    .forEach(item => {
+                    .querySelectorAll(".mode")
+                    .forEach(btn => {
 
-                        item.classList.remove(
+                        btn.classList.remove(
                             "active"
                         );
 
                     });
 
 
-                option.classList.add(
+                button.classList.add(
                     "active"
                 );
 
 
                 currentMode =
-                    option.dataset.mode;
-
-
-                selectedMode.textContent =
-                    option.dataset.name;
-
-
-                selectedModeIcon.textContent =
-                    option.dataset.icon;
-
-
-                currentModeText.textContent =
-                    option.dataset.icon +
-                    " " +
-                    option.dataset.name +
-                    " Rankings";
-
-
-                modeSelector.classList.remove(
-                    "open"
-                );
+                    button.dataset.mode;
 
 
                 renderLeaderboard();
@@ -334,22 +344,6 @@ document
         );
 
     });
-
-
-/* =========================
-CLICK OUTSIDE
-========================= */
-
-document.addEventListener(
-    "click",
-    () => {
-
-        modeSelector.classList.remove(
-            "open"
-        );
-
-    }
-);
 
 
 /* =========================
