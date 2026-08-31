@@ -3,11 +3,7 @@
 <head>
 
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>SpicyTiers — Login</title>
 
@@ -15,74 +11,65 @@
 
 </head>
 
-<body>
+<body class="login-page">
 
-<div class="site">
+<div class="login-container">
 
-<header class="topbar">
-
-    <a href="index.html" class="logo">
-        <span>⚡</span> SpicyTiers
+    <a href="index.html" class="login-logo">
+        <span>⚡</span> Spicy<span>Tiers</span>
     </a>
 
-</header>
-
-
-<main>
-
-<section class="login-page">
 
     <div class="login-card">
 
-        <div class="hero-badge">
+        <div class="login-icon">
+            ⚡
+        </div>
+
+        <div class="section-label">
             SPICYTIERS ACCOUNT
         </div>
 
         <h1>
-            Welcome back.
+            Welcome <span>back.</span>
         </h1>
 
         <p>
-            Sign in to manage your SpicyTiers account.
+            Connect your Minecraft account to access your
+            personal statistics and rankings.
         </p>
 
 
-        <button class="google-login">
-
-            <span>G</span>
-
-            Continue with Google
-
-        </button>
-
-
-        <div class="login-divider">
-            <span>OR</span>
-        </div>
-
-
-        <button class="secondary-button">
-
+        <button
+            id="minecraftLogin"
+            class="minecraft-login"
+        >
+            <span>◆</span>
             Connect Minecraft Account
-
         </button>
 
 
-        <div class="login-info">
+        <div
+            id="loginMessage"
+            class="login-message"
+        ></div>
 
-            Minecraft account connection will allow
-            your profile, ELO and tiers to be linked
-            to your Minecraft UUID.
 
+        <div class="login-note">
+            Minecraft account verification will be handled
+            through the SpicyTiers client.
         </div>
 
     </div>
 
-</section>
 
-</main>
+    <a href="index.html" class="back-home">
+        ← Back to SpicyTiers
+    </a>
 
 </div>
+
+<script src="auth.js"></script>
 
 </body>
 </html>
