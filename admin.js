@@ -46,10 +46,9 @@ auth.onAuthStateChanged(async (user) => {
         ) {
 
             isAdmin = true;
-
             adminPanel.style.display = "block";
 
-            loadAdminPlayers();
+            await loadAdminPlayers();
 
         } else {
 
@@ -119,7 +118,12 @@ logoutDenied.addEventListener("click", async () => {
 savePlayerButton.addEventListener("click", async () => {
 
     if (!isAdmin) {
-        showAdminMessage("Access denied.", false);
+
+        showAdminMessage(
+            "Access denied.",
+            false
+        );
+
         return;
     }
 
@@ -181,7 +185,7 @@ savePlayerButton.addEventListener("click", async () => {
             true
         );
 
-        loadAdminPlayers();
+        await loadAdminPlayers();
 
     } catch (error) {
 
@@ -196,7 +200,9 @@ savePlayerButton.addEventListener("click", async () => {
 
 deletePlayerButton.addEventListener("click", async () => {
 
-    if (!isAdmin) return;
+    if (!isAdmin) {
+        return;
+    }
 
     const username = document
         .getElementById("username")
@@ -225,7 +231,7 @@ deletePlayerButton.addEventListener("click", async () => {
             .delete();
 
         showAdminMessage(
-            username + " deleted!",
+            username + " deleted successfully!",
             true
         );
 
@@ -233,7 +239,7 @@ deletePlayerButton.addEventListener("click", async () => {
         document.getElementById("elo").value = "";
         document.getElementById("tier").value = "UNRANKED";
 
-        loadAdminPlayers();
+        await loadAdminPlayers();
 
     } catch (error) {
 
