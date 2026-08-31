@@ -4,99 +4,80 @@
 <head>
 
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Player — SpicyTiers</title>
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+    <link rel="stylesheet" href="style.css">
 
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 </head>
-
 
 <body>
 
 <div class="site">
 
-    <header class="topbar">
+<header class="topbar">
 
-        <a
-            href="index.html"
-            class="logo"
-        >
-            <span>⚡</span> SpicyTiers
-        </a>
+    <a href="index.html" class="logo">
+        <span>⚡</span> SpicyTiers
+    </a>
 
-        <nav>
+    <nav>
 
-            <a href="index.html">
-                Leaderboard
-            </a>
+        <a href="index.html">Home</a>
+        <a href="leaderboard.html">Leaderboard</a>
+        <a href="rules.html">Rules</a>
+        <a href="connect.html">Connect</a>
 
-            <a href="admin.html">
-                Admin
-            </a>
+    </nav>
 
-        </nav>
+    <div id="accountArea"></div>
 
-    </header>
+</header>
 
 
-    <main class="profile-page">
+<main>
 
-        <div
-            id="profileHeader"
-            class="profile-header"
-        >
+<section class="profile-page">
 
-            <div class="loading">
-                Loading player...
-            </div>
+    <div id="profile">
 
+        <div class="loading">
+            Loading player...
         </div>
 
+    </div>
 
-        <div
-            id="statsGrid"
-            class="stats-grid"
-        >
+</section>
 
-        </div>
-
-    </main>
+</main>
 
 
-    <footer>
+<footer>
 
-        <div>
-            ⚡ SpicyTiers
-        </div>
+    <div class="footer-brand">
+        ⚡ SpicyTiers
+    </div>
 
-        <span>
-            Minecraft PvP Ranking System
-        </span>
+    <div class="footer-links">
+        <a href="faq.html">FAQ</a>
+        <a href="about.html">About Us</a>
+        <a href="rules.html">Rules</a>
+        <a href="terms.html">Terms Of Service</a>
+    </div>
 
-    </footer>
+</footer>
 
 </div>
 
 
 <script src="firebase-config.js"></script>
-
+<script src="app.js"></script>
 <script src="player.js"></script>
 
 </body>
-
 </html>
