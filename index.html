@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +18,8 @@
 
 <div class="site">
 
+    <!-- TOPBAR -->
+
     <header class="topbar">
 
         <a href="index.html" class="logo">
@@ -24,16 +27,25 @@
         </a>
 
         <nav>
-            <a href="index.html" class="active">Leaderboard</a>
-            <a href="admin.html">Admin</a>
+            <a href="index.html" class="active">
+                Leaderboard
+            </a>
+
+            <a href="admin.html">
+                Admin
+            </a>
         </nav>
 
     </header>
 
 
+    <!-- HERO -->
+
     <main>
 
         <section class="hero">
+
+            <div class="hero-glow"></div>
 
             <div class="hero-content">
 
@@ -55,77 +67,197 @@
         </section>
 
 
+        <!-- LEADERBOARD -->
+
         <section class="leaderboard-section">
 
-            <div class="section-title">
+            <div class="leaderboard-top">
 
-                <div>
+                <div class="leaderboard-title">
+
                     <div class="small-title">
-                        GLOBAL RANKINGS
+                        GLOBAL LEADERBOARD
                     </div>
 
                     <h2>
-                        Leaderboard
+                        Global Rankings
                     </h2>
+
+                </div>
+
+
+                <!-- GAME MODE SELECTOR -->
+
+                <div class="mode-selector">
+
+                    <div class="mode-label">
+                        GAME MODE
+                    </div>
+
+                    <button
+                        id="modeButton"
+                        class="mode-selector-button"
+                    >
+
+                        <span id="selectedModeIcon">
+                            ⚔
+                        </span>
+
+                        <span id="selectedMode">
+                            Sword
+                        </span>
+
+                        <span class="arrow">
+                            ▼
+                        </span>
+
+                    </button>
+
+
+                    <div
+                        id="modeDropdown"
+                        class="mode-dropdown"
+                    >
+
+                        <button
+                            class="mode-option active"
+                            data-mode="sword"
+                            data-name="Sword"
+                            data-icon="⚔"
+                        >
+                            <span>⚔</span>
+                            Sword
+                        </button>
+
+                        <button
+                            class="mode-option"
+                            data-mode="axe"
+                            data-name="Axe"
+                            data-icon="🪓"
+                        >
+                            <span>🪓</span>
+                            Axe
+                        </button>
+
+                        <button
+                            class="mode-option"
+                            data-mode="vanilla"
+                            data-name="Vanilla"
+                            data-icon="◆"
+                        >
+                            <span>◆</span>
+                            Vanilla
+                        </button>
+
+                        <button
+                            class="mode-option"
+                            data-mode="uhc"
+                            data-name="UHC"
+                            data-icon="♥"
+                        >
+                            <span>♥</span>
+                            UHC
+                        </button>
+
+                        <button
+                            class="mode-option"
+                            data-mode="smp"
+                            data-name="SMP"
+                            data-icon="🌲"
+                        >
+                            <span>🌲</span>
+                            SMP
+                        </button>
+
+                        <button
+                            class="mode-option"
+                            data-mode="netheriteop"
+                            data-name="Netherite OP"
+                            data-icon="◆"
+                        >
+                            <span>◆</span>
+                            Netherite OP
+                        </button>
+
+                        <button
+                            class="mode-option"
+                            data-mode="pot"
+                            data-name="Pot"
+                            data-icon="⚗"
+                        >
+                            <span>⚗</span>
+                            Pot
+                        </button>
+
+                        <button
+                            class="mode-option"
+                            data-mode="mace"
+                            data-name="Mace"
+                            data-icon="🔨"
+                        >
+                            <span>🔨</span>
+                            Mace
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SEARCH -->
+
+            <div class="leaderboard-tools">
+
+                <div class="current-mode">
+
+                    <span id="currentModeText">
+                        ⚔ Sword Rankings
+                    </span>
+
                 </div>
 
                 <div class="search-wrapper">
+
+                    <span class="search-icon">
+                        ⌕
+                    </span>
+
                     <input
                         id="searchInput"
                         type="text"
                         placeholder="Search player..."
                         autocomplete="off"
                     >
+
                 </div>
 
             </div>
 
 
-            <div class="gamemode-tabs">
-
-                <button class="mode active" data-mode="sword">
-                    ⚔ Sword
-                </button>
-
-                <button class="mode" data-mode="axe">
-                    🪓 Axe
-                </button>
-
-                <button class="mode" data-mode="vanilla">
-                    Vanilla
-                </button>
-
-                <button class="mode" data-mode="uhc">
-                    UHC
-                </button>
-
-                <button class="mode" data-mode="smp">
-                    SMP
-                </button>
-
-                <button class="mode" data-mode="netheriteop">
-                    Netherite OP
-                </button>
-
-                <button class="mode" data-mode="pot">
-                    Pot
-                </button>
-
-                <button class="mode" data-mode="mace">
-                    Mace
-                </button>
-
-            </div>
-
+            <!-- TABLE -->
 
             <div class="leaderboard">
 
                 <div class="leaderboard-head">
+
                     <span>#</span>
-                    <span>PLAYER</span>
-                    <span>TIER</span>
-                    <span>ELO</span>
+
+                    <span>
+                        PLAYER
+                    </span>
+
+                    <span>
+                        TIER
+                    </span>
+
+                    <span>
+                        ELO
+                    </span>
+
                 </div>
+
 
                 <div id="leaderboardList">
 
@@ -141,6 +273,8 @@
 
     </main>
 
+
+    <!-- FOOTER -->
 
     <footer>
 
