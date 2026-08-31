@@ -1,95 +1,118 @@
 async function loadLeaderboard() {
 
-    const leaderboard =
-        document.getElementById("leaderboard");
+```
+const leaderboard =
+    document.getElementById("leaderboard");
 
 
-    try {
+try {
 
-        const snapshot =
-            await db.collection("players")
-                .orderBy("elo", "desc")
-                .get();
-
-
-        leaderboard.innerHTML = "";
+    const snapshot =
+        await db
+            .collection("players")
+            .orderBy("elo", "desc")
+            .get();
 
 
-        let rank = 1;
+    leaderboard.innerHTML = "";
 
 
-        snapshot.forEach(doc => {
-
-            const player = doc.data();
+    let rank = 1;
 
 
-            const row =
-                document.createElement("div");
+    snapshot.forEach(doc => {
+
+        const player = doc.data();
 
 
-            row.className =
-                "player-row";
+        const row =
+            document.createElement("div");
 
 
-            row.innerHTML = `
-
-                <div class="rank">
-
-                    #${rank}
-
-                </div>
+        row.className =
+            "player-row";
 
 
-                <div class="name">
+        const rankDiv =
+            document.createElement("div");
 
-                    ${player.username}
+        rankDiv.className = "rank";
 
-                </div>
-
-
-                <div class="tier">
-
-                    ${player.tier}
-
-                </div>
+        rankDiv.textContent =
+            "#" + rank;
 
 
-                <div class="elo">
+        const nameDiv =
+            document.createElement("div");
 
-                    ${player.elo} ELO
+        nameDiv.className = "name";
 
-                </div>
-
-            `;
-
-
-            leaderboard.appendChild(row);
+        nameDiv.textContent =
+            player.username || "Unknown";
 
 
-            rank++;
+        const tierDiv =
+            document.createElement("div");
 
-        });
+        tierDiv.className = "tier";
+
+        tierDiv.textContent =
+            player.tier || "Unranked";
 
 
-        if (rank === 1) {
+        const eloDiv =
+            document.createElement("div");
 
-            leaderboard.innerHTML =
-                "<p>No players yet.</p>";
+        eloDiv.className = "elo";
 
-        }
+        eloDiv.textContent =
+            (player.elo || 0) + " ELO";
 
-    }
 
-    catch (error) {
+        row.appendChild(rankDiv);
+        row.appendChild(nameDiv);
+        row.appendChild(tierDiv);
+        row.appendChild(eloDiv);
 
-        console.error(error);
 
-        leaderboard.innerHTML =
-            "<p>Could not load leaderboard.</p>";
+        leaderboard.appendChild(row);
+
+
+        rank++;
+
+    });
+
+
+    if (rank === 1) {
+
+        leaderboard.innerHTML = `
+
+            <div class="loading">
+                No players yet.
+            </div>
+
+        `;
 
     }
 
 }
 
+catch (error) {
+
+    console.error(error);
+
+
+    leaderboard.innerHTML = `
+
+        <div class="loading">
+            Could not load leaderboard.
+        </div>
+
+    `;
+
+}
+```
+
+}
 
 loadLeaderboard();
