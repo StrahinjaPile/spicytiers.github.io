@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SpicyTiers — Leaderboard</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+</head>
+
+<body>
+
+<div class="site">
+
+<header class="topbar">
+
+    <a href="index.html" class="logo">
+        <span>⚡</span> SpicyTiers
+    </a>
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="leaderboard.html" class="active">
+            Leaderboard
+        </a>
+
+        <a href="client.html">
+            Client
+        </a>
+
+        <a href="discord.html">
+            Discord
+        </a>
+
+    </nav>
+
+    <a href="login.html" class="login-button">
+        LOGIN
+    </a>
+
+</header>
+
+
+<main>
+
+<section class="leaderboard-section">
+
+    <div class="section-title">
+
+        <div>
+
+            <div class="small-title">
+                SPICYTIERS
+            </div>
+
+            <h1>
+                Global Leaderboard
+            </h1>
+
+        </div>
+
+        <input
+            id="searchInput"
+            class="search-input"
+            type="text"
+            placeholder="Search player..."
+            autocomplete="off"
+        >
+
+    </div>
+
+
+    <div class="gamemode-tabs">
+
+        <button class="mode active" data-mode="sword">
+            ⚔ Sword
+        </button>
+
+        <button class="mode" data-mode="axe">
+            🪓 Axe
+        </button>
+
+        <button class="mode" data-mode="vanilla">
+            Vanilla
+        </button>
+
+        <button class="mode" data-mode="uhc">
+            UHC
+        </button>
+
+        <button class="mode" data-mode="smp">
+            SMP
+        </button>
+
+        <button class="mode" data-mode="netheriteop">
+            Netherite OP
+        </button>
+
+        <button class="mode" data-mode="pot">
+            Pot
+        </button>
+
+        <button class="mode" data-mode="mace">
+            Mace
+        </button>
+
+    </div>
+
+
+    <div class="leaderboard">
+
+        <div class="leaderboard-head">
+
+            <span>#</span>
+            <span>PLAYER</span>
+            <span>TIER</span>
+            <span>ELO</span>
+
+        </div>
+
+        <div id="leaderboardList">
+
+            <div class="loading">
+                Loading players...
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+</div>
+
+
+<script src="firebase-config.js"></script>
+<script src="leaderboard.js"></script>
+
+</body>
+</html>
