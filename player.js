@@ -1,177 +1,243 @@
+const API_URL =
+    "https://spicytiersapi.strahinjapile2013.workers.dev";
+
+
 const params =
-    new URLSearchParams(window.location.search);
-
-const playerId =
-    params.get("player");
-
-const profile =
-    document.getElementById("profile");
+    new URLSearchParams(
+        window.location.search
+    );
 
 
-const modes = [
-    ["sword", "Sword"],
-    ["axe", "Axe"],
-    ["vanilla", "Vanilla"],
-    ["uhc", "UHC"],
-    ["smp", "SMP"],
-    ["netheriteop", "Netherite OP"],
-    ["pot", "Pot"],
-    ["mace", "Mace"]
-];
+const uuid =
+    params.get(
+        "uuid"
+    );
+
+
+const profileContent =
+    document.getElementById(
+        "profileContent"
+    );
 
 
 async function loadPlayer() {
 
-    if (!playerId) {
 
-        profile.innerHTML =
-            '<div class="empty">Player not found.</div>';
+    if (!uuid) {
+
+        profileContent.innerHTML =
+            `
+            <div class="empty">
+                Player not found.
+            </div>
+            `;
 
         return;
+
     }
 
 
     try {
 
-        const doc =
-            await db
-                .collection("players")
-                .doc(playerId)
-                .get();
+
+        const response =
+            await fetch(
+
+                API_URL +
+
+                "/player/" +
+
+                encodeURIComponent(
+                    uuid
+                )
+
+            );
 
 
-        if (!doc.exists) {
+        const data =
+            await response.json();
 
-            profile.innerHTML =
-                '<div class="empty">Player not found.</div>';
 
-            return;
+        if (
+            !data.success
+        ) {
+
+            throw new Error(
+                data.error
+            );
+
         }
 
 
-        const player =
-            doc.data();
-
-
-        const uuid =
-            player.uuid || "";
-
-
-        let cards = "";
-
-
-        modes.forEach(([key, name]) => {
-
-            const stats =
-                player[key] || {};
-
-
-            const elo =
-                Number(stats.elo) || 0;
-
-
-            const tier =
-                stats.tier || "UNRANKED";
-
-
-            cards += `
-
-                <div class="mode-card">
-
-                    <div class="mode-name">
-                        ${name}
-                    </div>
-
-                    <div class="mode-tier ${getTierClass(tier)}">
-                        ${tier}
-                    </div>
-
-                    <div class="mode-elo">
-                        ${elo.toLocaleString()} ELO
-                    </div>
-
-                </div>
-
-            `;
-
-        });
-
-
-        profile.innerHTML = `
-
-            <div class="profile-header">
-
-                <div class="profile-user">
-
-                    <img
-                        class="profile-avatar-image"
-                        src="${
-                            uuid
-                            ? "https://mc-heads.net/avatar/" + uuid + "/160"
-                            : "https://mc-heads.net/avatar/" +
-                              encodeURIComponent(player.username) +
-                              "/160"
-                        }"
-                    >
-
-                    <div>
-
-                        <div class="profile-label">
-                            MINECRAFT PLAYER
-                        </div>
-
-                        <h1>
-                            ${escapeHtml(player.username)}
-                        </h1>
-
-                        <p>
-                            SpicyTiers Competitive Profile
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="stats-header">
-
-                <div>
-                    <div class="section-label">
-                        PLAYER STATS
-                    </div>
-
-                    <h2>
-                        Game Modes
-                    </h2>
-                </div>
-
-            </div>
-
-
-            <div class="stats-grid">
-
-                ${cards}
-
-            </div>
-
-        `;
-
-
-        document.title =
-            player.username +
-            " — SpicyTiers";
+        renderPlayer(
+            data.player
+        );
 
 
     } catch (error) {
 
+
+        profileContent.innerHTML =
+            `
+            <div class="empty">
+
+                Could not load player.
+
+            </div>
+            `;
+
+
         console.error(error);
 
-        profile.innerHTML =
-            '<div class="empty">Could not load player.</div>';
-
     }
+
+}
+
+
+function renderPlayer(
+    player
+) {
+
+
+    let statsHTML =
+        "";
+
+
+    Object.entries(
+        player.stats
+    ).forEach(
+
+        (
+            [
+                mode,
+                stats
+            ]
+        ) => {
+
+
+            statsHTML +=
+                `
+
+                <div class="mode-card">
+
+                    <div class="mode-name">
+
+                        ${mode.toUpperCase()}
+
+                    </div>
+
+
+                    <div
+                    class="mode-tier ${getTierClass(
+                        stats.tier
+                    )}">
+
+                        ${stats.tier}
+
+                    </div>
+
+
+                    <div
+                    class="mode-elo">
+
+                        ${stats.elo} ELO
+
+                    </div>
+
+
+                    <div
+                    class="mode-elo">
+
+                        ${stats.wins}W
+
+                        /
+
+                        ${stats.losses}L
+
+                    </div>
+
+                </div>
+
+                `;
+
+        }
+
+    );
+
+
+    profileContent.innerHTML =
+        `
+
+        <section
+        class="profile-header">
+
+
+            <div
+            class="profile-user">
+
+
+                <img
+
+                class="profile-avatar"
+
+                src="https://mc-heads.net/avatar/${encodeURIComponent(
+                    player.username
+                )}/160"
+
+
+                alt="${player.username}">
+
+
+                <div>
+
+
+                    <h1>
+
+                        ${player.username}
+
+                    </h1>
+
+
+                    <p>
+
+                        SpicyTiers Player
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+        <div
+        class="stats-grid">
+
+            ${statsHTML}
+
+        </div>
+
+        `;
+
+}
+
+
+function getTierClass(
+    tier
+) {
+
+    return (
+
+        "tier-" +
+
+        tier
+            .toLowerCase()
+
+    );
 
 }
 
