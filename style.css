@@ -1,211 +1,421 @@
 * {
-    box-sizing: border-box;
-}
+  box-sizing: border-box;
+  }
 
 body {
 
-    margin: 0;
+```
+margin: 0;
 
-    min-height: 100vh;
+min-height: 100vh;
 
-    font-family: Arial, sans-serif;
+font-family: Arial, sans-serif;
 
-    background:
-        linear-gradient(
-            135deg,
-            #0b0f1a,
-            #1a0f2a
-        );
+color: white;
 
-    color: white;
+background: linear-gradient(
+        135deg,
+        #0B0F1A,
+        #1A0F2A
+);
+```
 
 }
-
 
 .container {
 
-    width: min(900px, 90%);
+```
+width: min(1000px, 92%);
 
-    margin: auto;
+margin: auto;
 
-    padding-top: 50px;
+padding-top: 40px;
 
-}
-
-
-h1 {
-
-    font-size: 42px;
+padding-bottom: 40px;
+```
 
 }
 
+/* ================= HEADER ================= */
 
-h1 span {
+.header {
 
-    color: #ff2a4d;
-
-}
-
-
-h2 {
-
-    margin-top: 40px;
+```
+margin-bottom: 40px;
+```
 
 }
 
+.header h1 {
 
-#leaderboard {
+```
+margin: 0;
 
-    margin-top: 25px;
+font-size: 48px;
+```
 
 }
 
+.red {
+
+```
+color: #FF2A4D;
+```
+
+}
+
+.header p {
+
+```
+color: #AAAAFF;
+```
+
+}
+
+/* ================= TITLE ================= */
+
+.title-box {
+
+```
+background: rgba(17, 17, 34, 0.85);
+
+border: 2px solid #FF2A4D;
+
+padding: 16px;
+
+font-size: 22px;
+
+font-weight: bold;
+
+margin-bottom: 10px;
+```
+
+}
+
+/* ================= LEADERBOARD ================= */
+
+.leaderboard-header,
+.player-row {
+
+```
+display: grid;
+
+grid-template-columns:
+    100px
+    1fr
+    120px
+    150px;
+
+gap: 10px;
+
+align-items: center;
+```
+
+}
+
+.leaderboard-header {
+
+```
+padding: 12px;
+
+color: #AAAAFF;
+
+font-weight: bold;
+```
+
+}
 
 .player-row {
 
-    display: grid;
+```
+margin-bottom: 8px;
 
-    grid-template-columns:
-        70px
-        1fr
-        100px
-        130px;
+padding: 18px;
 
-    gap: 15px;
+background: rgba(
+        17,
+        17,
+        34,
+        0.85
+);
 
-    align-items: center;
+border: 2px solid rgba(
+        58,
+        58,
+        85,
+        0.9
+);
 
-    padding: 18px;
-
-    margin-bottom: 10px;
-
-
-    background:
-
-        rgba(
-            17,
-            17,
-            34,
-            0.85
-        );
-
-
-    border:
-
-        2px solid
-        rgba(
-            58,
-            58,
-            85,
-            0.8
-        );
+transition: 0.15s;
+```
 
 }
-
 
 .player-row:hover {
 
-    background:
+```
+background: rgba(
+        26,
+        31,
+        53,
+        0.95
+);
 
-        rgba(
-            26,
-            31,
-            53,
-            0.9
-        );
+border-color: #FF2A4D;
+```
 
 }
-
 
 .rank {
 
-    color: #ff2a4d;
+```
+color: #FF2A4D;
 
-    font-weight: bold;
+font-weight: bold;
+```
 
 }
 
+.name {
+
+```
+font-weight: bold;
+```
+
+}
 
 .tier {
 
-    color: #aaaaff;
+```
+color: #AAAAFF;
+```
 
 }
-
 
 .elo {
 
-    color: #ffffff;
+```
+font-weight: bold;
+```
 
 }
 
+/* ================= FORMS ================= */
+
+.panel {
+
+```
+background: rgba(
+        17,
+        17,
+        34,
+        0.9
+);
+
+border: 2px solid rgba(
+        58,
+        58,
+        85,
+        0.9
+);
+
+padding: 25px;
+
+margin-top: 20px;
+```
+
+}
 
 input,
 select {
 
-    width: 100%;
+```
+width: 100%;
 
-    padding: 14px;
+padding: 14px;
 
-    margin-top: 10px;
+margin-bottom: 12px;
 
-    margin-bottom: 10px;
+background: #111122;
 
+color: white;
 
-    background:
-        #111122;
+border: 2px solid #3A3A55;
 
-
-    border:
-        2px solid
-        #3a3a55;
-
-
-    color: white;
+outline: none;
+```
 
 }
 
+input:focus,
+select:focus {
+
+```
+border-color: #FF2A4D;
+```
+
+}
 
 button {
 
-    width: 100%;
+```
+width: 100%;
 
-    padding: 14px;
+padding: 14px;
 
-    margin-top: 10px;
+margin-bottom: 10px;
 
+cursor: pointer;
 
-    cursor: pointer;
+background: #111122;
 
+color: white;
 
-    background:
-        #111122;
+border: 2px solid #FF2A4D;
 
-
-    color: white;
-
-
-    border:
-        2px solid
-        #ff2a4d;
+font-size: 15px;
+```
 
 }
-
 
 button:hover {
 
-    background:
-        #1a1f35;
+```
+background: #1A1F35;
+```
 
 }
 
+button.danger {
 
-.admin-link {
+```
+border-color: #FF4444;
+```
 
-    display: block;
+}
 
-    margin-top: 40px;
+button.gray {
 
-    color: #aaaaFF;
+```
+border-color: #3A3A55;
+```
+
+}
+
+/* ================= ADMIN LIST ================= */
+
+.admin-player {
+
+```
+display: grid;
+
+grid-template-columns:
+    1fr
+    120px
+    120px;
+
+gap: 10px;
+
+padding: 12px;
+
+margin-top: 8px;
+
+background: #111122;
+
+border: 2px solid #3A3A55;
+```
+
+}
+
+.loading {
+
+```
+padding: 30px;
+
+text-align: center;
+
+color: #AAAAFF;
+```
+
+}
+
+.message {
+
+```
+margin-top: 10px;
+
+padding: 10px;
+
+text-align: center;
+```
+
+}
+
+.success {
+
+```
+color: #66FF99;
+```
+
+}
+
+.error {
+
+```
+color: #FF6666;
+```
+
+}
+
+.footer {
+
+```
+margin-top: 30px;
+```
+
+}
+
+.footer a {
+
+```
+color: #AAAAFF;
+
+text-decoration: none;
+```
+
+}
+
+.footer a:hover {
+
+```
+color: #FF2A4D;
+```
+
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 650px) {
+
+```
+.leaderboard-header,
+.player-row {
+
+    grid-template-columns:
+        55px
+        1fr
+        70px
+        80px;
+
+    font-size: 12px;
+
+}
+
+.header h1 {
+
+    font-size: 36px;
+
+}
+```
 
 }
