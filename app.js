@@ -8,31 +8,29 @@ const searchInput =
     document.getElementById("searchInput");
 
 
-/* =========================================================
-   LOAD PLAYERS
-========================================================= */
+// =========================
+// LOAD PLAYERS
+// =========================
 
 async function loadPlayers() {
 
-    if (!leaderboardList) return;
-
     leaderboardList.innerHTML =
-        '<div class="loading">Loading players...</div>';
+        '<div class="loading">Loading leaderboard...</div>';
 
     try {
 
         const snapshot =
-            await db
-                .collection("players")
-                .get();
+            await db.collection("players").get();
 
         allPlayers = [];
 
-        snapshot.forEach((doc) => {
+        snapshot.forEach(doc => {
+
+            const data = doc.data();
 
             allPlayers.push({
                 id: doc.id,
-                ...doc.data()
+                ...data
             });
 
         });
@@ -41,7 +39,7 @@ async function loadPlayers() {
 
     } catch (error) {
 
-        console.error("Leaderboard error:", error);
+        console.error(error);
 
         leaderboardList.innerHTML =
             '<div class="empty">Could not load leaderboard.</div>';
@@ -49,50 +47,48 @@ async function loadPlayers() {
 }
 
 
-/* =========================================================
-   RENDER LEADERBOARD
-========================================================= */
+// =========================
+// RENDER
+// =========================
 
 function renderLeaderboard() {
 
-    if (!leaderboardList) return;
-
     const search =
-        searchInput
-            ? searchInput.value.trim().toLowerCase()
-            : "";
+        searchInput.value
+            .trim()
+            .toLowerCase();
 
-    let players = allPlayers
-        .filter(player => {
+    let players =
+        allPlayers
+            .filter(player => {
 
-            const username =
-                player.username || "";
+                return (player.username || "")
+                    .toLowerCase()
+                    .includes(search);
 
-            return username
-                .toLowerCase()
-                .includes(search);
+            })
+            .map(player => {
 
-        })
-        .map(player => {
+                const stats =
+                    player[currentMode] || {};
 
-            const stats =
-                player[currentMode] || {};
+                return {
+                    ...player,
 
-            return {
-                ...player,
+                    elo: Number(stats.elo) || 0,
 
-                elo:
-                    Number(stats.elo) || 0,
+                    tier:
+                        stats.tier || "UNRANKED"
+                };
 
-                tier:
-                    stats.tier || "UNRANKED"
-            };
+            });
 
-        });
 
     players.sort((a, b) => b.elo - a.elo);
 
+
     leaderboardList.innerHTML = "";
+
 
     if (players.length === 0) {
 
@@ -102,46 +98,60 @@ function renderLeaderboard() {
         return;
     }
 
+
     players.forEach((player, index) => {
 
         const row =
             document.createElement("div");
 
-        row.className =
-            "player-row";
+        row.className = "player-row";
 
-
-        /* RANK */
 
         const rank =
             document.createElement("div");
 
-        rank.className =
-            "rank";
+        rank.className = "rank";
 
         rank.textContent =
             "#" + (index + 1);
 
 
-        /* PLAYER */
-
         const name =
             document.createElement("div");
 
-        name.className =
-            "player-name";
+        name.className = "player-name";
 
 
         const avatar =
-            document.createElement("div");
+            document.createElement("img");
 
         avatar.className =
             "player-avatar";
 
-        avatar.textContent =
-            (player.username || "?")
-                .charAt(0)
-                .toUpperCase();
+
+        if (player.uuid) {
+
+            avatar.src =
+                "https://mc-heads.net/avatar/" +
+                player.uuid +
+                "/64";
+
+        } else {
+
+            avatar.src =
+                "https://mc-heads.net/avatar/" +
+                encodeURIComponent(player.username) +
+                "/64";
+
+        }
+
+
+        avatar.onerror = function () {
+
+            this.src =
+                "https://mc-heads.net/avatar/MHF_Steve/64";
+
+        };
 
 
         const username =
@@ -155,8 +165,6 @@ function renderLeaderboard() {
         name.appendChild(username);
 
 
-        /* TIER */
-
         const tier =
             document.createElement("div");
 
@@ -168,8 +176,6 @@ function renderLeaderboard() {
             player.tier;
 
 
-        /* ELO */
-
         const elo =
             document.createElement("div");
 
@@ -177,7 +183,8 @@ function renderLeaderboard() {
             "player-elo";
 
         elo.textContent =
-            player.elo + " ELO";
+            player.elo.toLocaleString() +
+            " ELO";
 
 
         row.appendChild(rank);
@@ -185,8 +192,6 @@ function renderLeaderboard() {
         row.appendChild(tier);
         row.appendChild(elo);
 
-
-        /* PLAYER PROFILE */
 
         row.addEventListener("click", () => {
 
@@ -203,9 +208,9 @@ function renderLeaderboard() {
 }
 
 
-/* =========================================================
-   TIER CLASS
-========================================================= */
+// =========================
+// TIER COLORS
+// =========================
 
 function getTierClass(tier) {
 
@@ -222,63 +227,147 @@ function getTierClass(tier) {
 }
 
 
-/* =========================================================
-   GAME MODE BUTTONS
-========================================================= */
+// =========================
+// MODE BUTTONS
+// =========================
 
-const modeButtons =
-    document.querySelectorAll(".mode");
+document
+    .querySelectorAll(".mode")
+    .forEach(button => {
 
-modeButtons.forEach(button => {
+        button.addEventListener("click", () => {
 
-    button.addEventListener("click", () => {
+            document
+                .querySelectorAll(".mode")
+                .forEach(btn =>
+                    btn.classList.remove("active")
+                );
 
-        const selectedMode =
-            button.dataset.mode;
+            button.classList.add("active");
 
-        if (!selectedMode) return;
+            currentMode =
+                button.dataset.mode;
 
-        currentMode =
-            selectedMode;
-
-
-        modeButtons.forEach(btn => {
-
-            btn.classList.remove("active");
+            renderLeaderboard();
 
         });
 
-
-        button.classList.add("active");
-
-
-        renderLeaderboard();
-
     });
+
+
+// =========================
+// SEARCH
+// =========================
+
+searchInput.addEventListener(
+    "input",
+    renderLeaderboard
+);
+
+
+// =========================
+// ACCOUNT
+// =========================
+
+async function loadAccountArea() {
+
+    const accountArea =
+        document.getElementById("accountArea");
+
+    if (!accountArea) return;
+
+
+    const user =
+        auth.currentUser;
+
+    if (!user) {
+
+        accountArea.innerHTML = `
+            <a href="connect.html" class="account-button">
+                Connect Account
+            </a>
+        `;
+
+        return;
+    }
+
+
+    try {
+
+        const doc =
+            await db
+                .collection("accounts")
+                .doc(user.uid)
+                .get();
+
+        if (!doc.exists) {
+
+            accountArea.innerHTML = `
+                <a href="connect.html" class="account-button">
+                    Connect Minecraft
+                </a>
+            `;
+
+            return;
+        }
+
+
+        const account =
+            doc.data();
+
+
+        accountArea.innerHTML = `
+
+            <a href="player.html?player=${encodeURIComponent(account.playerId)}"
+               class="account-user">
+
+                <img
+                    src="https://mc-heads.net/avatar/${account.uuid}/64"
+                    class="account-avatar"
+                >
+
+                <span>
+                    ${escapeHtml(account.username)}
+                </span>
+
+                <b>⌄</b>
+
+            </a>
+
+        `;
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+}
+
+
+// =========================
+// ESCAPE HTML
+// =========================
+
+function escapeHtml(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+}
+
+
+auth.onAuthStateChanged(() => {
+
+    loadAccountArea();
 
 });
 
 
-/* =========================================================
-   SEARCH
-========================================================= */
-
-if (searchInput) {
-
-    searchInput.addEventListener(
-        "input",
-        () => {
-
-            renderLeaderboard();
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   START
-========================================================= */
+// =========================
+// START
+// =========================
 
 loadPlayers();
