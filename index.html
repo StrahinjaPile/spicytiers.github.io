@@ -17,8 +17,6 @@
 
 <div class="site">
 
-    <!-- NAVBAR -->
-
     <header class="topbar">
 
         <a href="index.html" class="logo">
@@ -26,33 +24,20 @@
         </a>
 
         <nav>
-
-            <a href="index.html" class="active">
-                Home
-            </a>
-
-            <a href="leaderboard.html">
-                Leaderboard
-            </a>
-
-            <a href="client.html">
-                Client
-            </a>
-
-            <a href="rules.html">
-                Rules
-            </a>
-
+            <a href="index.html" class="active">Home</a>
+            <a href="leaderboard.html">Leaderboard</a>
+            <a href="rules.html">Rules</a>
+            <a href="connect.html">Connect</a>
         </nav>
 
-        <a href="login.html" class="login-button">
-            Login
-        </a>
+        <div id="accountArea">
+            <a href="connect.html" class="account-button">
+                Connect Account
+            </a>
+        </div>
 
     </header>
 
-
-    <!-- HERO -->
 
     <main>
 
@@ -63,7 +48,7 @@
             <div class="hero-content">
 
                 <div class="hero-badge">
-                    ⚡ SPICYTIERS
+                    SPICYTIERS
                 </div>
 
                 <h1>
@@ -72,19 +57,19 @@
                 </h1>
 
                 <p>
-                    A new Minecraft PvP experience built around
-                    ELO-based matchmaking, competitive rankings,
-                    and instant queueing.
+                    A new generation of Minecraft PvP,
+                    built around ELO matchmaking,
+                    competitive rankings and instant queueing.
                 </p>
 
                 <div class="hero-buttons">
 
-                    <a href="client.html" class="primary-button">
-                        Download Client
+                    <a href="leaderboard.html" class="primary-button">
+                        View Leaderboard
                     </a>
 
-                    <a href="leaderboard.html" class="secondary-button">
-                        View Leaderboard
+                    <a href="connect.html" class="secondary-button">
+                        Connect Minecraft
                     </a>
 
                 </div>
@@ -94,23 +79,20 @@
         </section>
 
 
-        <!-- ABOUT SPICYTIERS -->
-
-        <section class="home-section">
+        <section class="about-home">
 
             <div class="section-label">
                 ABOUT SPICYTIERS
             </div>
 
             <h2>
-                Competitive PvP,
-                <span>reimagined.</span>
+                Built for competitive Minecraft PvP.
             </h2>
 
             <p class="section-description">
-                SpicyTiers is a Minecraft PvP client and ranking
-                system designed to make competitive PvP faster,
-                fairer and more enjoyable.
+                SpicyTiers is a Client that introduces queueing instantly
+                from the home screen. And even better, the tiering system
+                will be completely ELO based for a much better experience.
             </p>
 
 
@@ -118,17 +100,14 @@
 
                 <div class="feature-card">
 
-                    <div class="feature-icon">
-                        ⚔
-                    </div>
+                    <div class="feature-number">01</div>
 
-                    <h3>
-                        Instant Queueing
-                    </h3>
+                    <h3>Smart Matchmaking</h3>
 
                     <p>
-                        Queue directly from the client home screen
-                        and get into a match without wasting time.
+                        Players are matched with opponents close to their
+                        skill level. For example, a player with 1400 ELO
+                        could be matched with players around 1350–1450 ELO.
                     </p>
 
                 </div>
@@ -136,18 +115,14 @@
 
                 <div class="feature-card">
 
-                    <div class="feature-icon">
-                        📈
-                    </div>
+                    <div class="feature-number">02</div>
 
-                    <h3>
-                        ELO Based
-                    </h3>
+                    <h3>20 TPS Servers</h3>
 
                     <p>
-                        Your tier is determined by your ELO,
-                        giving every player a more accurate
-                        competitive ranking.
+                        We are building the network around stable,
+                        competitive servers and working towards
+                        extremely low input delay.
                     </p>
 
                 </div>
@@ -155,17 +130,14 @@
 
                 <div class="feature-card">
 
-                    <div class="feature-icon">
-                        🎯
-                    </div>
+                    <div class="feature-number">03</div>
 
-                    <h3>
-                        Better Matchmaking
-                    </h3>
+                    <h3>Anti-Cheat</h3>
 
                     <p>
-                        Match against players around your skill
-                        level instead of completely random opponents.
+                        We are developing our own anti-cheat designed
+                        to detect a wide range of cheats and keep
+                        competitive matches fair.
                     </p>
 
                 </div>
@@ -173,17 +145,14 @@
 
                 <div class="feature-card">
 
-                    <div class="feature-icon">
-                        🛡
-                    </div>
+                    <div class="feature-number">04</div>
 
-                    <h3>
-                        Anti-Cheat
-                    </h3>
+                    <h3>ELO Based Ranking</h3>
 
                     <p>
-                        We are working on an advanced anti-cheat
-                        designed to detect different kinds of cheats.
+                        Your performance actually matters.
+                        Win matches, gain ELO and climb through
+                        the SpicyTiers ranking system.
                     </p>
 
                 </div>
@@ -193,146 +162,20 @@
         </section>
 
 
-        <!-- MATCHMAKING -->
-
-        <section class="matchmaking-section">
-
-            <div class="matchmaking-content">
-
-                <div class="section-label">
-                    ELO MATCHMAKING
-                </div>
-
-                <h2>
-                    Fight players
-                    <span>your level.</span>
-                </h2>
-
-                <p>
-                    The matchmaking system is designed to find
-                    opponents close to your current ELO.
-                </p>
-
-                <div class="elo-example">
-
-                    <div class="elo-player">
-
-                        <span>Your ELO</span>
-
-                        <strong>
-                            1400
-                        </strong>
-
-                    </div>
-
-                    <div class="elo-line"></div>
-
-                    <div class="elo-range">
-
-                        <span>Match Range</span>
-
-                        <strong>
-                            1350 — 1450
-                        </strong>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- SERVER -->
-
-        <section class="home-section">
-
-            <div class="section-label">
-                PERFORMANCE
-            </div>
-
-            <h2>
-                Built for
-                <span>competitive PvP.</span>
-            </h2>
-
-            <p class="section-description">
-                We are working toward high-performance servers
-                running at 20 TPS and minimizing input delay
-                as much as possible.
-            </p>
-
-
-            <div class="stats-grid-home">
-
-                <div class="stat-card">
-
-                    <strong>
-                        20
-                    </strong>
-
-                    <span>
-                        TPS
-                    </span>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <strong>
-                        8+
-                    </strong>
-
-                    <span>
-                        Game Modes
-                    </span>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <strong>
-                        ELO
-                    </strong>
-
-                    <span>
-                        Ranking System
-                    </span>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- DISCORD -->
-
-        <section class="discord-section">
+        <section class="home-cta">
 
             <div>
-
                 <div class="section-label">
-                    COMMUNITY
+                    READY?
                 </div>
 
                 <h2>
-                    Join the
-                    <span>SpicyTiers Discord.</span>
+                    See who's on top.
                 </h2>
-
-                <p>
-                    Get updates, report bugs, talk with other
-                    players and stay up to date with development.
-                </p>
-
             </div>
 
-            <a href="#" class="primary-button">
-                Join Discord
+            <a href="leaderboard.html" class="primary-button">
+                Open Leaderboard →
             </a>
 
         </section>
@@ -340,92 +183,32 @@
     </main>
 
 
-    <!-- FOOTER -->
-
     <footer>
 
-        <div class="footer-top">
+        <div class="footer-brand">
+            ⚡ SpicyTiers
+        </div>
 
-            <div class="footer-brand">
+        <div class="footer-links">
 
-                <div class="footer-logo">
-                    ⚡ SpicyTiers
-                </div>
-
-                <p>
-                    The future of Minecraft PvP.
-                </p>
-
-            </div>
-
-
-            <div class="footer-links">
-
-                <div>
-
-                    <h4>
-                        SpicyTiers
-                    </h4>
-
-                    <a href="index.html">
-                        Home
-                    </a>
-
-                    <a href="leaderboard.html">
-                        Leaderboard
-                    </a>
-
-                    <a href="client.html">
-                        Client
-                    </a>
-
-                    <a href="rules.html">
-                        Rules
-                    </a>
-
-                </div>
-
-
-                <div>
-
-                    <h4>
-                        Information
-                    </h4>
-
-                    <a href="faq.html">
-                        FAQ
-                    </a>
-
-                    <a href="about.html">
-                        About Us
-                    </a>
-
-                    <a href="terms.html">
-                        Terms of Service
-                    </a>
-
-                </div>
-
-            </div>
+            <a href="faq.html">FAQ</a>
+            <a href="about.html">About Us</a>
+            <a href="rules.html">Rules</a>
+            <a href="terms.html">Terms Of Service</a>
 
         </div>
 
-
-        <div class="footer-bottom">
-
-            <span>
-                © 2026 SpicyTiers. All rights reserved.
-            </span>
-
-            <span>
-                Minecraft is a trademark of Mojang Studios.
-            </span>
-
+        <div class="footer-copy">
+            Minecraft PvP Ranking System
         </div>
 
     </footer>
 
 </div>
+
+
+<script src="firebase-config.js"></script>
+<script src="app.js"></script>
 
 </body>
 </html>
