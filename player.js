@@ -1,74 +1,22 @@
 const params =
-    new URLSearchParams(
-        window.location.search
-    );
+    new URLSearchParams(window.location.search);
 
 const playerId =
     params.get("player");
 
-
-const profileHeader =
-    document.getElementById(
-        "profileHeader"
-    );
+const profile =
+    document.getElementById("profile");
 
 
-const statsGrid =
-    document.getElementById(
-        "statsGrid"
-    );
-
-
-const gameModes = [
-
-    {
-        id: "sword",
-        name: "SWORD",
-        icon: "⚔"
-    },
-
-    {
-        id: "axe",
-        name: "AXE",
-        icon: "🪓"
-    },
-
-    {
-        id: "vanilla",
-        name: "VANILLA",
-        icon: "◆"
-    },
-
-    {
-        id: "uhc",
-        name: "UHC",
-        icon: "💥"
-    },
-
-    {
-        id: "smp",
-        name: "SMP",
-        icon: "◆"
-    },
-
-    {
-        id: "netheriteop",
-        name: "NETHERITE OP",
-        icon: "◆"
-    },
-
-    {
-        id: "pot",
-        name: "POT",
-        icon: "🧪"
-    },
-
-    {
-        id: "mace",
-        name: "MACE",
-        icon: "🔨"
-    }
-
+const modes = [
+    ["sword", "Sword"],
+    ["axe", "Axe"],
+    ["vanilla", "Vanilla"],
+    ["uhc", "UHC"],
+    ["smp", "SMP"],
+    ["netheriteop", "Netherite OP"],
+    ["pot", "Pot"],
+    ["mace", "Mace"]
 ];
 
 
@@ -76,7 +24,7 @@ async function loadPlayer() {
 
     if (!playerId) {
 
-        profileHeader.innerHTML =
+        profile.innerHTML =
             '<div class="empty">Player not found.</div>';
 
         return;
@@ -94,7 +42,7 @@ async function loadPlayer() {
 
         if (!doc.exists) {
 
-            profileHeader.innerHTML =
+            profile.innerHTML =
                 '<div class="empty">Player not found.</div>';
 
             return;
@@ -105,139 +53,125 @@ async function loadPlayer() {
             doc.data();
 
 
-        document.title =
-            player.username +
-            " — SpicyTiers";
+        const uuid =
+            player.uuid || "";
 
 
-        profileHeader.innerHTML = `
+        let cards = "";
 
-            <div class="profile-user">
 
-                <div class="profile-avatar">
-                    ${escapeHtml(
-                        (player.username || "?")
-                            .charAt(0)
-                            .toUpperCase()
-                    )}
+        modes.forEach(([key, name]) => {
+
+            const stats =
+                player[key] || {};
+
+
+            const elo =
+                Number(stats.elo) || 0;
+
+
+            const tier =
+                stats.tier || "UNRANKED";
+
+
+            cards += `
+
+                <div class="mode-card">
+
+                    <div class="mode-name">
+                        ${name}
+                    </div>
+
+                    <div class="mode-tier ${getTierClass(tier)}">
+                        ${tier}
+                    </div>
+
+                    <div class="mode-elo">
+                        ${elo.toLocaleString()} ELO
+                    </div>
+
                 </div>
+
+            `;
+
+        });
+
+
+        profile.innerHTML = `
+
+            <div class="profile-header">
+
+                <div class="profile-user">
+
+                    <img
+                        class="profile-avatar-image"
+                        src="${
+                            uuid
+                            ? "https://mc-heads.net/avatar/" + uuid + "/160"
+                            : "https://mc-heads.net/avatar/" +
+                              encodeURIComponent(player.username) +
+                              "/160"
+                        }"
+                    >
+
+                    <div>
+
+                        <div class="profile-label">
+                            MINECRAFT PLAYER
+                        </div>
+
+                        <h1>
+                            ${escapeHtml(player.username)}
+                        </h1>
+
+                        <p>
+                            SpicyTiers Competitive Profile
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="stats-header">
 
                 <div>
+                    <div class="section-label">
+                        PLAYER STATS
+                    </div>
 
-                    <h1>
-                        ${escapeHtml(
-                            player.username ||
-                            "Unknown"
-                        )}
-                    </h1>
-
-                    <p>
-                        SpicyTiers PvP Profile
-                    </p>
-
+                    <h2>
+                        Game Modes
+                    </h2>
                 </div>
+
+            </div>
+
+
+            <div class="stats-grid">
+
+                ${cards}
 
             </div>
 
         `;
 
 
-        statsGrid.innerHTML = "";
-
-
-        gameModes.forEach(mode => {
-
-            const stats =
-                player[mode.id] || {};
-
-
-            const tier =
-                stats.tier ||
-                "UNRANKED";
-
-
-            const elo =
-                Number(stats.elo) ||
-                0;
-
-
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-
-            card.className =
-                "mode-card";
-
-
-            card.innerHTML = `
-
-                <div class="mode-name">
-                    ${mode.icon}
-                    &nbsp;
-                    ${mode.name}
-                </div>
-
-                <div class="
-                    mode-tier
-                    ${getTierClass(tier)}
-                ">
-                    ${escapeHtml(tier)}
-                </div>
-
-                <div class="mode-elo">
-                    ${elo} ELO
-                </div>
-
-            `;
-
-
-            statsGrid.appendChild(card);
-
-        });
+        document.title =
+            player.username +
+            " — SpicyTiers";
 
 
     } catch (error) {
 
         console.error(error);
 
-        profileHeader.innerHTML =
+        profile.innerHTML =
             '<div class="empty">Could not load player.</div>';
 
     }
-
-}
-
-
-/* =========================
-TIER CLASS
-========================= */
-
-function getTierClass(tier) {
-
-    return (
-        "tier-" +
-        String(tier)
-            .toLowerCase()
-            .replace(" ", "-")
-    );
-
-}
-
-
-/* =========================
-HTML SAFETY
-========================= */
-
-function escapeHtml(text) {
-
-    const div =
-        document.createElement("div");
-
-    div.textContent = text;
-
-    return div.innerHTML;
 
 }
 
