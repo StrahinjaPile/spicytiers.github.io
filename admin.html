@@ -10,7 +10,6 @@
 
 <link rel="stylesheet" href="style.css">
 
-<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
@@ -24,49 +23,64 @@
 
 ```
 <div class="header">
-    <h1><span class="red">⚡ Spicy</span>Tiers</h1>
-    <p>Leaderboard Administration</p>
+    <h1>
+        <span class="red">⚡ Spicy</span>Tiers
+    </h1>
+
+    <p>
+        Leaderboard Administration
+    </p>
 </div>
 
 
 <!-- LOGIN -->
+
 <div id="loginPanel" class="panel">
 
     <h2>ADMIN LOGIN</h2>
 
     <input
-            id="email"
-            type="email"
-            placeholder="Email"
+        id="email"
+        type="email"
+        placeholder="Email"
     >
 
     <input
-            id="password"
-            type="password"
-            placeholder="Password"
+        id="password"
+        type="password"
+        placeholder="Password"
     >
 
     <button id="loginButton">
         LOGIN
     </button>
 
-    <div id="loginMessage" class="message"></div>
+    <div
+        id="loginMessage"
+        class="message"
+    ></div>
 
 </div>
 
 
 <!-- ACCESS DENIED -->
+
 <div
-        id="deniedPanel"
-        class="panel"
-        style="display: none;"
+    id="deniedPanel"
+    class="panel"
+    style="display: none;"
 >
 
     <h2>ACCESS DENIED</h2>
 
-    <p>This account is not an administrator.</p>
+    <p>
+        This account is not an administrator.
+    </p>
 
-    <button id="logoutDenied" class="gray">
+    <button
+        id="logoutDenied"
+        class="gray"
+    >
         LOGOUT
     </button>
 
@@ -74,71 +88,104 @@
 
 
 <!-- ADMIN PANEL -->
+
 <div
-        id="adminPanel"
-        style="display: none;"
+    id="adminPanel"
+    style="display: none;"
 >
 
     <!-- PLAYER EDITOR -->
+
     <div class="panel">
 
         <h2>PLAYER EDITOR</h2>
 
         <input
-                id="username"
-                type="text"
-                placeholder="Minecraft Username"
-                maxlength="16"
+            id="username"
+            type="text"
+            placeholder="Minecraft Username"
+            maxlength="16"
         >
 
         <input
-                id="elo"
-                type="number"
-                min="0"
-                placeholder="ELO"
+            id="elo"
+            type="number"
+            min="0"
+            placeholder="ELO"
         >
 
         <select id="tier">
 
-            <option value="UNRANKED">UNRANKED</option>
+            <option value="UNRANKED">
+                UNRANKED
+            </option>
 
-            <option value="LT5">LT5</option>
-            <option value="HT5">HT5</option>
+            <option value="LT5">
+                LT5
+            </option>
 
-            <option value="LT4">LT4</option>
-            <option value="HT4">HT4</option>
+            <option value="HT5">
+                HT5
+            </option>
 
-            <option value="LT3">LT3</option>
-            <option value="HT3">HT3</option>
+            <option value="LT4">
+                LT4
+            </option>
 
-            <option value="LT2">LT2</option>
-            <option value="HT2">HT2</option>
+            <option value="HT4">
+                HT4
+            </option>
 
-            <option value="LT1">LT1</option>
-            <option value="HT1">HT1</option>
+            <option value="LT3">
+                LT3
+            </option>
+
+            <option value="HT3">
+                HT3
+            </option>
+
+            <option value="LT2">
+                LT2
+            </option>
+
+            <option value="HT2">
+                HT2
+            </option>
+
+            <option value="LT1">
+                LT1
+            </option>
+
+            <option value="HT1">
+                HT1
+            </option>
 
         </select>
+
 
         <button id="savePlayer">
             SAVE / UPDATE PLAYER
         </button>
 
+
         <button
-                id="deletePlayer"
-                class="danger"
+            id="deletePlayer"
+            class="danger"
         >
             DELETE PLAYER
         </button>
 
+
         <div
-                id="adminMessage"
-                class="message"
+            id="adminMessage"
+            class="message"
         ></div>
 
     </div>
 
 
-    <!-- PLAYERS -->
+    <!-- PLAYER LIST -->
+
     <div class="panel">
 
         <h2>ALL PLAYERS</h2>
@@ -151,16 +198,17 @@
 
 
     <!-- LOGOUT -->
+
     <div class="panel">
 
         <button
-                id="logoutButton"
-                class="gray"
+            id="logoutButton"
+            class="gray"
         >
             LOGOUT
         </button>
 
-        <br>
+        <br><br>
 
         <a href="index.html">
             ← Back to Leaderboard
@@ -173,11 +221,7 @@
 
 </div>
 
-<!-- FIREBASE CONFIG MORA PRVO -->
-
 <script src="firebase-config.js"></script>
-
-<!-- ADMIN KOD -->
 
 <script src="admin.js"></script>
 
