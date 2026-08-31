@@ -1,5 +1,3 @@
-console.log("🔥 SpicyTiers admin.js loaded!");
-
 const loginPanel = document.getElementById("loginPanel");
 const deniedPanel = document.getElementById("deniedPanel");
 const adminPanel = document.getElementById("adminPanel");
@@ -14,10 +12,24 @@ const logoutDenied = document.getElementById("logoutDenied");
 const savePlayerButton = document.getElementById("savePlayer");
 const deletePlayerButton = document.getElementById("deletePlayer");
 
-const loginForm = document.getElementById("loginForm");
-
 let currentUser = null;
 let isAdmin = false;
+
+
+/* =========================
+   GAMEMODES
+========================= */
+
+const modes = [
+    "sword",
+    "axe",
+    "vanilla",
+    "uhc",
+    "smp",
+    "netheriteop",
+    "pot",
+    "mace"
+];
 
 
 /* =========================
@@ -35,12 +47,11 @@ auth.onAuthStateChanged(async (user) => {
     isAdmin = false;
 
     if (!user) {
+
         loginPanel.style.display = "block";
+
         return;
     }
-
-    console.log("Logged in:", user.email);
-    console.log("UID:", user.uid);
 
     try {
 
@@ -54,24 +65,21 @@ auth.onAuthStateChanged(async (user) => {
             userDoc.data().role === "admin"
         ) {
 
-            console.log("✅ Admin verified");
-
             isAdmin = true;
 
             adminPanel.style.display = "block";
 
-            await loadAdminPlayers();
+            loadAdminPlayers();
 
         } else {
 
-            console.log("❌ User is not admin");
-
             deniedPanel.style.display = "block";
+
         }
 
     } catch (error) {
 
-        console.error("Admin check error:", error);
+        console.error(error);
 
         loginPanel.style.display = "block";
 
@@ -79,7 +87,9 @@ auth.onAuthStateChanged(async (user) => {
             "Could not check admin permissions.",
             false
         );
+
     }
+
 });
 
 
@@ -87,79 +97,74 @@ auth.onAuthStateChanged(async (user) => {
    LOGIN
 ========================= */
 
-if (loginForm) {
+loginButton.addEventListener(
+    "click",
+    async () => {
 
-    loginForm.addEventListener("submit", async (event) => {
+        const email =
+            document
+                .getElementById("email")
+                .value
+                .trim();
 
-        event.preventDefault();
-
-        await login();
-
-    });
-
-} else {
-
-    loginButton.addEventListener("click", async () => {
-
-        await login();
-
-    });
-
-}
+        const password =
+            document
+                .getElementById("password")
+                .value;
 
 
-async function login() {
+        if (!email || !password) {
 
-    const email = document
-        .getElementById("email")
-        .value
-        .trim();
+            showLoginMessage(
+                "Enter your email and password.",
+                false
+            );
 
-    const password = document
-        .getElementById("password")
-        .value;
+            return;
+        }
 
-    if (!email || !password) {
 
-        showLoginMessage(
-            "Enter your email and password.",
-            false
-        );
+        try {
 
-        return;
-    }
+            loginButton.disabled = true;
 
-    loginButton.disabled = true;
-    loginButton.textContent = "LOGGING IN...";
+            loginButton.textContent =
+                "LOGGING IN...";
 
-    try {
 
-        await auth.signInWithEmailAndPassword(
-            email,
-            password
-        );
+            await auth.signInWithEmailAndPassword(
+                email,
+                password
+            );
 
-        showLoginMessage(
-            "Login successful!",
-            true
-        );
 
-    } catch (error) {
+            showLoginMessage(
+                "Logged in successfully.",
+                true
+            );
 
-        console.error("Login error:", error);
 
-        showLoginMessage(
-            getFirebaseError(error),
-            false
-        );
+        } catch (error) {
 
-    } finally {
+            console.error(error);
 
-        loginButton.disabled = false;
-        loginButton.textContent = "LOGIN";
+            showLoginMessage(
+                error.message,
+                false
+            );
+
+
+        } finally {
+
+            loginButton.disabled = false;
+
+            loginButton.textContent =
+                "LOGIN";
+
+        }
 
     }
-}
+);
 
 
 /* =========================
@@ -170,15 +175,7 @@ logoutButton.addEventListener(
     "click",
     async () => {
 
-        try {
-
-            await auth.signOut();
-
-        } catch (error) {
-
-            console.error(error);
-
-        }
+        await auth.signOut();
 
     }
 );
@@ -188,22 +185,14 @@ logoutDenied.addEventListener(
     "click",
     async () => {
 
-        try {
-
-            await auth.signOut();
-
-        } catch (error) {
-
-            console.error(error);
-
-        }
+        await auth.signOut();
 
     }
 );
 
 
 /* =========================
-   SAVE / UPDATE PLAYER
+   SAVE PLAYER
 ========================= */
 
 savePlayerButton.addEventListener(
@@ -220,20 +209,13 @@ savePlayerButton.addEventListener(
             return;
         }
 
-        const username = document
-            .getElementById("username")
-            .value
-            .trim();
 
-        const eloValue = document
-            .getElementById("elo")
-            .value;
+        const username =
+            document
+                .getElementById("username")
+                .value
+                .trim();
 
-        const elo = Number(eloValue);
-
-        const tier = document
-            .getElementById("tier")
-            .value;
 
         if (!username) {
 
@@ -245,23 +227,66 @@ savePlayerButton.addEventListener(
             return;
         }
 
-        if (
-            !Number.isFinite(elo) ||
-            elo < 0
-        ) {
 
-            showAdminMessage(
-                "Enter a valid ELO.",
-                false
-            );
+        const modesData = {};
 
-            return;
+
+        for (const mode of modes) {
+
+            const eloInput =
+                document.getElementById(
+                    mode + "-elo"
+                );
+
+            const tierInput =
+                document.getElementById(
+                    mode + "-tier"
+                );
+
+
+            const elo =
+                Number(
+                    eloInput.value || 0
+                );
+
+
+            const tier =
+                tierInput.value;
+
+
+            if (
+                !Number.isFinite(elo) ||
+                elo < 0
+            ) {
+
+                showAdminMessage(
+                    "Invalid ELO in " +
+                    mode.toUpperCase(),
+                    false
+                );
+
+                return;
+            }
+
+
+            modesData[mode] = {
+
+                elo: elo,
+
+                tier: tier
+
+            };
+
         }
 
-        savePlayerButton.disabled = true;
-        savePlayerButton.textContent = "SAVING...";
 
         try {
+
+            savePlayerButton.disabled = true;
+
+            savePlayerButton.textContent =
+                "SAVING...";
+
 
             await db
                 .collection("players")
@@ -270,9 +295,7 @@ savePlayerButton.addEventListener(
 
                     username: username,
 
-                    elo: elo,
-
-                    tier: tier,
+                    modes: modesData,
 
                     updatedAt:
                         firebase.firestore
@@ -281,28 +304,31 @@ savePlayerButton.addEventListener(
 
                 });
 
+
             showAdminMessage(
-                username + " saved successfully!",
+                username +
+                " saved successfully!",
                 true
             );
 
-            await loadAdminPlayers();
+
+            loadAdminPlayers();
+
 
         } catch (error) {
 
-            console.error(
-                "Save player error:",
-                error
-            );
+            console.error(error);
 
             showAdminMessage(
-                getFirebaseError(error),
+                error.message,
                 false
             );
+
 
         } finally {
 
             savePlayerButton.disabled = false;
+
             savePlayerButton.textContent =
                 "SAVE / UPDATE PLAYER";
 
@@ -320,20 +346,16 @@ deletePlayerButton.addEventListener(
     "click",
     async () => {
 
-        if (!isAdmin) {
-
-            showAdminMessage(
-                "Access denied.",
-                false
-            );
-
+        if (!isAdmin)
             return;
-        }
 
-        const username = document
-            .getElementById("username")
-            .value
-            .trim();
+
+        const username =
+            document
+                .getElementById("username")
+                .value
+                .trim();
+
 
         if (!username) {
 
@@ -345,60 +367,49 @@ deletePlayerButton.addEventListener(
             return;
         }
 
-        const confirmed = confirm(
-            "Are you sure you want to delete " +
-            username +
-            "?"
-        );
 
-        if (!confirmed) return;
+        const confirmed =
+            confirm(
+                "Are you sure you want to delete " +
+                username +
+                "?"
+            );
 
-        deletePlayerButton.disabled = true;
-        deletePlayerButton.textContent = "DELETING...";
+
+        if (!confirmed)
+            return;
+
 
         try {
 
             await db
                 .collection("players")
-                .doc(username.toLowerCase())
+                .doc(
+                    username.toLowerCase()
+                )
                 .delete();
 
+
             showAdminMessage(
-                username + " deleted successfully.",
+                username +
+                " deleted.",
                 true
             );
 
-            document
-                .getElementById("username")
-                .value = "";
 
-            document
-                .getElementById("elo")
-                .value = "";
+            clearEditor();
 
-            document
-                .getElementById("tier")
-                .value = "UNRANKED";
+            loadAdminPlayers();
 
-            await loadAdminPlayers();
 
         } catch (error) {
 
-            console.error(
-                "Delete player error:",
-                error
-            );
+            console.error(error);
 
             showAdminMessage(
-                getFirebaseError(error),
+                error.message,
                 false
             );
-
-        } finally {
-
-            deletePlayerButton.disabled = false;
-            deletePlayerButton.textContent =
-                "DELETE PLAYER";
 
         }
 
@@ -412,119 +423,260 @@ deletePlayerButton.addEventListener(
 
 async function loadAdminPlayers() {
 
-    const list = document.getElementById(
-        "adminPlayerList"
-    );
+    const list =
+        document.getElementById(
+            "adminPlayerList"
+        );
 
-    list.innerHTML = "Loading players...";
+
+    list.innerHTML =
+        "Loading...";
+
 
     try {
 
-        const snapshot = await db
-            .collection("players")
-            .orderBy("elo", "desc")
-            .get();
+        const snapshot =
+            await db
+                .collection("players")
+                .get();
+
+
+        const players = [];
+
+
+        snapshot.forEach((doc) => {
+
+            players.push({
+                id: doc.id,
+                ...doc.data()
+            });
+
+        });
+
+
+        players.sort(
+            (a, b) => {
+
+                const aElo =
+                    getTotalElo(a);
+
+                const bElo =
+                    getTotalElo(b);
+
+                return bElo - aElo;
+
+            }
+        );
+
 
         list.innerHTML = "";
 
-        if (snapshot.empty) {
 
-            list.innerHTML = "No players yet.";
+        if (players.length === 0) {
+
+            list.innerHTML =
+                "No players yet.";
 
             return;
         }
 
-        let rank = 1;
 
-        snapshot.forEach((doc) => {
+        players.forEach(
+            (player) => {
 
-            const player = doc.data();
+                const row =
+                    document.createElement(
+                        "div"
+                    );
 
-            const row =
-                document.createElement("div");
 
-            row.className = "admin-player";
+                row.className =
+                    "admin-player";
 
-            const name =
-                document.createElement("div");
 
-            name.textContent =
-                player.username || "Unknown";
+                const name =
+                    document.createElement(
+                        "div"
+                    );
 
-            const tier =
-                document.createElement("div");
+                name.textContent =
+                    player.username ||
+                    "Unknown";
 
-            tier.textContent =
-                player.tier || "UNRANKED";
 
-            const elo =
-                document.createElement("div");
+                const total =
+                    document.createElement(
+                        "div"
+                    );
 
-            elo.textContent =
-                (player.elo || 0) + " ELO";
+                total.textContent =
+                    getTotalElo(player) +
+                    " TOTAL ELO";
 
-            const rankElement =
-                document.createElement("div");
 
-            rankElement.textContent =
-                "#" + rank;
+                row.appendChild(name);
 
-            row.appendChild(rankElement);
-            row.appendChild(name);
-            row.appendChild(tier);
-            row.appendChild(elo);
+                row.appendChild(total);
 
-            row.style.cursor = "pointer";
 
-            row.addEventListener(
-                "click",
-                () => {
+                row.style.cursor =
+                    "pointer";
 
-                    document
-                        .getElementById("username")
-                        .value =
-                        player.username || "";
 
-                    document
-                        .getElementById("elo")
-                        .value =
-                        player.elo || 0;
+                row.addEventListener(
+                    "click",
+                    () => {
 
-                    document
-                        .getElementById("tier")
-                        .value =
-                        player.tier || "UNRANKED";
+                        loadPlayerIntoEditor(
+                            player
+                        );
 
-                    window.scrollTo({
-                        top: 0,
-                        behavior: "smooth"
-                    });
+                        window.scrollTo({
+                            top: 0,
+                            behavior: "smooth"
+                        });
 
-                }
-            );
+                    }
+                );
 
-            list.appendChild(row);
 
-            rank++;
+                list.appendChild(row);
 
-        });
+            }
+        );
+
 
     } catch (error) {
 
-        console.error(
-            "Load players error:",
-            error
-        );
+        console.error(error);
 
         list.innerHTML =
             "Could not load players.";
 
     }
+
 }
 
 
 /* =========================
-   MESSAGES
+   LOAD PLAYER INTO EDITOR
+========================= */
+
+function loadPlayerIntoEditor(player) {
+
+    document
+        .getElementById("username")
+        .value =
+        player.username || "";
+
+
+    for (const mode of modes) {
+
+        const modeData =
+            player.modes &&
+            player.modes[mode]
+                ? player.modes[mode]
+                : {
+                    elo: 0,
+                    tier: "UNRANKED"
+                };
+
+
+        document
+            .getElementById(
+                mode + "-elo"
+            )
+            .value =
+            modeData.elo || 0;
+
+
+        document
+            .getElementById(
+                mode + "-tier"
+            )
+            .value =
+            modeData.tier ||
+            "UNRANKED";
+
+    }
+
+
+    showAdminMessage(
+        "Loaded " +
+        player.username +
+        ".",
+        true
+    );
+
+}
+
+
+/* =========================
+   CLEAR EDITOR
+========================= */
+
+function clearEditor() {
+
+    document
+        .getElementById("username")
+        .value = "";
+
+
+    for (const mode of modes) {
+
+        document
+            .getElementById(
+                mode + "-elo"
+            )
+            .value = 0;
+
+
+        document
+            .getElementById(
+                mode + "-tier"
+            )
+            .value =
+            "UNRANKED";
+
+    }
+
+}
+
+
+/* =========================
+   TOTAL ELO
+========================= */
+
+function getTotalElo(player) {
+
+    let total = 0;
+
+
+    for (const mode of modes) {
+
+        if (
+            player.modes &&
+            player.modes[mode]
+        ) {
+
+            total += Number(
+                player
+                    .modes[mode]
+                    .elo || 0
+            );
+
+        }
+
+    }
+
+
+    return total;
+
+}
+
+
+/* =========================
+   LOGIN MESSAGE
 ========================= */
 
 function showLoginMessage(
@@ -535,12 +687,18 @@ function showLoginMessage(
     loginMessage.textContent =
         message;
 
+
     loginMessage.className =
         success
             ? "message success"
             : "message error";
+
 }
 
+
+/* =========================
+   ADMIN MESSAGE
+========================= */
 
 function showAdminMessage(
     message,
@@ -550,44 +708,10 @@ function showAdminMessage(
     adminMessage.textContent =
         message;
 
+
     adminMessage.className =
         success
             ? "message success"
             : "message error";
-}
 
-
-/* =========================
-   FIREBASE ERRORS
-========================= */
-
-function getFirebaseError(error) {
-
-    if (!error) {
-        return "Unknown error.";
-    }
-
-    switch (error.code) {
-
-        case "auth/invalid-credential":
-            return "Invalid email or password.";
-
-        case "auth/user-not-found":
-            return "No account exists with this email.";
-
-        case "auth/wrong-password":
-            return "Incorrect password.";
-
-        case "auth/invalid-email":
-            return "Invalid email address.";
-
-        case "auth/too-many-requests":
-            return "Too many attempts. Try again later.";
-
-        case "permission-denied":
-            return "Firebase permission denied.";
-
-        default:
-            return error.message || "Something went wrong.";
-    }
 }
