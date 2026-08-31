@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>SpicyTiers — PvP Leaderboard</title>
+    <title>SpicyTiers — Minecraft PvP</title>
 
     <link rel="stylesheet" href="style.css">
 
@@ -17,8 +17,6 @@
 
 <div class="site">
 
-    <!-- TOPBAR -->
-
     <header class="topbar">
 
         <a href="index.html" class="logo">
@@ -26,170 +24,124 @@
         </a>
 
         <nav>
-            <a href="index.html" class="active">Leaderboard</a>
-            <a href="admin.html">Admin</a>
+            <a href="index.html" class="active">Home</a>
+            <a href="leaderboard.html">Leaderboard</a>
+            <a href="client.html">Client</a>
+            <a href="discord.html">Discord</a>
         </nav>
+
+        <a href="login.html" class="login-button">
+            Login
+        </a>
 
     </header>
 
 
-    <!-- HERO -->
-
     <main>
 
-        <section class="hero">
+        <section class="home-hero">
 
             <div class="hero-glow"></div>
 
             <div class="hero-content">
 
                 <div class="hero-badge">
-                    ⚡ SPICYTIERS
+                    ⚡ MINECRAFT PVP RANKING SYSTEM
                 </div>
 
                 <h1>
-                    Minecraft PvP
-                    <span>Leaderboard</span>
+                    Become the
+                    <span>best.</span>
                 </h1>
 
                 <p>
-                    Compete. Rank up. Become the best.
+                    SpicyTiers is a competitive Minecraft PvP
+                    ranking system built for players who want
+                    to compete, improve and climb the leaderboard.
                 </p>
+
+                <div class="hero-buttons">
+
+                    <a href="leaderboard.html" class="primary-button">
+                        View Leaderboard
+                    </a>
+
+                    <a href="client.html" class="secondary-button">
+                        Download Client
+                    </a>
+
+                </div>
 
             </div>
 
         </section>
 
 
-        <!-- LEADERBOARD -->
+        <section class="home-section">
 
-        <section class="leaderboard-section">
+            <div class="section-heading">
 
-            <div class="leaderboard-top">
+                <span>WHY SPICYTIERS</span>
 
-                <div>
+                <h2>
+                    Built for competitive PvP.
+                </h2>
 
-                    <div class="small-title">
-                        GLOBAL RANKINGS
+            </div>
+
+
+            <div class="feature-grid">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        🏆
                     </div>
 
-                    <h2>
-                        Leaderboard
-                    </h2>
+                    <h3>
+                        Competitive Rankings
+                    </h3>
 
-                    <p class="section-description">
-                        View the best Minecraft PvP players across every gamemode.
+                    <p>
+                        Earn ELO and climb through the
+                        SpicyTiers ranking system.
                     </p>
 
                 </div>
 
 
-                <div class="controls">
+                <div class="feature-card">
 
-                    <!-- GAMEMODE DROPDOWN -->
-
-                    <div class="mode-select">
-
-                        <div class="mode-select-label">
-                            GAMEMODE
-                        </div>
-
-                        <select id="gameModeSelect">
-
-                            <option value="sword">
-                                ⚔ Sword
-                            </option>
-
-                            <option value="axe">
-                                🪓 Axe
-                            </option>
-
-                            <option value="vanilla">
-                                ◈ Vanilla
-                            </option>
-
-                            <option value="uhc">
-                                ❤ UHC
-                            </option>
-
-                            <option value="smp">
-                                ✦ SMP
-                            </option>
-
-                            <option value="netheriteop">
-                                ◆ Netherite OP
-                            </option>
-
-                            <option value="pot">
-                                🧪 Pot
-                            </option>
-
-                            <option value="mace">
-                                ✹ Mace
-                            </option>
-
-                        </select>
-
+                    <div class="feature-icon">
+                        ⚔
                     </div>
 
+                    <h3>
+                        Multiple Gamemodes
+                    </h3>
 
-                    <!-- SEARCH -->
-
-                    <div class="search-wrapper">
-
-                        <input
-                            id="searchInput"
-                            type="text"
-                            placeholder="Search player..."
-                            autocomplete="off"
-                        >
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- LEADERBOARD CARD -->
-
-            <div class="leaderboard">
-
-                <div class="leaderboard-titlebar">
-
-                    <div>
-
-                        <span class="live-dot"></span>
-
-                        LIVE RANKINGS
-
-                    </div>
-
-                    <span id="currentModeText">
-                        SWORD
-                    </span>
+                    <p>
+                        Sword, Axe, UHC, SMP, Pot, Mace
+                        and more competitive modes.
+                    </p>
 
                 </div>
 
 
-                <div class="leaderboard-head">
+                <div class="feature-card">
 
-                    <span>#</span>
-
-                    <span>PLAYER</span>
-
-                    <span>TIER</span>
-
-                    <span>ELO</span>
-
-                </div>
-
-
-                <div id="leaderboardList">
-
-                    <div class="loading">
-                        Loading players...
+                    <div class="feature-icon">
+                        📊
                     </div>
+
+                    <h3>
+                        Player Profiles
+                    </h3>
+
+                    <p>
+                        Track your ELO, tiers and
+                        competitive progress.
+                    </p>
 
                 </div>
 
@@ -199,8 +151,6 @@
 
     </main>
 
-
-    <!-- FOOTER -->
 
     <footer>
 
@@ -215,10 +165,6 @@
     </footer>
 
 </div>
-
-
-<script src="firebase-config.js"></script>
-<script src="app.js"></script>
 
 </body>
 </html>
