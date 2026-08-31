@@ -1,26 +1,43 @@
-const loginPanel = document.getElementById("loginPanel");
-const deniedPanel = document.getElementById("deniedPanel");
-const adminPanel = document.getElementById("adminPanel");
+const loginPanel =
+    document.getElementById("loginPanel");
 
-const loginMessage = document.getElementById("loginMessage");
-const adminMessage = document.getElementById("adminMessage");
+const deniedPanel =
+    document.getElementById("deniedPanel");
 
-const loginButton = document.getElementById("loginButton");
-const logoutButton = document.getElementById("logoutButton");
-const logoutDenied = document.getElementById("logoutDenied");
+const adminPanel =
+    document.getElementById("adminPanel");
 
-const savePlayerButton = document.getElementById("savePlayer");
-const deletePlayerButton = document.getElementById("deletePlayer");
+const loginMessage =
+    document.getElementById("loginMessage");
 
-let currentUser = null;
+const adminMessage =
+    document.getElementById("adminMessage");
+
+const loginButton =
+    document.getElementById("loginButton");
+
+const logoutButton =
+    document.getElementById("logoutButton");
+
+const logoutDenied =
+    document.getElementById("logoutDenied");
+
+const savePlayerButton =
+    document.getElementById("savePlayer");
+
+const deletePlayerButton =
+    document.getElementById("deletePlayer");
+
+
 let isAdmin = false;
 
 
 /* =========================
-   GAMEMODES
+GAME MODES
 ========================= */
 
-const modes = [
+const gameModes = [
+
     "sword",
     "axe",
     "vanilla",
@@ -29,72 +46,143 @@ const modes = [
     "netheriteop",
     "pot",
     "mace"
+
 ];
 
 
 /* =========================
-   AUTH STATE
+TIERS
 ========================= */
 
-auth.onAuthStateChanged(async (user) => {
+const tiers = [
 
-    currentUser = user;
+    "UNRANKED",
 
-    loginPanel.style.display = "none";
-    deniedPanel.style.display = "none";
-    adminPanel.style.display = "none";
+    "LT5",
+    "HT5",
 
-    isAdmin = false;
+    "LT4",
+    "HT4",
 
-    if (!user) {
+    "LT3",
+    "HT3",
 
-        loginPanel.style.display = "block";
+    "LT2",
+    "HT2",
 
-        return;
-    }
+    "LT1",
+    "HT1"
 
-    try {
+];
 
-        const userDoc = await db
-            .collection("users")
-            .doc(user.uid)
-            .get();
 
-        if (
-            userDoc.exists &&
-            userDoc.data().role === "admin"
-        ) {
+/* =========================
+CREATE TIER OPTIONS
+========================= */
 
-            isAdmin = true;
+gameModes.forEach(mode => {
 
-            adminPanel.style.display = "block";
-
-            loadAdminPlayers();
-
-        } else {
-
-            deniedPanel.style.display = "block";
-
-        }
-
-    } catch (error) {
-
-        console.error(error);
-
-        loginPanel.style.display = "block";
-
-        showLoginMessage(
-            "Could not check admin permissions.",
-            false
+    const select =
+        document.getElementById(
+            mode + "Tier"
         );
 
-    }
+
+    tiers.forEach(tier => {
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+        option.value = tier;
+
+        option.textContent = tier;
+
+        select.appendChild(option);
+
+    });
 
 });
 
 
 /* =========================
-   LOGIN
+AUTH STATE
+========================= */
+
+auth.onAuthStateChanged(
+    async user => {
+
+        loginPanel.style.display =
+            "none";
+
+        deniedPanel.style.display =
+            "none";
+
+        adminPanel.style.display =
+            "none";
+
+
+        isAdmin = false;
+
+
+        if (!user) {
+
+            loginPanel.style.display =
+                "block";
+
+            return;
+        }
+
+
+        try {
+
+            const userDoc =
+                await db
+                    .collection("users")
+                    .doc(user.uid)
+                    .get();
+
+
+            if (
+                userDoc.exists &&
+                userDoc.data().role === "admin"
+            ) {
+
+                isAdmin = true;
+
+                adminPanel.style.display =
+                    "block";
+
+                loadAdminPlayers();
+
+            } else {
+
+                deniedPanel.style.display =
+                    "block";
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            loginPanel.style.display =
+                "block";
+
+            showLoginMessage(
+                "Could not check admin permissions.",
+                false
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================
+LOGIN
 ========================= */
 
 loginButton.addEventListener(
@@ -106,6 +194,7 @@ loginButton.addEventListener(
                 .getElementById("email")
                 .value
                 .trim();
+
 
         const password =
             document
@@ -124,22 +213,23 @@ loginButton.addEventListener(
         }
 
 
+        loginButton.disabled = true;
+
+        loginButton.textContent =
+            "LOGGING IN...";
+
+
         try {
 
-            loginButton.disabled = true;
-
-            loginButton.textContent =
-                "LOGGING IN...";
-
-
-            await auth.signInWithEmailAndPassword(
-                email,
-                password
-            );
+            await auth
+                .signInWithEmailAndPassword(
+                    email,
+                    password
+                );
 
 
             showLoginMessage(
-                "Logged in successfully.",
+                "Login successful.",
                 true
             );
 
@@ -149,10 +239,9 @@ loginButton.addEventListener(
             console.error(error);
 
             showLoginMessage(
-                error.message,
+                getFirebaseError(error),
                 false
             );
-
 
         } finally {
 
@@ -168,7 +257,7 @@ loginButton.addEventListener(
 
 
 /* =========================
-   LOGOUT
+LOGOUT
 ========================= */
 
 logoutButton.addEventListener(
@@ -192,7 +281,7 @@ logoutDenied.addEventListener(
 
 
 /* =========================
-   SAVE PLAYER
+SAVE PLAYER
 ========================= */
 
 savePlayerButton.addEventListener(
@@ -228,30 +317,28 @@ savePlayerButton.addEventListener(
         }
 
 
-        const modesData = {};
+        const playerData = {
+            username: username
+        };
 
 
-        for (const mode of modes) {
+        gameModes.forEach(mode => {
 
             const eloInput =
                 document.getElementById(
-                    mode + "-elo"
+                    mode + "Elo"
                 );
 
             const tierInput =
                 document.getElementById(
-                    mode + "-tier"
+                    mode + "Tier"
                 );
 
 
             const elo =
                 Number(
-                    eloInput.value || 0
+                    eloInput.value
                 );
-
-
-            const tier =
-                tierInput.value;
 
 
             if (
@@ -259,50 +346,49 @@ savePlayerButton.addEventListener(
                 elo < 0
             ) {
 
-                showAdminMessage(
-                    "Invalid ELO in " +
-                    mode.toUpperCase(),
-                    false
+                throw new Error(
+                    "Invalid ELO for " +
+                    mode.toUpperCase()
                 );
 
-                return;
             }
 
 
-            modesData[mode] = {
+            playerData[mode] = {
 
                 elo: elo,
 
-                tier: tier
+                tier:
+                    tierInput.value
 
             };
 
-        }
+        });
 
 
         try {
 
-            savePlayerButton.disabled = true;
+            savePlayerButton.disabled =
+                true;
 
             savePlayerButton.textContent =
                 "SAVING...";
 
 
+            playerData.updatedAt =
+                firebase.firestore
+                    .FieldValue
+                    .serverTimestamp();
+
+
             await db
                 .collection("players")
-                .doc(username.toLowerCase())
-                .set({
-
-                    username: username,
-
-                    modes: modesData,
-
-                    updatedAt:
-                        firebase.firestore
-                            .FieldValue
-                            .serverTimestamp()
-
-                });
+                .doc(
+                    username.toLowerCase()
+                )
+                .set(
+                    playerData
+                );
 
 
             showAdminMessage(
@@ -324,13 +410,13 @@ savePlayerButton.addEventListener(
                 false
             );
 
-
         } finally {
 
-            savePlayerButton.disabled = false;
+            savePlayerButton.disabled =
+                false;
 
             savePlayerButton.textContent =
-                "SAVE / UPDATE PLAYER";
+                "SAVE / UPDATE";
 
         }
 
@@ -339,15 +425,14 @@ savePlayerButton.addEventListener(
 
 
 /* =========================
-   DELETE PLAYER
+DELETE PLAYER
 ========================= */
 
 deletePlayerButton.addEventListener(
     "click",
     async () => {
 
-        if (!isAdmin)
-            return;
+        if (!isAdmin) return;
 
 
         const username =
@@ -360,7 +445,7 @@ deletePlayerButton.addEventListener(
         if (!username) {
 
             showAdminMessage(
-                "Enter the player's username.",
+                "Enter a player's username.",
                 false
             );
 
@@ -368,16 +453,16 @@ deletePlayerButton.addEventListener(
         }
 
 
-        const confirmed =
-            confirm(
-                "Are you sure you want to delete " +
+        if (
+            !confirm(
+                "Delete " +
                 username +
                 "?"
-            );
+            )
+        ) {
 
-
-        if (!confirmed)
             return;
+        }
 
 
         try {
@@ -418,7 +503,7 @@ deletePlayerButton.addEventListener(
 
 
 /* =========================
-   LOAD PLAYERS
+LOAD PLAYERS
 ========================= */
 
 async function loadAdminPlayers() {
@@ -444,7 +529,7 @@ async function loadAdminPlayers() {
         const players = [];
 
 
-        snapshot.forEach((doc) => {
+        snapshot.forEach(doc => {
 
             players.push({
                 id: doc.id,
@@ -458,10 +543,14 @@ async function loadAdminPlayers() {
             (a, b) => {
 
                 const aElo =
-                    getTotalElo(a);
+                    Number(
+                        a.sword?.elo || 0
+                    );
 
                 const bElo =
-                    getTotalElo(b);
+                    Number(
+                        b.sword?.elo || 0
+                    );
 
                 return bElo - aElo;
 
@@ -481,69 +570,70 @@ async function loadAdminPlayers() {
         }
 
 
-        players.forEach(
-            (player) => {
+        players.forEach(player => {
 
-                const row =
-                    document.createElement(
-                        "div"
-                    );
+            const row =
+                document.createElement(
+                    "div"
+                );
 
-
-                row.className =
-                    "admin-player";
+            row.className =
+                "admin-player";
 
 
-                const name =
-                    document.createElement(
-                        "div"
-                    );
+            const name =
+                document.createElement(
+                    "div"
+                );
 
-                name.textContent =
-                    player.username ||
-                    "Unknown";
-
-
-                const total =
-                    document.createElement(
-                        "div"
-                    );
-
-                total.textContent =
-                    getTotalElo(player) +
-                    " TOTAL ELO";
+            name.textContent =
+                player.username ||
+                "Unknown";
 
 
-                row.appendChild(name);
+            const sword =
+                document.createElement(
+                    "div"
+                );
 
-                row.appendChild(total);
-
-
-                row.style.cursor =
-                    "pointer";
-
-
-                row.addEventListener(
-                    "click",
-                    () => {
-
-                        loadPlayerIntoEditor(
-                            player
-                        );
-
-                        window.scrollTo({
-                            top: 0,
-                            behavior: "smooth"
-                        });
-
-                    }
+            sword.textContent =
+                "Sword: " +
+                (
+                    player.sword?.elo ||
+                    0
                 );
 
 
-                list.appendChild(row);
+            const tier =
+                document.createElement(
+                    "div"
+                );
 
-            }
-        );
+            tier.textContent =
+                player.sword?.tier ||
+                "UNRANKED";
+
+
+            row.appendChild(name);
+            row.appendChild(sword);
+            row.appendChild(tier);
+
+
+            row.addEventListener(
+                "click",
+                () => {
+
+                    loadPlayerIntoEditor(
+                        player
+                    );
+
+                }
+            );
+
+
+            list.appendChild(row);
+
+        });
 
 
     } catch (error) {
@@ -559,10 +649,12 @@ async function loadAdminPlayers() {
 
 
 /* =========================
-   LOAD PLAYER INTO EDITOR
+LOAD PLAYER EDITOR
 ========================= */
 
-function loadPlayerIntoEditor(player) {
+function loadPlayerIntoEditor(
+    player
+) {
 
     document
         .getElementById("username")
@@ -570,49 +662,40 @@ function loadPlayerIntoEditor(player) {
         player.username || "";
 
 
-    for (const mode of modes) {
+    gameModes.forEach(mode => {
 
-        const modeData =
-            player.modes &&
-            player.modes[mode]
-                ? player.modes[mode]
-                : {
-                    elo: 0,
-                    tier: "UNRANKED"
-                };
+        const stats =
+            player[mode] || {};
 
 
         document
             .getElementById(
-                mode + "-elo"
+                mode + "Elo"
             )
             .value =
-            modeData.elo || 0;
+            Number(stats.elo) || 0;
 
 
         document
             .getElementById(
-                mode + "-tier"
+                mode + "Tier"
             )
             .value =
-            modeData.tier ||
-            "UNRANKED";
+            stats.tier || "UNRANKED";
 
-    }
+    });
 
 
-    showAdminMessage(
-        "Loaded " +
-        player.username +
-        ".",
-        true
-    );
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 
 }
 
 
 /* =========================
-   CLEAR EDITOR
+CLEAR EDITOR
 ========================= */
 
 function clearEditor() {
@@ -622,61 +705,29 @@ function clearEditor() {
         .value = "";
 
 
-    for (const mode of modes) {
+    gameModes.forEach(mode => {
 
         document
             .getElementById(
-                mode + "-elo"
+                mode + "Elo"
             )
             .value = 0;
 
 
         document
             .getElementById(
-                mode + "-tier"
+                mode + "Tier"
             )
             .value =
             "UNRANKED";
 
-    }
+    });
 
 }
 
 
 /* =========================
-   TOTAL ELO
-========================= */
-
-function getTotalElo(player) {
-
-    let total = 0;
-
-
-    for (const mode of modes) {
-
-        if (
-            player.modes &&
-            player.modes[mode]
-        ) {
-
-            total += Number(
-                player
-                    .modes[mode]
-                    .elo || 0
-            );
-
-        }
-
-    }
-
-
-    return total;
-
-}
-
-
-/* =========================
-   LOGIN MESSAGE
+MESSAGES
 ========================= */
 
 function showLoginMessage(
@@ -696,10 +747,6 @@ function showLoginMessage(
 }
 
 
-/* =========================
-   ADMIN MESSAGE
-========================= */
-
 function showAdminMessage(
     message,
     success
@@ -713,5 +760,55 @@ function showAdminMessage(
         success
             ? "message success"
             : "message error";
+
+}
+
+
+/* =========================
+FIREBASE ERRORS
+========================= */
+
+function getFirebaseError(error) {
+
+    if (
+        error.code ===
+        "auth/invalid-credential"
+    ) {
+
+        return "Wrong email or password.";
+
+    }
+
+    if (
+        error.code ===
+        "auth/user-not-found"
+    ) {
+
+        return "Account does not exist.";
+
+    }
+
+    if (
+        error.code ===
+        "auth/wrong-password"
+    ) {
+
+        return "Wrong password.";
+
+    }
+
+    if (
+        error.code ===
+        "auth/too-many-requests"
+    ) {
+
+        return "Too many attempts. Try again later.";
+
+    }
+
+    return (
+        error.message ||
+        "Login failed."
+    );
 
 }
