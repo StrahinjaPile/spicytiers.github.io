@@ -1,582 +1,185 @@
-const loginPanel =
-document.getElementById("loginPanel");
+<!DOCTYPE html>
 
-const deniedPanel =
-document.getElementById("deniedPanel");
-
-const adminPanel =
-document.getElementById("adminPanel");
-
-const loginMessage =
-document.getElementById("loginMessage");
-
-const adminMessage =
-document.getElementById("adminMessage");
-
-const loginButton =
-document.getElementById("loginButton");
-
-const logoutButton =
-document.getElementById("logoutButton");
-
-const logoutDenied =
-document.getElementById("logoutDenied");
-
-const savePlayerButton =
-document.getElementById("savePlayer");
-
-const deletePlayerButton =
-document.getElementById("deletePlayer");
-
-let currentUser = null;
-let isAdmin = false;
-
-/* ================= AUTH STATE ================= */
-
-auth.onAuthStateChanged(async user => {
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 ```
-hideEverything();
+<title>SpicyTiers Admin</title>
 
+<link rel="stylesheet" href="style.css">
 
-currentUser = user;
-
-
-if (!user) {
-
-    loginPanel.style.display =
-        "block";
-
-    return;
-
-}
-
-
-try {
-
-    const userDoc =
-        await db
-            .collection("users")
-            .doc(user.uid)
-            .get();
-
-
-    if (
-        userDoc.exists &&
-        userDoc.data().role === "admin"
-    ) {
-
-        isAdmin = true;
-
-
-        adminPanel.style.display =
-            "block";
-
-
-        loadAdminPlayers();
-
-    }
-
-    else {
-
-        isAdmin = false;
-
-
-        deniedPanel.style.display =
-            "block";
-
-    }
-
-}
-
-catch (error) {
-
-    console.error(error);
-
-
-    showLoginMessage(
-        "Error checking account.",
-        false
-    );
-
-}
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 ```
 
-});
+</head>
 
-function hideEverything() {
+<body>
 
-```
-loginPanel.style.display =
-    "none";
-
-deniedPanel.style.display =
-    "none";
-
-adminPanel.style.display =
-    "none";
-```
-
-}
-
-/* ================= LOGIN ================= */
-
-loginButton.addEventListener(
-"click",
-async () => {
+<div class="container">
 
 ```
-    const email =
-        document
-            .getElementById("email")
-            .value
-            .trim();
+<div class="header">
+    <h1><span class="red">⚡ Spicy</span>Tiers</h1>
+    <p>Leaderboard Administration</p>
+</div>
 
 
-    const password =
-        document
-            .getElementById("password")
-            .value;
+<!-- LOGIN -->
+<div id="loginPanel" class="panel">
+
+    <h2>ADMIN LOGIN</h2>
+
+    <input
+            id="email"
+            type="email"
+            placeholder="Email"
+    >
+
+    <input
+            id="password"
+            type="password"
+            placeholder="Password"
+    >
+
+    <button id="loginButton">
+        LOGIN
+    </button>
+
+    <div id="loginMessage" class="message"></div>
+
+</div>
 
 
-    if (!email || !password) {
+<!-- ACCESS DENIED -->
+<div
+        id="deniedPanel"
+        class="panel"
+        style="display: none;"
+>
 
-        showLoginMessage(
-            "Enter email and password.",
-            false
-        );
+    <h2>ACCESS DENIED</h2>
 
-        return;
+    <p>This account is not an administrator.</p>
 
-    }
+    <button id="logoutDenied" class="gray">
+        LOGOUT
+    </button>
 
-
-    try {
-
-        await auth
-            .signInWithEmailAndPassword(
-                email,
-                password
-            );
+</div>
 
 
-        showLoginMessage(
-            "Logged in!",
-            true
-        );
+<!-- ADMIN PANEL -->
+<div
+        id="adminPanel"
+        style="display: none;"
+>
 
-    }
+    <!-- PLAYER EDITOR -->
+    <div class="panel">
 
-    catch (error) {
+        <h2>PLAYER EDITOR</h2>
 
-        console.error(error);
+        <input
+                id="username"
+                type="text"
+                placeholder="Minecraft Username"
+                maxlength="16"
+        >
+
+        <input
+                id="elo"
+                type="number"
+                min="0"
+                placeholder="ELO"
+        >
+
+        <select id="tier">
+
+            <option value="UNRANKED">UNRANKED</option>
+
+            <option value="LT5">LT5</option>
+            <option value="HT5">HT5</option>
+
+            <option value="LT4">LT4</option>
+            <option value="HT4">HT4</option>
+
+            <option value="LT3">LT3</option>
+            <option value="HT3">HT3</option>
+
+            <option value="LT2">LT2</option>
+            <option value="HT2">HT2</option>
+
+            <option value="LT1">LT1</option>
+            <option value="HT1">HT1</option>
+
+        </select>
+
+        <button id="savePlayer">
+            SAVE / UPDATE PLAYER
+        </button>
+
+        <button
+                id="deletePlayer"
+                class="danger"
+        >
+            DELETE PLAYER
+        </button>
+
+        <div
+                id="adminMessage"
+                class="message"
+        ></div>
+
+    </div>
 
 
-        showLoginMessage(
-            error.message,
-            false
-        );
+    <!-- PLAYERS -->
+    <div class="panel">
 
-    }
+        <h2>ALL PLAYERS</h2>
 
-}
+        <div id="adminPlayerList">
+            Loading...
+        </div>
+
+    </div>
+
+
+    <!-- LOGOUT -->
+    <div class="panel">
+
+        <button
+                id="logoutButton"
+                class="gray"
+        >
+            LOGOUT
+        </button>
+
+        <br>
+
+        <a href="index.html">
+            ← Back to Leaderboard
+        </a>
+
+    </div>
+
+</div>
 ```
 
-);
+</div>
 
-/* ================= LOGOUT ================= */
+<!-- FIREBASE CONFIG MORA PRVO -->
 
-logoutButton.addEventListener(
-"click",
-async () => {
+<script src="firebase-config.js"></script>
 
-```
-    await auth.signOut();
+<!-- ADMIN KOD -->
 
-}
-```
+<script src="admin.js"></script>
 
-);
-
-logoutDenied.addEventListener(
-"click",
-async () => {
-
-```
-    await auth.signOut();
-
-}
-```
-
-);
-
-/* ================= SAVE PLAYER ================= */
-
-savePlayerButton.addEventListener(
-"click",
-async () => {
-
-```
-    if (!isAdmin) {
-
-        showAdminMessage(
-            "Access denied.",
-            false
-        );
-
-        return;
-
-    }
-
-
-    const username =
-        document
-            .getElementById("username")
-            .value
-            .trim();
-
-
-    const elo =
-        Number(
-            document
-                .getElementById("elo")
-                .value
-        );
-
-
-    const tier =
-        document
-            .getElementById("tier")
-            .value;
-
-
-    if (!username) {
-
-        showAdminMessage(
-            "Enter a Minecraft username.",
-            false
-        );
-
-        return;
-
-    }
-
-
-    if (
-        !Number.isFinite(elo) ||
-        elo < 0
-    ) {
-
-        showAdminMessage(
-            "Enter a valid ELO.",
-            false
-        );
-
-        return;
-
-    }
-
-
-    try {
-
-        await db
-            .collection("players")
-            .doc(
-                username.toLowerCase()
-            )
-            .set({
-
-                username: username,
-
-                elo: elo,
-
-                tier: tier,
-
-                updatedAt:
-                    firebase.firestore.FieldValue
-                        .serverTimestamp()
-
-            });
-
-
-        showAdminMessage(
-            username + " saved!",
-            true
-        );
-
-
-        loadAdminPlayers();
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-
-        showAdminMessage(
-            error.message,
-            false
-        );
-
-    }
-
-}
-```
-
-);
-
-/* ================= DELETE PLAYER ================= */
-
-deletePlayerButton.addEventListener(
-"click",
-async () => {
-
-```
-    if (!isAdmin) return;
-
-
-    const username =
-        document
-            .getElementById("username")
-            .value
-            .trim();
-
-
-    if (!username) {
-
-        showAdminMessage(
-            "Enter the username to delete.",
-            false
-        );
-
-        return;
-
-    }
-
-
-    const confirmed =
-        confirm(
-            "Delete " +
-            username +
-            "?"
-        );
-
-
-    if (!confirmed) return;
-
-
-    try {
-
-        await db
-            .collection("players")
-            .doc(
-                username.toLowerCase()
-            )
-            .delete();
-
-
-        showAdminMessage(
-            username + " deleted!",
-            true
-        );
-
-
-        document
-            .getElementById("username")
-            .value = "";
-
-
-        document
-            .getElementById("elo")
-            .value = "";
-
-
-        loadAdminPlayers();
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-
-        showAdminMessage(
-            error.message,
-            false
-        );
-
-    }
-
-}
-```
-
-);
-
-/* ================= LOAD PLAYERS ================= */
-
-async function loadAdminPlayers() {
-
-```
-const list =
-    document.getElementById(
-        "adminPlayerList"
-    );
-
-
-try {
-
-    const snapshot =
-        await db
-            .collection("players")
-            .orderBy("elo", "desc")
-            .get();
-
-
-    list.innerHTML = "";
-
-
-    snapshot.forEach(doc => {
-
-        const player =
-            doc.data();
-
-
-        const row =
-            document.createElement("div");
-
-
-        row.className =
-            "admin-player";
-
-
-        const name =
-            document.createElement("div");
-
-        name.textContent =
-            player.username;
-
-
-        const tier =
-            document.createElement("div");
-
-        tier.textContent =
-            player.tier;
-
-
-        const elo =
-            document.createElement("div");
-
-        elo.textContent =
-            player.elo + " ELO";
-
-
-        row.appendChild(name);
-
-        row.appendChild(tier);
-
-        row.appendChild(elo);
-
-
-        row.style.cursor =
-            "pointer";
-
-
-        row.addEventListener(
-            "click",
-            () => {
-
-                document
-                    .getElementById("username")
-                    .value =
-                    player.username;
-
-
-                document
-                    .getElementById("elo")
-                    .value =
-                    player.elo;
-
-
-                document
-                    .getElementById("tier")
-                    .value =
-                    player.tier;
-
-
-                window.scrollTo({
-
-                    top: 0,
-
-                    behavior: "smooth"
-
-                });
-
-            }
-        );
-
-
-        list.appendChild(row);
-
-    });
-
-
-    if (snapshot.empty) {
-
-        list.innerHTML =
-            "No players yet.";
-
-    }
-
-}
-
-catch (error) {
-
-    console.error(error);
-
-
-    list.innerHTML =
-        "Could not load players.";
-
-}
-```
-
-}
-
-/* ================= MESSAGES ================= */
-
-function showLoginMessage(
-message,
-success
-) {
-
-```
-loginMessage.textContent =
-    message;
-
-
-loginMessage.className =
-    success
-        ? "message success"
-        : "message error";
-```
-
-}
-
-function showAdminMessage(
-message,
-success
-) {
-
-```
-adminMessage.textContent =
-    message;
-
-
-adminMessage.className =
-    success
-        ? "message success"
-        : "message error";
-```
-
-}
+</body>
+</html>
