@@ -5,25 +5,18 @@
 }
 
 :root {
-    --bg: #06070a;
-    --bg2: #0a0c11;
-    --card: #0d1016;
-    --card2: #11151d;
-
-    --border: #1c212b;
-    --border2: #292f3b;
+    --bg: #07080c;
+    --bg2: #0b0d12;
+    --card: #101219;
+    --card2: #141720;
+    --border: #222631;
 
     --text: #f5f7fb;
-    --soft: #b9bec9;
-    --muted: #707785;
+    --muted: #858b9b;
 
     --red: #ff3030;
     --red2: #ff5555;
 
-    --green: #43e46a;
-    --blue: #4b8dff;
-    --purple: #a65cff;
-    --pink: #ff4fca;
     --gold: #ffc83d;
 }
 
@@ -32,18 +25,11 @@ html {
 }
 
 body {
-    min-height: 100vh;
-
     background:
         radial-gradient(
-            circle at 50% -15%,
-            rgba(255, 40, 40, 0.15),
+            circle at 50% -10%,
+            rgba(255, 48, 48, 0.14),
             transparent 35%
-        ),
-        radial-gradient(
-            circle at 90% 30%,
-            rgba(110, 50, 255, 0.04),
-            transparent 25%
         ),
         var(--bg);
 
@@ -55,38 +41,12 @@ body {
         Helvetica,
         sans-serif;
 
-    overflow-x: hidden;
+    min-height: 100vh;
 }
 
-body::before {
-    content: "";
-
-    position: fixed;
-    inset: 0;
-
-    pointer-events: none;
-
-    background-image:
-        linear-gradient(
-            rgba(255,255,255,0.012) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,0.012) 1px,
-            transparent 1px
-        );
-
-    background-size: 80px 80px;
-
-    mask-image:
-        linear-gradient(
-            to bottom,
-            black,
-            transparent 80%
-        );
-
-    z-index: -1;
+a {
+    color: inherit;
+    text-decoration: none;
 }
 
 button,
@@ -95,234 +55,151 @@ select {
     font-family: inherit;
 }
 
-button {
-    outline: none;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-
-/* =========================================================
-   SITE
-========================================================= */
-
 .site {
     min-height: 100vh;
-
-    display: flex;
-    flex-direction: column;
 }
 
 
-/* =========================================================
-   TOPBAR
-========================================================= */
+/* =========================
+TOPBAR
+========================= */
 
 .topbar {
-    position: sticky;
-    top: 0;
-    z-index: 999;
-
     height: 76px;
+
+    padding: 0 6%;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    padding: 0 6%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 
-    background: rgba(6, 7, 10, 0.78);
+    background: rgba(7, 8, 12, 0.82);
 
-    border-bottom:
-        1px solid rgba(255,255,255,0.055);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
 
     backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-
-    gap: 9px;
-
     font-size: 21px;
-
-    font-weight: 950;
-
-    letter-spacing: -0.8px;
-
-    transition: 0.2s ease;
-}
-
-.logo:hover {
-    transform: translateY(-1px);
+    font-weight: 900;
+    letter-spacing: -0.7px;
 }
 
 .logo span {
     color: var(--red);
-
-    text-shadow:
-        0 0 18px rgba(255,48,48,0.55);
 }
 
 .topbar nav {
     display: flex;
-    align-items: center;
-
-    gap: 5px;
+    gap: 28px;
 }
 
 .topbar nav a {
-    position: relative;
+    color: #777d8d;
 
-    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 750;
 
-    border-radius: 8px;
-
-    color: #777d89;
-
-    font-size: 12px;
-
-    font-weight: 800;
-
-    transition: 0.2s ease;
+    transition: 0.2s;
 }
 
-.topbar nav a:hover {
-    color: white;
-
-    background:
-        rgba(255,255,255,0.045);
-}
-
+.topbar nav a:hover,
 .topbar nav a.active {
     color: white;
-
-    background:
-        rgba(255,48,48,0.09);
-}
-
-.topbar nav a.active::after {
-    content: "";
-
-    position: absolute;
-
-    left: 50%;
-    bottom: -1px;
-
-    width: 20px;
-    height: 2px;
-
-    transform: translateX(-50%);
-
-    border-radius: 20px;
-
-    background: var(--red);
-
-    box-shadow:
-        0 0 12px rgba(255,48,48,0.8);
 }
 
 
-/* =========================================================
-   CONNECT ACCOUNT
-========================================================= */
+/* =========================
+ACCOUNT
+========================= */
 
-.connect-account {
-    display: inline-flex;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 8px;
-
-    margin-left: 12px;
-
-    padding: 10px 15px;
-
-    border: 1px solid
-        rgba(255,55,55,0.4);
+.account-button {
+    padding: 11px 17px;
 
     border-radius: 8px;
+
+    border: 1px solid rgba(255, 55, 55, 0.35);
 
     background:
         linear-gradient(
-            180deg,
-            rgba(255,55,55,0.15),
-            rgba(255,35,35,0.07)
+            135deg,
+            rgba(255, 48, 48, 0.16),
+            rgba(255, 48, 48, 0.04)
         );
 
     color: white;
 
     font-size: 12px;
+    font-weight: 800;
 
-    font-weight: 850;
-
-    cursor: pointer;
-
-    transition: 0.2s ease;
+    transition: 0.2s;
 }
 
-.connect-account:hover {
-    border-color:
-        rgba(255,75,75,0.7);
-
-    background:
-        rgba(255,48,48,0.17);
-
+.account-button:hover {
+    border-color: var(--red);
     transform: translateY(-1px);
+}
 
-    box-shadow:
-        0 7px 25px
-        rgba(255,48,48,0.12);
+.account-user {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 6px 10px;
+
+    border: 1px solid var(--border);
+
+    background: var(--card);
+
+    border-radius: 9px;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.account-avatar {
+    width: 29px;
+    height: 29px;
+
+    border-radius: 6px;
 }
 
 
-/* =========================================================
-   HERO
-========================================================= */
+/* =========================
+HOME HERO
+========================= */
 
-.hero {
-    position: relative;
-
-    min-height: 590px;
+.home-hero {
+    min-height: 650px;
 
     display: flex;
     align-items: center;
 
-    padding:
-        100px 7%
-        90px;
+    padding: 100px 8%;
 
+    position: relative;
     overflow: hidden;
 }
 
-.hero::before {
-    content: "";
-
+.hero-glow {
     position: absolute;
 
-    width: 800px;
-    height: 800px;
+    width: 650px;
+    height: 650px;
 
     left: 50%;
-    top: -530px;
+    top: -420px;
 
     transform: translateX(-50%);
 
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,48,48,0.22),
-            rgba(255,48,48,0.05) 42%,
-            transparent 70%
-        );
+    background: rgba(255, 35, 35, 0.16);
 
-    filter: blur(25px);
+    filter: blur(130px);
 
     pointer-events: none;
 }
@@ -330,555 +207,422 @@ a {
 .hero-content {
     position: relative;
 
-    z-index: 2;
-
-    max-width: 920px;
+    max-width: 900px;
 }
 
 .hero-badge {
     display: inline-flex;
 
-    align-items: center;
+    padding: 8px 13px;
 
-    padding:
-        8px 13px;
-
-    margin-bottom: 25px;
-
-    border:
-        1px solid
-        rgba(255,65,65,0.35);
+    border: 1px solid rgba(255, 60, 60, 0.35);
 
     border-radius: 7px;
 
-    background:
-        rgba(255,45,45,0.06);
+    color: #ff6565;
 
-    color: #ff6767;
+    background: rgba(255, 40, 40, 0.08);
 
-    font-size: 9px;
+    font-size: 10px;
+    font-weight: 900;
 
-    font-weight: 950;
+    letter-spacing: 2.5px;
 
-    letter-spacing: 3px;
+    margin-bottom: 25px;
 }
 
-.hero h1 {
-    max-width: 900px;
+.hero-content h1 {
+    font-size: clamp(48px, 7vw, 88px);
 
-    font-size:
-        clamp(50px, 7vw, 92px);
+    line-height: 0.95;
 
-    line-height: 0.91;
-
-    letter-spacing: -6px;
+    letter-spacing: -5px;
 
     font-weight: 950;
 }
 
-.hero h1 span {
+.hero-content h1 span {
     color: var(--red);
-
-    text-shadow:
-        0 0 45px
-        rgba(255,48,48,0.2);
 }
 
-.hero p {
-    max-width: 680px;
+.hero-content p {
+    max-width: 650px;
+
+    color: var(--muted);
+
+    font-size: 17px;
+
+    line-height: 1.7;
 
     margin-top: 27px;
-
-    color: #858b98;
-
-    font-size: 16px;
-
-    line-height: 1.8;
 }
-
-
-/* =========================================================
-   HERO BUTTONS
-========================================================= */
 
 .hero-buttons {
     display: flex;
+    gap: 12px;
 
-    align-items: center;
-
-    gap: 10px;
-
-    margin-top: 32px;
+    margin-top: 35px;
 }
 
-.hero-button {
+
+/* =========================
+BUTTONS
+========================= */
+
+.primary-button,
+.secondary-button {
     display: inline-flex;
 
     align-items: center;
     justify-content: center;
 
-    padding:
-        13px 20px;
+    padding: 14px 21px;
 
     border-radius: 8px;
 
-    font-size: 12px;
-
+    font-size: 13px;
     font-weight: 850;
 
-    transition: 0.2s ease;
+    transition: 0.2s;
 }
 
-.hero-button.primary {
-    background:
-        linear-gradient(
-            180deg,
-            #ff4a4a,
-            #ff2929
-        );
-
+.primary-button {
+    background: var(--red);
     color: white;
 
     box-shadow:
-        0 10px 30px
-        rgba(255,48,48,0.15);
+        0 8px 30px rgba(255, 48, 48, 0.15);
 }
 
-.hero-button.primary:hover {
+.primary-button:hover {
     transform: translateY(-2px);
 
     box-shadow:
-        0 15px 35px
-        rgba(255,48,48,0.22);
+        0 12px 35px rgba(255, 48, 48, 0.25);
 }
 
-.hero-button.secondary {
-    background:
-        rgba(255,255,255,0.035);
+.secondary-button {
+    border: 1px solid var(--border);
 
-    border:
-        1px solid
-        var(--border2);
+    background: rgba(255,255,255,0.025);
 
-    color: #c6cad3;
+    color: #dfe2e9;
 }
 
-.hero-button.secondary:hover {
-    color: white;
+.secondary-button:hover {
+    background: var(--card2);
+    border-color: #343946;
+}
 
-    background:
-        rgba(255,255,255,0.06);
+.large-button {
+    width: 100%;
+    padding: 16px;
+    border: 0;
+    cursor: pointer;
 }
 
 
-/* =========================================================
-   HOME CONTENT
-========================================================= */
+/* =========================
+HOME CONTENT
+========================= */
 
-.home-content {
+.about-home {
     width: 86%;
-    max-width: 1200px;
+    max-width: 1250px;
 
     margin: auto;
 
-    padding-bottom: 100px;
+    padding: 80px 0 120px;
 }
 
-.home-card {
-    position: relative;
+.section-label {
+    color: var(--red);
 
-    padding: 32px;
+    font-size: 10px;
+    font-weight: 900;
 
-    margin-bottom: 16px;
+    letter-spacing: 2.2px;
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,0.025),
-            rgba(255,255,255,0.005)
-        ),
-        var(--card);
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius: 13px;
-
-    overflow: hidden;
-
-    transition: 0.2s ease;
+    margin-bottom: 10px;
 }
 
-.home-card:hover {
-    border-color:
-        var(--border2);
+.about-home h2 {
+    font-size: 36px;
 
-    transform: translateY(-2px);
+    letter-spacing: -1.5px;
 }
 
-.home-card h2 {
-    margin-bottom: 13px;
+.section-description {
+    max-width: 750px;
 
-    font-size: 23px;
+    margin-top: 17px;
 
-    font-weight: 950;
-
-    letter-spacing: -0.7px;
-}
-
-.home-card p {
     color: var(--muted);
 
-    font-size: 13px;
-
-    line-height: 1.9;
+    line-height: 1.7;
 }
-
-
-/* =========================================================
-   FEATURE CARDS
-========================================================= */
 
 .feature-grid {
     display: grid;
 
     grid-template-columns:
-        repeat(3, 1fr);
+        repeat(4, 1fr);
 
-    gap: 13px;
+    gap: 12px;
 
-    margin-top: 18px;
+    margin-top: 40px;
 }
 
 .feature-card {
-    position: relative;
-
-    min-height: 150px;
+    min-height: 260px;
 
     padding: 25px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(255,255,255,0.025),
-            transparent
-        ),
-        var(--card);
+            rgba(255,255,255,0.035),
+            rgba(255,255,255,0.012)
+        );
 
-    border:
-        1px solid
-        var(--border);
+    border: 1px solid var(--border);
 
     border-radius: 12px;
 
-    overflow: hidden;
-
-    transition: 0.2s ease;
+    transition: 0.25s;
 }
 
 .feature-card:hover {
+    transform: translateY(-5px);
+
+    border-color: #333744;
+
     background: var(--card2);
+}
 
-    border-color:
-        var(--border2);
+.feature-number {
+    color: #4b505d;
 
-    transform:
-        translateY(-3px);
+    font-size: 11px;
+    font-weight: 900;
+
+    margin-bottom: 45px;
 }
 
 .feature-card h3 {
-    position: relative;
-
-    margin-bottom: 9px;
-
-    font-size: 15px;
-
-    font-weight: 900;
+    font-size: 17px;
+    margin-bottom: 11px;
 }
 
 .feature-card p {
-    position: relative;
-
     color: var(--muted);
 
-    font-size: 12px;
-
-    line-height: 1.7;
+    font-size: 13px;
+    line-height: 1.65;
 }
 
-
-/* =========================================================
-   LEADERBOARD SECTION
-========================================================= */
-
-.leaderboard-section {
+.home-cta {
     width: 86%;
     max-width: 1250px;
 
-    margin: 0 auto;
+    margin: 0 auto 100px;
 
-    padding-bottom: 110px;
-}
+    padding: 35px;
 
-.section-title {
-    display: flex;
+    border: 1px solid var(--border);
 
-    align-items: flex-end;
-
-    justify-content: space-between;
-
-    gap: 20px;
-
-    margin-bottom: 22px;
-}
-
-.small-title {
-    margin-bottom: 6px;
-
-    color: var(--red);
-
-    font-size: 9px;
-
-    font-weight: 950;
-
-    letter-spacing: 3px;
-}
-
-.section-title h2 {
-    font-size: 34px;
-
-    font-weight: 950;
-
-    letter-spacing: -1.5px;
-}
-
-
-/* =========================================================
-   SEARCH
-========================================================= */
-
-.search-wrapper {
-    position: relative;
-
-    width: 290px;
-}
-
-.search-wrapper::before {
-    content: "⌕";
-
-    position: absolute;
-
-    left: 15px;
-    top: 50%;
-
-    transform:
-        translateY(-52%);
-
-    color: #737986;
-
-    font-size: 19px;
-
-    pointer-events: none;
-
-    z-index: 2;
-}
-
-.search-wrapper input {
-    width: 100%;
-
-    height: 45px;
-
-    padding:
-        0 15px 0 42px;
+    border-radius: 14px;
 
     background:
-        linear-gradient(
-            180deg,
-            #11141b,
-            #0d1016
-        );
+        radial-gradient(
+            circle at 100% 50%,
+            rgba(255,48,48,0.12),
+            transparent 35%
+        ),
+        var(--card);
 
-    border:
-        1px solid
-        var(--border2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.home-cta h2 {
+    font-size: 27px;
+}
+
+
+/* =========================
+LEADERBOARD PAGE
+========================= */
+
+.leaderboard-page {
+    width: 86%;
+    max-width: 1250px;
+
+    margin: auto;
+
+    padding: 80px 0 110px;
+}
+
+.leaderboard-title {
+    display: flex;
+
+    align-items: end;
+    justify-content: space-between;
+
+    gap: 30px;
+
+    margin-bottom: 35px;
+}
+
+.leaderboard-title h1 {
+    font-size: 43px;
+
+    letter-spacing: -2px;
+}
+
+.leaderboard-title p {
+    color: var(--muted);
+
+    margin-top: 9px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+
+    width: 270px;
+
+    padding: 0 13px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
 
     border-radius: 9px;
+}
+
+.search-box span {
+    color: #666c7b;
+
+    font-size: 22px;
+}
+
+.search-box input {
+    width: 100%;
+
+    padding: 14px 9px;
+
+    background: transparent;
+
+    border: 0;
+
+    outline: 0;
 
     color: white;
 
-    font-size: 12px;
-
-    outline: none;
-
-    transition:
-        border-color 0.2s,
-        box-shadow 0.2s,
-        background 0.2s;
+    font-size: 13px;
 }
 
-.search-wrapper input:hover {
-    background: #12151c;
-}
-
-.search-wrapper input:focus {
-    border-color:
-        rgba(255,48,48,0.55);
-
-    box-shadow:
-        0 0 0 3px
-        rgba(255,48,48,0.06);
-}
-
-.search-wrapper input::placeholder {
-    color: #626875;
+.search-box input::placeholder {
+    color: #5e6370;
 }
 
 
-/* =========================================================
-   GAME MODE SELECTOR
-========================================================= */
+/* =========================
+MODE SELECTOR
+========================= */
 
-.gamemode-tabs {
+.mode-selector {
+    display: grid;
+
+    grid-template-columns:
+        repeat(8, 1fr);
+
+    gap: 8px;
+
+    margin-bottom: 15px;
+}
+
+.mode {
+    min-height: 70px;
+
+    padding: 10px;
+
     display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
 
     align-items: center;
 
     gap: 5px;
 
-    padding: 5px;
-
-    margin-bottom: 15px;
-
-    background:
-        rgba(10,12,17,0.95);
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius: 10px;
-
-    overflow-x: auto;
-
-    scrollbar-width: none;
-}
-
-.gamemode-tabs::-webkit-scrollbar {
-    display: none;
-}
-
-.mode {
-    position: relative;
-
-    flex: 1;
-
-    min-width: 105px;
-
-    height: 40px;
-
-    padding:
-        0 15px;
-
-    border:
-        1px solid transparent;
-
-    border-radius: 7px;
-
-    background: transparent;
-
-    color: #747a87;
-
-    font-size: 11px;
-
-    font-weight: 850;
-
     cursor: pointer;
 
-    transition:
-        color 0.18s ease,
-        background 0.18s ease,
-        border-color 0.18s ease,
-        transform 0.15s ease;
+    color: #777d8d;
+
+    border: 1px solid var(--border);
+
+    background:
+        linear-gradient(
+            145deg,
+            #101219,
+            #0d0f14
+        );
+
+    border-radius: 9px;
+
+    transition: 0.2s;
+}
+
+.mode strong {
+    font-size: 17px;
+}
+
+.mode span {
+    font-size: 10px;
+    font-weight: 800;
 }
 
 .mode:hover {
-    color: #e8eaf0;
+    color: white;
 
-    background:
-        rgba(255,255,255,0.035);
-}
+    border-color: #363a47;
 
-.mode:active {
-    transform: scale(0.97);
+    transform: translateY(-2px);
 }
 
 .mode.active {
     color: white;
 
-    background:
-        linear-gradient(
-            180deg,
-            rgba(255,55,55,0.17),
-            rgba(255,45,45,0.07)
-        );
-
-    border-color:
-        rgba(255,55,55,0.4);
-
-    box-shadow:
-        inset 0 0 20px
-        rgba(255,48,48,0.025);
-}
-
-.mode.active::after {
-    content: "";
-
-    position: absolute;
-
-    left: 50%;
-    bottom: -1px;
-
-    width: 22px;
-    height: 2px;
-
-    transform:
-        translateX(-50%);
-
-    border-radius: 20px;
-
-    background: var(--red);
-
-    box-shadow:
-        0 0 10px
-        rgba(255,48,48,0.75);
-}
-
-
-/* =========================================================
-   LEADERBOARD TABLE
-========================================================= */
-
-.leaderboard {
-    overflow: hidden;
+    border-color: rgba(255, 48, 48, 0.55);
 
     background:
         linear-gradient(
             145deg,
-            rgba(255,255,255,0.012),
-            transparent
-        ),
-        var(--card);
+            rgba(255,48,48,0.16),
+            rgba(255,48,48,0.035)
+        );
 
-    border:
-        1px solid
-        var(--border);
+    box-shadow:
+        inset 0 0 25px rgba(255,48,48,0.04);
+}
+
+
+/* =========================
+LEADERBOARD
+========================= */
+
+.leaderboard-card {
+    overflow: hidden;
+
+    border: 1px solid var(--border);
 
     border-radius: 13px;
 
-    box-shadow:
-        0 25px 70px
-        rgba(0,0,0,0.18);
+    background: var(--card);
 }
 
 .leaderboard-head,
@@ -886,94 +630,57 @@ a {
     display: grid;
 
     grid-template-columns:
-        70px
-        minmax(180px, 1fr)
+        80px
+        minmax(220px, 1fr)
         180px
         130px;
 
     align-items: center;
-
-    padding:
-        0 25px;
 }
 
 .leaderboard-head {
-    min-height: 49px;
+    min-height: 51px;
 
-    background:
-        rgba(7,9,13,0.7);
+    padding: 0 25px;
 
-    border-bottom:
-        1px solid
-        var(--border);
+    background: #0c0e13;
 
-    color: #606673;
+    border-bottom: 1px solid var(--border);
 
-    font-size: 8px;
+    color: #666c79;
 
-    font-weight: 950;
+    font-size: 9px;
+    font-weight: 900;
 
-    letter-spacing: 2px;
+    letter-spacing: 1.7px;
 }
 
 .player-row {
-    min-height: 76px;
+    min-height: 78px;
 
-    border-bottom:
-        1px solid
-        #191c24;
+    padding: 0 25px;
+
+    border-bottom: 1px solid #1b1e26;
 
     cursor: pointer;
 
-    transition:
-        background 0.15s ease,
-        padding-left 0.15s ease;
+    transition: 0.16s;
 }
 
 .player-row:last-child {
-    border-bottom: none;
+    border-bottom: 0;
 }
 
 .player-row:hover {
-    background:
-        linear-gradient(
-            90deg,
-            rgba(255,48,48,0.045),
-            rgba(255,255,255,0.018)
-        );
-
-    padding-left: 29px;
+    background: #151821;
 }
-
-
-/* =========================================================
-   RANK
-========================================================= */
 
 .rank {
-    color: #696f7c;
+    color: #666c79;
 
-    font-size: 12px;
-
-    font-weight: 950;
+    font-size: 13px;
+    font-weight: 900;
 }
-
-.player-row:nth-child(1) .rank {
-    color: var(--gold);
-}
-
-.player-row:nth-child(2) .rank {
-    color: #c9ced7;
-}
-
-.player-row:nth-child(3) .rank {
-    color: #c17e4e;
-}
-
-
-/* =========================================================
-   PLAYER
-========================================================= */
 
 .player-name {
     display: flex;
@@ -982,66 +689,39 @@ a {
 
     gap: 13px;
 
-    font-size: 13px;
-
+    font-size: 14px;
     font-weight: 850;
 }
 
 .player-avatar {
-    width: 38px;
-    height: 38px;
+    width: 39px;
+    height: 39px;
 
-    display: flex;
+    border-radius: 7px;
 
-    align-items: center;
-    justify-content: center;
+    image-rendering: pixelated;
 
-    flex-shrink: 0;
+    background: #191c24;
 
-    border-radius: 8px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #272c36,
-            #11141a
-        );
-
-    border:
-        1px solid
-        #303641;
-
-    color: #e9ebef;
-
-    font-size: 12px;
-
-    font-weight: 950;
-
-    box-shadow:
-        inset 0 0 15px
-        rgba(255,255,255,0.025);
+    border: 1px solid #303440;
 }
 
 .player-tier {
-    font-size: 12px;
-
+    font-size: 13px;
     font-weight: 950;
 
-    letter-spacing: 0.4px;
+    letter-spacing: .5px;
 }
 
 .player-elo {
-    color: #d4d7de;
-
-    font-size: 12px;
-
+    font-size: 13px;
     font-weight: 850;
 }
 
 
-/* =========================================================
-   TIER COLORS
-========================================================= */
+/* =========================
+TIERS
+========================= */
 
 .tier-unranked {
     color: #777d8b;
@@ -1088,60 +768,35 @@ a {
 }
 
 
-/* =========================================================
-   LOADING
-========================================================= */
-
-.loading,
-.empty {
-    min-height: 160px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    color: #696f7c;
-
-    font-size: 12px;
-}
-
-
-/* =========================================================
-   PROFILE
-========================================================= */
+/* =========================
+PROFILE
+========================= */
 
 .profile-page {
     width: 86%;
-    max-width: 1050px;
+    max-width: 1100px;
 
-    margin:
-        70px auto
-        100px;
+    margin: auto;
+
+    padding: 80px 0 110px;
 }
 
 .profile-header {
-    position: relative;
+    padding: 38px;
 
-    padding: 35px;
+    border: 1px solid var(--border);
 
-    margin-bottom: 18px;
+    border-radius: 14px;
 
     background:
         radial-gradient(
-            circle at 90% 0%,
-            rgba(255,48,48,0.09),
+            circle at 100% 0%,
+            rgba(255,48,48,0.11),
             transparent 35%
         ),
         var(--card);
 
-    border:
-        1px solid
-        var(--border);
-
-    border-radius: 13px;
-
-    overflow: hidden;
+    margin-bottom: 35px;
 }
 
 .profile-user {
@@ -1149,432 +804,334 @@ a {
 
     align-items: center;
 
-    gap: 20px;
+    gap: 22px;
 }
 
-.profile-avatar {
-    width: 82px;
-    height: 82px;
+.profile-avatar-image {
+    width: 100px;
+    height: 100px;
 
-    display: flex;
+    border-radius: 13px;
 
-    align-items: center;
-    justify-content: center;
+    image-rendering: pixelated;
 
-    border-radius: 11px;
+    border: 1px solid #343946;
 
-    background:
-        linear-gradient(
-            145deg,
-            #292e39,
-            #11141a
-        );
+    background: #171a22;
+}
 
-    border:
-        1px solid
-        #353a46;
+.profile-label {
+    color: #6c7280;
 
-    font-size: 27px;
+    font-size: 9px;
+    font-weight: 900;
 
-    font-weight: 950;
+    letter-spacing: 2px;
+
+    margin-bottom: 7px;
 }
 
 .profile-user h1 {
-    font-size: 32px;
+    font-size: 37px;
 
-    font-weight: 950;
-
-    letter-spacing: -1.2px;
+    letter-spacing: -1.5px;
 }
 
 .profile-user p {
-    margin-top: 5px;
-
     color: var(--muted);
 
-    font-size: 12px;
+    margin-top: 7px;
+
+    font-size: 13px;
+}
+
+.stats-header {
+    margin-bottom: 15px;
+}
+
+.stats-header h2 {
+    font-size: 27px;
 }
 
 .stats-grid {
     display: grid;
 
     grid-template-columns:
-        repeat(2, 1fr);
+        repeat(4, 1fr);
 
-    gap: 12px;
+    gap: 11px;
 }
 
 .mode-card {
     padding: 22px;
 
+    min-height: 150px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 11px;
+
     background: var(--card);
 
-    border:
-        1px solid
-        var(--border);
-
-    border-radius: 10px;
-
-    transition: 0.2s ease;
+    transition: 0.2s;
 }
 
 .mode-card:hover {
+    transform: translateY(-3px);
+
     background: var(--card2);
 
-    border-color:
-        var(--border2);
-
-    transform:
-        translateY(-2px);
+    border-color: #343946;
 }
 
 .mode-name {
-    margin-bottom: 12px;
+    color: #717786;
 
-    color: #707683;
+    font-size: 10px;
+    font-weight: 900;
 
-    font-size: 9px;
+    letter-spacing: 1.4px;
 
-    font-weight: 950;
-
-    letter-spacing: 2px;
+    margin-bottom: 22px;
 }
 
 .mode-tier {
-    font-size: 22px;
-
+    font-size: 23px;
     font-weight: 950;
 }
 
 .mode-elo {
-    margin-top: 7px;
-
-    color: #999fab;
-
-    font-size: 12px;
-}
-
-
-/* =========================================================
-   ADMIN
-========================================================= */
-
-.admin-page {
-    width: 86%;
-    max-width: 1050px;
-
-    margin:
-        70px auto
-        100px;
-}
-
-.admin-title {
-    margin-bottom: 30px;
-}
-
-.admin-title h1 {
-    font-size: 43px;
-
-    font-weight: 950;
-
-    letter-spacing: -2px;
-}
-
-.admin-title p {
-    margin-top: 8px;
-
-    color: var(--muted);
+    color: #a1a5b0;
 
     font-size: 13px;
+
+    margin-top: 7px;
 }
 
-.panel {
-    padding: 28px;
 
-    margin-bottom: 18px;
+/* =========================
+CONNECT
+========================= */
+
+.connect-page {
+    min-height: 700px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 70px 20px;
+}
+
+.connect-card {
+    width: 100%;
+    max-width: 570px;
+
+    padding: 45px;
+
+    text-align: center;
 
     background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,0.018),
-            transparent
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(255,48,48,0.13),
+            transparent 40%
         ),
         var(--card);
 
-    border:
-        1px solid
-        var(--border);
+    border: 1px solid var(--border);
 
-    border-radius: 12px;
+    border-radius: 15px;
 }
 
-.panel h2 {
-    margin-bottom: 20px;
+.connect-icon {
+    width: 65px;
+    height: 65px;
 
-    font-size: 15px;
+    margin: 0 auto 25px;
 
-    font-weight: 950;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background: rgba(255,48,48,0.1);
+
+    border: 1px solid rgba(255,48,48,0.25);
+
+    color: var(--red);
+
+    font-size: 26px;
 }
 
-.form-grid {
-    display: grid;
+.connect-card h1 {
+    font-size: 38px;
 
-    grid-template-columns:
-        1fr 1fr;
+    letter-spacing: -1.5px;
 
-    gap: 14px;
+    margin-bottom: 13px;
 }
 
-.form-group {
+.connect-card > p {
+    color: var(--muted);
+
+    line-height: 1.65;
+
+    font-size: 14px;
+
+    margin-bottom: 30px;
+}
+
+.connect-info {
     display: flex;
 
     flex-direction: column;
 
-    gap: 7px;
+    gap: 9px;
+
+    margin-top: 30px;
+
+    text-align: left;
 }
 
-.form-group.full {
-    grid-column: 1 / -1;
-}
-
-.form-group label {
-    color: #707683;
-
-    font-size: 9px;
-
-    font-weight: 950;
-
-    letter-spacing: 1.5px;
-}
-
-.form-group input,
-.form-group select {
-    width: 100%;
-
+.connect-info div {
     padding: 13px;
 
-    background: #0a0c11;
+    background: #0c0e13;
 
-    border:
-        1px solid
-        var(--border);
+    border: 1px solid #1d2028;
 
-    border-radius: 7px;
+    border-radius: 8px;
 
-    color: white;
+    color: #999eab;
 
-    outline: none;
+    font-size: 12px;
 }
 
-.form-group input:focus,
-.form-group select:focus {
-    border-color:
-        rgba(255,48,48,0.55);
+.connect-info span {
+    display: inline-flex;
 
-    box-shadow:
-        0 0 0 3px
-        rgba(255,48,48,0.05);
+    width: 25px;
+
+    color: var(--red);
+
+    font-weight: 900;
 }
 
-.admin-buttons {
-    display: flex;
+.verification-code {
+    padding: 25px;
 
-    gap: 10px;
+    background: #0b0d12;
 
-    margin-top: 20px;
-}
-
-.admin-buttons button {
-    padding:
-        13px 20px;
-
-    border: 0;
-
-    border-radius: 7px;
-
-    cursor: pointer;
-
-    font-weight: 850;
-}
-
-.save-btn {
-    background: var(--red);
-
-    color: white;
-}
-
-.delete-btn {
-    background: #292d37;
-
-    color: #ff6868;
-}
-
-.gray-btn {
-    background: #242832;
-
-    color: white;
-}
-
-.admin-player {
-    display: grid;
-
-    grid-template-columns:
-        minmax(150px, 1fr)
-        150px
-        100px;
-
-    padding:
-        15px 8px;
-
-    border-bottom:
-        1px solid
-        #1c2028;
-
-    cursor: pointer;
-
-    transition: 0.15s ease;
-}
-
-.admin-player:last-child {
-    border-bottom: none;
-}
-
-.admin-player:hover {
-    background: #171a22;
-
-    padding-left: 12px;
-}
-
-
-/* =========================================================
-   LOGIN
-========================================================= */
-
-.login-box {
-    width: 100%;
-
-    max-width: 450px;
-
-    margin: 100px auto;
-}
-
-.login-box input {
-    display: block;
-
-    width: 100%;
-
-    padding: 14px;
-
-    margin-bottom: 12px;
-
-    background: #0a0c11;
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius: 7px;
-
-    color: white;
-
-    outline: none;
-}
-
-.login-box button {
-    width: 100%;
-
-    padding: 14px;
-
-    border: 0;
-
-    border-radius: 7px;
-
-    background: var(--red);
-
-    color: white;
-
-    font-weight: 850;
-
-    cursor: pointer;
-}
-
-
-/* =========================================================
-   CONTENT PAGES
-========================================================= */
-
-.content-page {
-    width: 86%;
-    max-width: 950px;
-
-    margin:
-        80px auto
-        110px;
-}
-
-.content-page h1 {
-    margin-bottom: 12px;
-
-    font-size: 45px;
-
-    font-weight: 950;
-
-    letter-spacing: -2px;
-}
-
-.content-page > p {
-    margin-bottom: 35px;
-
-    color: var(--muted);
-
-    line-height: 1.8;
-}
-
-.content-section {
-    padding: 28px;
-
-    margin-bottom: 15px;
-
-    background: var(--card);
-
-    border:
-        1px solid
-        var(--border);
+    border: 1px solid rgba(255,48,48,0.25);
 
     border-radius: 11px;
 }
 
-.content-section h2 {
-    margin-bottom: 12px;
+.code-label {
+    color: #777d8a;
 
-    font-size: 18px;
+    font-size: 9px;
 
-    font-weight: 950;
+    font-weight: 900;
+
+    letter-spacing: 1.5px;
 }
 
-.content-section p,
-.content-section li {
+.code {
+    margin: 13px 0;
+
+    color: white;
+
+    font-size: 32px;
+
+    font-weight: 950;
+
+    letter-spacing: 5px;
+}
+
+.code-status {
+    color: #ff6868;
+
+    font-size: 12px;
+
+    font-weight: 800;
+}
+
+.code-expiry {
+    margin-top: 7px;
+
+    color: #555b68;
+
+    font-size: 11px;
+}
+
+.connected-box {
+    padding: 10px 0;
+}
+
+.connected-check {
+    width: 55px;
+    height: 55px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(55,239,75,0.1);
+
+    color: #37ef4b;
+
+    font-size: 25px;
+}
+
+.connected-box h2 {
+    font-size: 27px;
+
+    margin-bottom: 8px;
+}
+
+.connected-box p {
     color: var(--muted);
 
     font-size: 13px;
 
-    line-height: 1.85;
-}
-
-.content-section ul {
-    padding-left: 20px;
+    margin-bottom: 23px;
 }
 
 
-/* =========================================================
-   FOOTER
-========================================================= */
+/* =========================
+LOADING
+========================= */
+
+.loading,
+.empty {
+    padding: 55px;
+
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+
+/* =========================
+FOOTER
+========================= */
 
 footer {
-    min-height: 105px;
+    min-height: 100px;
 
-    padding:
-        25px 7%;
+    padding: 25px 7%;
+
+    border-top: 1px solid var(--border);
 
     display: flex;
 
@@ -1582,24 +1139,13 @@ footer {
 
     justify-content: space-between;
 
-    gap: 20px;
+    color: #646a78;
 
-    border-top:
-        1px solid
-        var(--border);
-
-    background:
-        rgba(5,6,9,0.7);
-
-    color: #626875;
-
-    font-size: 11px;
+    font-size: 12px;
 }
 
-footer div {
-    color: #aeb3be;
-
-    font-size: 14px;
+.footer-brand {
+    color: #aeb3bf;
 
     font-weight: 900;
 }
@@ -1607,19 +1153,7 @@ footer div {
 .footer-links {
     display: flex;
 
-    align-items: center;
-
-    gap: 24px;
-}
-
-.footer-links a {
-    color: #686e7b;
-
-    font-size: 11px;
-
-    font-weight: 700;
-
-    transition: 0.2s;
+    gap: 22px;
 }
 
 .footer-links a:hover {
@@ -1627,187 +1161,117 @@ footer div {
 }
 
 
-/* =========================================================
-   HOME FOOTER
-========================================================= */
+/* =========================
+RESPONSIVE
+========================= */
 
-.home-footer {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 18px;
-
-    padding:
-        45px 7%;
-
-    border-top:
-        1px solid
-        var(--border);
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(10,11,15,0.8),
-            rgba(5,6,9,0.97)
-        );
-}
-
-.home-footer-top {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 20px;
-}
-
-.home-footer-brand {
-    font-size: 16px;
-
-    font-weight: 950;
-}
-
-.home-footer-brand span {
-    color: var(--red);
-}
-
-.home-footer-links {
-    display: flex;
-
-    gap: 25px;
-
-    flex-wrap: wrap;
-}
-
-.home-footer-links a {
-    color: #6d7380;
-
-    font-size: 11px;
-
-    font-weight: 750;
-
-    transition: 0.2s;
-}
-
-.home-footer-links a:hover {
-    color: white;
-}
-
-.home-footer-bottom {
-    padding-top: 18px;
-
-    border-top:
-        1px solid
-        #171a21;
-
-    color: #4d535f;
-
-    font-size: 10px;
-}
-
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
-@media (max-width: 900px) {
-
-    .topbar {
-        padding: 0 5%;
-    }
-
-    .hero {
-        padding:
-            80px 7%;
-    }
+@media (max-width: 1000px) {
 
     .feature-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            repeat(2, 1fr);
     }
 
-    .mode {
-        flex: none;
+    .mode-selector {
+        grid-template-columns:
+            repeat(4, 1fr);
     }
+
+    .stats-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
 }
-
 
 @media (max-width: 750px) {
 
     .topbar {
         height: auto;
 
-        min-height: 65px;
+        min-height: 70px;
 
-        padding:
-            11px 5%;
+        padding: 14px 5%;
 
         flex-wrap: wrap;
 
-        gap: 8px;
+        gap: 15px;
     }
 
     .topbar nav {
+        order: 3;
+
         width: 100%;
 
         overflow-x: auto;
+
+        gap: 20px;
+
+        padding-bottom: 3px;
     }
 
-    .connect-account {
-        margin-left: auto;
+    .home-hero {
+        min-height: 560px;
+
+        padding: 80px 7%;
     }
 
-    .hero {
-        min-height: 470px;
-
-        padding:
-            65px 7%;
-    }
-
-    .hero h1 {
-        font-size:
-            clamp(44px, 12vw, 68px);
-
+    .hero-content h1 {
         letter-spacing: -3px;
     }
 
-    .hero p {
-        font-size: 14px;
-    }
-
     .hero-buttons {
-        flex-wrap: wrap;
+        flex-direction: column;
     }
 
-    .leaderboard-section {
+    .about-home,
+    .leaderboard-page,
+    .profile-page {
         width: 92%;
     }
 
-    .section-title {
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .home-cta {
+        width: 92%;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 25px;
+    }
+
+    .leaderboard-title {
         flex-direction: column;
 
         align-items: stretch;
     }
 
-    .search-wrapper {
+    .search-box {
         width: 100%;
+    }
+
+    .mode-selector {
+        grid-template-columns:
+            repeat(2, 1fr);
     }
 
     .leaderboard-head,
     .player-row {
         grid-template-columns:
-            40px
-            minmax(130px, 1fr)
+            45px
+            minmax(140px, 1fr)
             90px
             80px;
 
-        padding:
-            0 12px;
+        padding: 0 13px;
     }
 
-    .player-row {
-        min-height: 68px;
+    .player-name {
+        font-size: 12px;
     }
 
     .player-avatar {
@@ -1815,152 +1279,44 @@ footer div {
         height: 32px;
     }
 
-    .player-name {
-        gap: 9px;
-
-        font-size: 11px;
-    }
-
-    .player-tier,
-    .player-elo {
-        font-size: 10px;
-    }
-
-    .gamemode-tabs {
-        padding: 4px;
-    }
-
-    .mode {
-        min-width: 88px;
-
-        height: 38px;
-
-        padding:
-            0 10px;
-
-        font-size: 10px;
+    .leaderboard-head {
+        font-size: 8px;
     }
 
     .stats-grid {
         grid-template-columns: 1fr;
     }
 
-    .form-grid {
-        grid-template-columns: 1fr;
+    .profile-user {
+        align-items: flex-start;
+
+        flex-direction: column;
     }
 
-    .form-group.full {
-        grid-column: auto;
+    .connect-card {
+        padding: 30px 20px;
     }
 
-    .admin-player {
-        grid-template-columns:
-            1fr 90px 80px;
+    .connect-card h1 {
+        font-size: 30px;
     }
 
-    .profile-page {
-        width: 92%;
+    .code {
+        font-size: 24px;
 
-        margin-top: 45px;
-    }
-
-    .profile-user h1 {
-        font-size: 26px;
+        letter-spacing: 3px;
     }
 
     footer {
-        padding:
-            25px 7%;
-
         flex-direction: column;
 
         align-items: flex-start;
+
+        gap: 15px;
     }
 
-    .home-footer-top {
-        flex-direction: column;
-
-        align-items: flex-start;
-    }
-}
-
-
-@media (max-width: 500px) {
-
-    .logo {
-        font-size: 18px;
+    .footer-links {
+        flex-wrap: wrap;
     }
 
-    .topbar nav a {
-        font-size: 11px;
-
-        padding:
-            8px 9px;
-    }
-
-    .connect-account {
-        padding:
-            8px 11px;
-
-        font-size: 10px;
-    }
-
-    .hero {
-        padding:
-            55px 7%;
-    }
-
-    .hero h1 {
-        font-size: 44px;
-
-        letter-spacing: -2.5px;
-    }
-
-    .section-title h2 {
-        font-size: 27px;
-    }
-
-    .leaderboard-head,
-    .player-row {
-        grid-template-columns:
-            32px
-            minmax(110px, 1fr)
-            65px
-            65px;
-
-        padding:
-            0 9px;
-    }
-
-    .player-avatar {
-        display: none;
-    }
-
-    .player-name {
-        gap: 0;
-    }
-
-    .player-tier,
-    .player-elo {
-        font-size: 9px;
-    }
-
-    .profile-header {
-        padding: 24px;
-    }
-
-    .profile-avatar {
-        width: 64px;
-        height: 64px;
-
-        font-size: 21px;
-    }
-
-    .profile-user {
-        gap: 13px;
-    }
-
-    .profile-user h1 {
-        font-size: 22px;
-    }
 }
