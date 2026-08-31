@@ -1,31 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>SpicyTiers Admin</title>
 
     <link rel="stylesheet" href="style.css">
 
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
 </head>
 
 <body>
 
 <div class="container">
 
+    <!-- HEADER -->
+
     <div class="header">
+
         <h1>
             <span class="red">⚡ Spicy</span>Tiers
         </h1>
 
-        <p>Leaderboard Administration</p>
+        <p>
+            Leaderboard Administration
+        </p>
+
     </div>
 
-    <div id="loginPanel" class="panel">
+
+    <!-- LOGIN -->
+
+    <div
+        id="loginPanel"
+        class="panel"
+    >
 
         <h2>ADMIN LOGIN</h2>
 
@@ -33,42 +53,60 @@
             id="email"
             type="email"
             placeholder="Email"
+            autocomplete="email"
         >
 
         <input
             id="password"
             type="password"
             placeholder="Password"
+            autocomplete="current-password"
         >
 
         <button id="loginButton">
             LOGIN
         </button>
 
-        <div id="loginMessage" class="message"></div>
+        <div
+            id="loginMessage"
+            class="message"
+        ></div>
 
     </div>
+
+
+    <!-- ACCESS DENIED -->
 
     <div
         id="deniedPanel"
         class="panel"
-        style="display: none;"
+        style="display:none;"
     >
 
         <h2>ACCESS DENIED</h2>
 
-        <p>This account is not an administrator.</p>
+        <p>
+            This account is not an administrator.
+        </p>
 
-        <button id="logoutDenied" class="gray">
+        <button
+            id="logoutDenied"
+            class="gray"
+        >
             LOGOUT
         </button>
 
     </div>
 
+
+    <!-- ADMIN PANEL -->
+
     <div
         id="adminPanel"
-        style="display: none;"
+        style="display:none;"
     >
+
+        <!-- PLAYER EDITOR -->
 
         <div class="panel">
 
@@ -89,22 +127,58 @@
             >
 
             <select id="tier">
-                <option value="UNRANKED">UNRANKED</option>
-                <option value="LT5">LT5</option>
-                <option value="HT5">HT5</option>
-                <option value="LT4">LT4</option>
-                <option value="HT4">HT4</option>
-                <option value="LT3">LT3</option>
-                <option value="HT3">HT3</option>
-                <option value="LT2">LT2</option>
-                <option value="HT2">HT2</option>
-                <option value="LT1">LT1</option>
-                <option value="HT1">HT1</option>
+
+                <option value="UNRANKED">
+                    UNRANKED
+                </option>
+
+                <option value="LT5">
+                    LT5
+                </option>
+
+                <option value="HT5">
+                    HT5
+                </option>
+
+                <option value="LT4">
+                    LT4
+                </option>
+
+                <option value="HT4">
+                    HT4
+                </option>
+
+                <option value="LT3">
+                    LT3
+                </option>
+
+                <option value="HT3">
+                    HT3
+                </option>
+
+                <option value="LT2">
+                    LT2
+                </option>
+
+                <option value="HT2">
+                    HT2
+                </option>
+
+                <option value="LT1">
+                    LT1
+                </option>
+
+                <option value="HT1">
+                    HT1
+                </option>
+
             </select>
+
 
             <button id="savePlayer">
                 SAVE / UPDATE PLAYER
             </button>
+
 
             <button
                 id="deletePlayer"
@@ -113,12 +187,16 @@
                 DELETE PLAYER
             </button>
 
+
             <div
                 id="adminMessage"
                 class="message"
             ></div>
 
         </div>
+
+
+        <!-- ALL PLAYERS -->
 
         <div class="panel">
 
@@ -130,6 +208,9 @@
 
         </div>
 
+
+        <!-- LOGOUT -->
+
         <div class="panel">
 
             <button
@@ -139,7 +220,8 @@
                 LOGOUT
             </button>
 
-            <br><br>
+            <br>
+            <br>
 
             <a href="index.html">
                 ← Back to Leaderboard
@@ -151,8 +233,13 @@
 
 </div>
 
+
+<!-- Firebase config MUST come before admin.js -->
+
 <script src="firebase-config.js"></script>
+
 <script src="admin.js"></script>
 
 </body>
+
 </html>
