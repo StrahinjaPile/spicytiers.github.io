@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Connect Minecraft — SpicyTiers</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+</head>
+
+<body>
+
+<div class="site">
+
+<header class="topbar">
+
+    <a href="index.html" class="logo">
+        <span>⚡</span> SpicyTiers
+    </a>
+
+    <nav>
+
+        <a href="index.html">Home</a>
+        <a href="leaderboard.html">Leaderboard</a>
+        <a href="rules.html">Rules</a>
+        <a href="connect.html" class="active">Connect</a>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+<section class="connect-page">
+
+    <div class="connect-card">
+
+        <div class="connect-icon">
+            ⚡
+        </div>
+
+        <div class="section-label">
+            MINECRAFT ACCOUNT
+        </div>
+
+        <h1>
+            Connect your account.
+        </h1>
+
+        <p>
+            Connect your Minecraft account to access your
+            SpicyTiers profile, ELO and competitive statistics.
+        </p>
+
+
+        <div id="connectState">
+
+            <button
+                id="generateCode"
+                class="primary-button large-button"
+            >
+                Connect Minecraft Account
+            </button>
+
+        </div>
+
+
+        <div class="connect-info">
+
+            <div>
+                <span>01</span>
+                Open SpicyTiers Client
+            </div>
+
+            <div>
+                <span>02</span>
+                Enter the verification code
+            </div>
+
+            <div>
+                <span>03</span>
+                Your Minecraft account is linked
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <div class="footer-brand">
+        ⚡ SpicyTiers
+    </div>
+
+    <div class="footer-links">
+        <a href="faq.html">FAQ</a>
+        <a href="about.html">About Us</a>
+        <a href="rules.html">Rules</a>
+        <a href="terms.html">Terms Of Service</a>
+    </div>
+
+</footer>
+
+</div>
+
+
+<script src="firebase-config.js"></script>
+<script src="connect.js"></script>
+
+</body>
+</html>
