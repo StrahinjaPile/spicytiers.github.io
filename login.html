@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Login — SpicyTiers</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SpicyTiers — Login</title>
 
     <link rel="stylesheet" href="style.css">
-
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 </head>
 
@@ -26,32 +25,12 @@
         <span>⚡</span> SpicyTiers
     </a>
 
-    <nav>
-
-        <a href="index.html">
-            Home
-        </a>
-
-        <a href="leaderboard.html">
-            Leaderboard
-        </a>
-
-        <a href="client.html">
-            Client
-        </a>
-
-        <a href="discord.html">
-            Discord
-        </a>
-
-    </nav>
-
 </header>
 
 
 <main>
 
-<div class="login-page">
+<section class="login-page">
 
     <div class="login-card">
 
@@ -64,34 +43,46 @@
         </h1>
 
         <p>
-            Login to connect your Minecraft account,
-            view your stats and manage your profile.
+            Sign in to manage your SpicyTiers account.
         </p>
 
-        <button
-            id="googleLogin"
-            class="google-button"
-        >
+
+        <button class="google-login">
+
             <span>G</span>
+
             Continue with Google
+
         </button>
 
-        <div
-            id="loginMessage"
-            class="message"
-        ></div>
+
+        <div class="login-divider">
+            <span>OR</span>
+        </div>
+
+
+        <button class="secondary-button">
+
+            Connect Minecraft Account
+
+        </button>
+
+
+        <div class="login-info">
+
+            Minecraft account connection will allow
+            your profile, ELO and tiers to be linked
+            to your Minecraft UUID.
+
+        </div>
 
     </div>
 
-</div>
+</section>
 
 </main>
 
 </div>
-
-
-<script src="firebase-config.js"></script>
-<script src="login.js"></script>
 
 </body>
 </html>
