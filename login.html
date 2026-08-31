@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login — SpicyTiers</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+</head>
+
+<body>
+
+<div class="site">
+
+<header class="topbar">
+
+    <a href="index.html" class="logo">
+        <span>⚡</span> SpicyTiers
+    </a>
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="leaderboard.html">
+            Leaderboard
+        </a>
+
+        <a href="client.html">
+            Client
+        </a>
+
+        <a href="discord.html">
+            Discord
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+<div class="login-page">
+
+    <div class="login-card">
+
+        <div class="hero-badge">
+            SPICYTIERS ACCOUNT
+        </div>
+
+        <h1>
+            Welcome back.
+        </h1>
+
+        <p>
+            Login to connect your Minecraft account,
+            view your stats and manage your profile.
+        </p>
+
+        <button
+            id="googleLogin"
+            class="google-button"
+        >
+            <span>G</span>
+            Continue with Google
+        </button>
+
+        <div
+            id="loginMessage"
+            class="message"
+        ></div>
+
+    </div>
+
+</div>
+
+</main>
+
+</div>
+
+
+<script src="firebase-config.js"></script>
+<script src="login.js"></script>
+
+</body>
+</html>
