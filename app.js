@@ -7,6 +7,12 @@ const leaderboardList =
 const searchInput =
     document.getElementById("searchInput");
 
+const gameModeSelect =
+    document.getElementById("gameModeSelect");
+
+const currentModeText =
+    document.getElementById("currentModeText");
+
 
 /* =========================
 LOAD PLAYERS
@@ -45,65 +51,13 @@ async function loadPlayers() {
 
         leaderboardList.innerHTML =
             '<div class="empty">Could not load leaderboard.</div>';
+
     }
 }
 
 
 /* =========================
-GET PLAYER STATS
-========================= */
-
-function getPlayerStats(player) {
-
-    /*
-        Ako Firebase ima:
-
-        sword: {
-            elo: 1200,
-            tier: "LT4"
-        }
-
-        koristi podatke za izabrani gamemode.
-    */
-
-    if (
-        player[currentMode] &&
-        typeof player[currentMode] === "object"
-    ) {
-
-        return {
-
-            elo:
-                Number(player[currentMode].elo) || 0,
-
-            tier:
-                player[currentMode].tier || "UNRANKED"
-
-        };
-
-    }
-
-
-    /*
-        Ako player još nema gamemode podatke,
-        koristimo stare elo/tier vrednosti
-        koje admin trenutno upisuje.
-    */
-
-    return {
-
-        elo:
-            Number(player.elo) || 0,
-
-        tier:
-            player.tier || "UNRANKED"
-
-    };
-}
-
-
-/* =========================
-RENDER LEADERBOARD
+RENDER
 ========================= */
 
 function renderLeaderboard() {
@@ -129,28 +83,23 @@ function renderLeaderboard() {
             .map(player => {
 
                 const stats =
-                    getPlayerStats(player);
+                    player[currentMode] || {};
 
                 return {
-
                     ...player,
 
-                    elo: stats.elo,
+                    elo:
+                        Number(stats.elo) || 0,
 
-                    tier: stats.tier
+                    tier:
+                        stats.tier || "UNRANKED"
 
                 };
 
             });
 
 
-    /*
-        Najveći ELO ide prvi.
-    */
-
-    players.sort(
-        (a, b) => b.elo - a.elo
-    );
+    players.sort((a, b) => b.elo - a.elo);
 
 
     leaderboardList.innerHTML = "";
@@ -170,27 +119,25 @@ function renderLeaderboard() {
         const row =
             document.createElement("div");
 
-        row.className =
-            "player-row";
+        row.className = "player-row";
 
 
-        /* =========================
-        RANK
-        ========================= */
+        /* RANK */
 
         const rank =
             document.createElement("div");
 
-        rank.className =
-            "rank";
+        rank.className = "rank";
+
+        if (index === 0) {
+            rank.classList.add("rank-first");
+        }
 
         rank.textContent =
             "#" + (index + 1);
 
 
-        /* =========================
-        PLAYER NAME
-        ========================= */
+        /* PLAYER */
 
         const name =
             document.createElement("div");
@@ -222,9 +169,7 @@ function renderLeaderboard() {
         name.appendChild(username);
 
 
-        /* =========================
-        TIER
-        ========================= */
+        /* TIER */
 
         const tier =
             document.createElement("div");
@@ -237,9 +182,7 @@ function renderLeaderboard() {
             player.tier;
 
 
-        /* =========================
-        ELO
-        ========================= */
+        /* ELO */
 
         const elo =
             document.createElement("div");
@@ -251,19 +194,13 @@ function renderLeaderboard() {
             player.elo + " ELO";
 
 
-        /* =========================
-        ADD TO ROW
-        ========================= */
-
         row.appendChild(rank);
         row.appendChild(name);
         row.appendChild(tier);
         row.appendChild(elo);
 
 
-        /* =========================
-        CLICK PLAYER
-        ========================= */
+        /* PLAYER PROFILE */
 
         row.addEventListener(
             "click",
@@ -271,9 +208,7 @@ function renderLeaderboard() {
 
                 window.location.href =
                     "player.html?player=" +
-                    encodeURIComponent(
-                        player.id
-                    );
+                    encodeURIComponent(player.id);
 
             }
         );
@@ -282,6 +217,7 @@ function renderLeaderboard() {
         leaderboardList.appendChild(row);
 
     });
+
 }
 
 
@@ -292,58 +228,43 @@ TIER CLASS
 function getTierClass(tier) {
 
     if (!tier) {
-
         return "tier-unranked";
-
     }
 
     return (
         "tier-" +
         tier
             .toLowerCase()
-            .replace(/\s+/g, "-")
+            .replace(" ", "-")
     );
+
 }
 
 
 /* =========================
-GAME MODE BUTTONS
+GAME MODE DROPDOWN
 ========================= */
 
-document
-    .querySelectorAll(".mode")
-    .forEach(button => {
+gameModeSelect.addEventListener(
+    "change",
+    () => {
 
-        button.addEventListener(
-            "click",
-            () => {
-
-                document
-                    .querySelectorAll(".mode")
-                    .forEach(btn => {
-
-                        btn.classList.remove(
-                            "active"
-                        );
-
-                    });
+        currentMode =
+            gameModeSelect.value;
 
 
-                button.classList.add(
-                    "active"
-                );
+        currentModeText.textContent =
+            gameModeSelect.options[
+                gameModeSelect.selectedIndex
+            ].text
+            .replace(/^[^\w]+/, "")
+            .toUpperCase();
 
 
-                currentMode =
-                    button.dataset.mode;
+        renderLeaderboard();
 
-
-                renderLeaderboard();
-
-            }
-        );
-
-    });
+    }
+);
 
 
 /* =========================
