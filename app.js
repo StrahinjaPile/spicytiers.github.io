@@ -1,96 +1,37 @@
-const modes = {
-
-    sword: {
-        name: "⚔ Sword",
-        short: "SWORD"
-    },
-
-    axe: {
-        name: "🪓 Axe",
-        short: "AXE"
-    },
-
-    vanilla: {
-        name: "🟫 Vanilla",
-        short: "VANILLA"
-    },
-
-    uhc: {
-        name: "❤️ UHC",
-        short: "UHC"
-    },
-
-    smp: {
-        name: "🌍 SMP",
-        short: "SMP"
-    },
-
-    netheriteop: {
-        name: "💎 Netherite OP",
-        short: "NETHERITE OP"
-    },
-
-    pot: {
-        name: "🧪 Pot",
-        short: "POT"
-    },
-
-    mace: {
-        name: "🔨 Mace",
-        short: "MACE"
-    }
-
-};
+let currentMode = "sword";
+let allPlayers = [];
 
 
-let players = [];
-let selectedMode = "sword";
+const leaderboardList =
+    document.getElementById("leaderboardList");
 
-
-const modeSelect =
-    document.getElementById("modeSelect");
-
-const leaderboardRows =
-    document.getElementById("leaderboardRows");
-
-const playerCount =
-    document.getElementById("playerCount");
-
-const topElo =
-    document.getElementById("topElo");
-
-const modeTitle =
-    document.getElementById("modeTitle");
-
-const statMode =
-    document.getElementById("statMode");
+const searchInput =
+    document.getElementById("searchInput");
 
 
 /* =========================
-   LOAD PLAYERS
+LOAD PLAYERS
 ========================= */
 
 async function loadPlayers() {
 
-    leaderboardRows.innerHTML = `
-        <div class="loading">
-            Loading leaderboard...
-        </div>
-    `;
+    leaderboardList.innerHTML =
+        '<div class="loading">Loading players...</div>';
 
     try {
 
-        const snapshot = await db
-            .collection("players")
-            .get();
+        const snapshot =
+            await db
+                .collection("players")
+                .get();
 
-        players = [];
+        allPlayers = [];
 
-        snapshot.forEach(doc => {
+        snapshot.forEach((doc) => {
 
             const data = doc.data();
 
-            players.push({
+            allPlayers.push({
                 id: doc.id,
                 ...data
             });
@@ -101,425 +42,229 @@ async function loadPlayers() {
 
     } catch (error) {
 
-        console.error(
-            "Leaderboard error:",
-            error
-        );
+        console.error(error);
 
-        leaderboardRows.innerHTML = `
-            <div class="loading error">
-                Could not load leaderboard.
-            </div>
-        `;
-
+        leaderboardList.innerHTML =
+            '<div class="empty">Could not load leaderboard.</div>';
     }
-
 }
 
 
 /* =========================
-   RENDER LEADERBOARD
+RENDER
 ========================= */
 
 function renderLeaderboard() {
 
-    const sorted = players
-        .filter(player => {
-
-            return player.modes &&
-                   player.modes[selectedMode];
-
-        })
-        .sort((a, b) => {
-
-            const eloA =
-                Number(
-                    a.modes[selectedMode].elo || 0
-                );
-
-            const eloB =
-                Number(
-                    b.modes[selectedMode].elo || 0
-                );
-
-            return eloB - eloA;
-
-        });
+    const search =
+        searchInput.value
+            .trim()
+            .toLowerCase();
 
 
-    playerCount.textContent =
-        sorted.length;
+    let players =
+        allPlayers
+            .filter(player => {
+
+                const username =
+                    player.username || "";
+
+                return username
+                    .toLowerCase()
+                    .includes(search);
+
+            })
+            .map(player => {
+
+                const stats =
+                    player[currentMode] || {};
+
+                return {
+                    ...player,
+
+                    elo:
+                        Number(stats.elo) || 0,
+
+                    tier:
+                        stats.tier || "UNRANKED"
+                };
+
+            });
 
 
-    topElo.textContent =
-        sorted.length > 0
-            ? Number(
-                sorted[0]
-                    .modes[selectedMode]
-                    .elo || 0
-              ).toLocaleString()
-            : "0";
+    players.sort((a, b) => b.elo - a.elo);
 
 
-    modeTitle.textContent =
-        modes[selectedMode].name;
+    leaderboardList.innerHTML = "";
 
 
-    statMode.textContent =
-        modes[selectedMode].short;
+    if (players.length === 0) {
 
-
-    if (sorted.length === 0) {
-
-        leaderboardRows.innerHTML = `
-            <div class="empty">
-                No players have been ranked in this gamemode yet.
-            </div>
-        `;
+        leaderboardList.innerHTML =
+            '<div class="empty">No players found.</div>';
 
         return;
     }
 
 
-    leaderboardRows.innerHTML = "";
-
-
-    sorted.forEach((player, index) => {
-
-        const mode =
-            player.modes[selectedMode];
-
-        const elo =
-            Number(mode.elo || 0);
-
-        const tier =
-            mode.tier || "UNRANKED";
-
+    players.forEach((player, index) => {
 
         const row =
             document.createElement("div");
 
-        row.className =
-            "leaderboard-row";
+        row.className = "player-row";
 
 
-        if (index === 0)
-            row.classList.add("first");
+        const rank =
+            document.createElement("div");
 
-        if (index === 1)
-            row.classList.add("second");
+        rank.className = "rank";
 
-        if (index === 2)
-            row.classList.add("third");
+        rank.textContent =
+            "#" + (index + 1);
 
 
-        row.innerHTML = `
+        const name =
+            document.createElement("div");
 
-            <div class="rank">
-                ${getRank(index)}
-            </div>
+        name.className = "player-name";
 
-            <div class="player">
 
-                <div class="player-avatar">
-                    ${escapeHTML(
-                        (player.username || "?")
-                            .charAt(0)
-                            .toUpperCase()
-                    )}
-                </div>
+        const avatar =
+            document.createElement("div");
 
-                <div>
+        avatar.className =
+            "player-avatar";
 
-                    <strong>
-                        ${escapeHTML(
-                            player.username || "Unknown"
-                        )}
-                    </strong>
+        avatar.textContent =
+            (player.username || "?")
+                .charAt(0)
+                .toUpperCase();
 
-                    <small>
-                        SpicyTiers Player
-                    </small>
 
-                </div>
+        const username =
+            document.createElement("span");
 
-            </div>
+        username.textContent =
+            player.username || "Unknown";
 
-            <div class="tier">
-                ${escapeHTML(tier)}
-            </div>
 
-            <div class="elo">
-                ${elo.toLocaleString()}
-            </div>
+        name.appendChild(avatar);
+        name.appendChild(username);
 
-        `;
+
+        const tier =
+            document.createElement("div");
+
+        tier.className =
+            "player-tier " +
+            getTierClass(player.tier);
+
+        tier.textContent =
+            player.tier;
+
+
+        const elo =
+            document.createElement("div");
+
+        elo.className =
+            "player-elo";
+
+        elo.textContent =
+            player.elo + " ELO";
+
+
+        row.appendChild(rank);
+        row.appendChild(name);
+        row.appendChild(tier);
+        row.appendChild(elo);
 
 
         row.addEventListener(
             "click",
             () => {
 
-                openPlayer(
-                    player
-                );
+                window.location.href =
+                    "player.html?player=" +
+                    encodeURIComponent(
+                        player.id
+                    );
 
             }
         );
 
 
-        leaderboardRows.appendChild(row);
+        leaderboardList.appendChild(row);
+
+    });
+}
+
+
+/* =========================
+TIER CLASS
+========================= */
+
+function getTierClass(tier) {
+
+    if (!tier) {
+        return "tier-unranked";
+    }
+
+    return (
+        "tier-" +
+        tier
+            .toLowerCase()
+            .replace(" ", "-")
+    );
+}
+
+
+/* =========================
+GAME MODE BUTTONS
+========================= */
+
+document
+    .querySelectorAll(".mode")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelectorAll(".mode")
+                    .forEach(btn =>
+                        btn.classList.remove("active")
+                    );
+
+
+                button.classList.add("active");
+
+
+                currentMode =
+                    button.dataset.mode;
+
+
+                renderLeaderboard();
+
+            }
+        );
 
     });
 
-}
-
 
 /* =========================
-   RANK
+SEARCH
 ========================= */
 
-function getRank(index) {
-
-    if (index === 0)
-        return "🥇";
-
-    if (index === 1)
-        return "🥈";
-
-    if (index === 2)
-        return "🥉";
-
-    return "#" + (index + 1);
-
-}
-
-
-/* =========================
-   MODE CHANGE
-========================= */
-
-modeSelect.addEventListener(
-    "change",
-    () => {
-
-        selectedMode =
-            modeSelect.value;
-
-        renderLeaderboard();
-
-    }
+searchInput.addEventListener(
+    "input",
+    renderLeaderboard
 );
 
 
 /* =========================
-   PLAYER MODAL
-========================= */
-
-const playerModal =
-    document.getElementById("playerModal");
-
-const modalBackground =
-    document.getElementById("modalBackground");
-
-const modalClose =
-    document.getElementById("modalClose");
-
-
-function openPlayer(player) {
-
-    const mode =
-        player.modes &&
-        player.modes[selectedMode]
-            ? player.modes[selectedMode]
-            : {
-                elo: 0,
-                tier: "UNRANKED"
-            };
-
-
-    document.getElementById(
-        "modalPlayerName"
-    ).textContent =
-        player.username || "Unknown";
-
-
-    document.getElementById(
-        "modalPlayerSubtitle"
-    ).textContent =
-        "SpicyTiers Player";
-
-
-    document.getElementById(
-        "modalModeName"
-    ).textContent =
-        modes[selectedMode].name;
-
-
-    document.getElementById(
-        "modalTier"
-    ).textContent =
-        mode.tier || "UNRANKED";
-
-
-    document.getElementById(
-        "modalElo"
-    ).textContent =
-        Number(
-            mode.elo || 0
-        ).toLocaleString();
-
-
-    renderAllModes(player);
-
-
-    playerModal.classList.add("open");
-
-    document.body.classList.add(
-        "modal-open"
-    );
-
-}
-
-
-function closePlayer() {
-
-    playerModal.classList.remove(
-        "open"
-    );
-
-    document.body.classList.remove(
-        "modal-open"
-    );
-
-}
-
-
-modalClose.addEventListener(
-    "click",
-    closePlayer
-);
-
-
-modalBackground.addEventListener(
-    "click",
-    closePlayer
-);
-
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            event.key === "Escape" &&
-            playerModal.classList.contains("open")
-        ) {
-
-            closePlayer();
-
-        }
-
-    }
-);
-
-
-/* =========================
-   ALL MODES IN MODAL
-========================= */
-
-function renderAllModes(player) {
-
-    const container =
-        document.getElementById(
-            "modalModes"
-        );
-
-    container.innerHTML = "";
-
-
-    Object.entries(modes)
-        .forEach(([key, info]) => {
-
-            const mode =
-                player.modes &&
-                player.modes[key]
-                    ? player.modes[key]
-                    : {
-                        elo: 0,
-                        tier: "UNRANKED"
-                    };
-
-
-            const card =
-                document.createElement("div");
-
-            card.className =
-                "mode-row";
-
-
-            card.innerHTML = `
-
-                <div class="mode-row-name">
-                    ${info.name}
-                </div>
-
-                <div class="mode-row-tier">
-                    ${escapeHTML(
-                        mode.tier || "UNRANKED"
-                    )}
-                </div>
-
-                <div class="mode-row-elo">
-                    ${Number(
-                        mode.elo || 0
-                    ).toLocaleString()} ELO
-                </div>
-
-            `;
-
-
-            card.addEventListener(
-                "click",
-                () => {
-
-                    selectedMode = key;
-
-                    modeSelect.value = key;
-
-                    renderLeaderboard();
-
-                    openPlayer(player);
-
-                }
-            );
-
-
-            container.appendChild(card);
-
-        });
-
-}
-
-
-/* =========================
-   SECURITY
-========================= */
-
-function escapeHTML(value) {
-
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-
-}
-
-
-/* =========================
-   START
+START
 ========================= */
 
 loadPlayers();
