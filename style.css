@@ -1,1322 +1,243 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-:root {
-    --bg: #07080c;
-    --bg2: #0b0d12;
-    --card: #101219;
-    --card2: #141720;
-    --border: #222631;
-
-    --text: #f5f7fb;
-    --muted: #858b9b;
-
-    --red: #ff3030;
-    --red2: #ff5555;
-
-    --gold: #ffc83d;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    background:
-        radial-gradient(
-            circle at 50% -10%,
-            rgba(255, 48, 48, 0.14),
-            transparent 35%
-        ),
-        var(--bg);
-
-    color: var(--text);
-
-    font-family:
-        Inter,
-        Arial,
-        Helvetica,
-        sans-serif;
-
-    min-height: 100vh;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-button,
-input,
-select {
-    font-family: inherit;
-}
-
-.site {
-    min-height: 100vh;
-}
-
-
-/* =========================
-TOPBAR
-========================= */
-
-.topbar {
-    height: 76px;
-
-    padding: 0 6%;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    position: sticky;
-    top: 0;
-    z-index: 100;
-
-    background: rgba(7, 8, 12, 0.82);
-
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-
-    backdrop-filter: blur(20px);
-}
-
-.logo {
-    font-size: 21px;
-    font-weight: 900;
-    letter-spacing: -0.7px;
-}
-
-.logo span {
-    color: var(--red);
-}
-
-.topbar nav {
-    display: flex;
-    gap: 28px;
-}
-
-.topbar nav a {
-    color: #777d8d;
-
-    font-size: 13px;
-    font-weight: 750;
-
-    transition: 0.2s;
-}
-
-.topbar nav a:hover,
-.topbar nav a.active {
-    color: white;
-}
-
-
-/* =========================
-ACCOUNT
-========================= */
-
-.account-button {
-    padding: 11px 17px;
-
-    border-radius: 8px;
-
-    border: 1px solid rgba(255, 55, 55, 0.35);
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255, 48, 48, 0.16),
-            rgba(255, 48, 48, 0.04)
-        );
-
-    color: white;
-
-    font-size: 12px;
-    font-weight: 800;
-
-    transition: 0.2s;
-}
-
-.account-button:hover {
-    border-color: var(--red);
-    transform: translateY(-1px);
-}
-
-.account-user {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-
-    padding: 6px 10px;
-
-    border: 1px solid var(--border);
-
-    background: var(--card);
-
-    border-radius: 9px;
-
-    font-size: 12px;
-    font-weight: 800;
-}
-
-.account-avatar {
-    width: 29px;
-    height: 29px;
-
-    border-radius: 6px;
-}
-
-
-/* =========================
-HOME HERO
-========================= */
-
-.home-hero {
-    min-height: 650px;
-
-    display: flex;
-    align-items: center;
-
-    padding: 100px 8%;
-
-    position: relative;
-    overflow: hidden;
-}
-
-.hero-glow {
-    position: absolute;
-
-    width: 650px;
-    height: 650px;
-
-    left: 50%;
-    top: -420px;
-
-    transform: translateX(-50%);
-
-    background: rgba(255, 35, 35, 0.16);
-
-    filter: blur(130px);
-
-    pointer-events: none;
-}
-
-.hero-content {
-    position: relative;
-
-    max-width: 900px;
-}
-
-.hero-badge {
-    display: inline-flex;
-
-    padding: 8px 13px;
-
-    border: 1px solid rgba(255, 60, 60, 0.35);
-
-    border-radius: 7px;
-
-    color: #ff6565;
-
-    background: rgba(255, 40, 40, 0.08);
-
-    font-size: 10px;
-    font-weight: 900;
-
-    letter-spacing: 2.5px;
-
-    margin-bottom: 25px;
-}
-
-.hero-content h1 {
-    font-size: clamp(48px, 7vw, 88px);
-
-    line-height: 0.95;
-
-    letter-spacing: -5px;
-
-    font-weight: 950;
-}
-
-.hero-content h1 span {
-    color: var(--red);
-}
-
-.hero-content p {
-    max-width: 650px;
-
-    color: var(--muted);
-
-    font-size: 17px;
-
-    line-height: 1.7;
-
-    margin-top: 27px;
-}
-
-.hero-buttons {
-    display: flex;
-    gap: 12px;
-
-    margin-top: 35px;
-}
-
-
-/* =========================
-BUTTONS
-========================= */
-
-.primary-button,
-.secondary-button {
-    display: inline-flex;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 14px 21px;
-
-    border-radius: 8px;
-
-    font-size: 13px;
-    font-weight: 850;
-
-    transition: 0.2s;
-}
-
-.primary-button {
-    background: var(--red);
-    color: white;
-
-    box-shadow:
-        0 8px 30px rgba(255, 48, 48, 0.15);
-}
-
-.primary-button:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 12px 35px rgba(255, 48, 48, 0.25);
-}
-
-.secondary-button {
-    border: 1px solid var(--border);
-
-    background: rgba(255,255,255,0.025);
-
-    color: #dfe2e9;
-}
-
-.secondary-button:hover {
-    background: var(--card2);
-    border-color: #343946;
-}
-
-.large-button {
-    width: 100%;
-    padding: 16px;
-    border: 0;
-    cursor: pointer;
-}
-
-
-/* =========================
-HOME CONTENT
-========================= */
-
-.about-home {
-    width: 86%;
-    max-width: 1250px;
-
-    margin: auto;
-
-    padding: 80px 0 120px;
-}
-
-.section-label {
-    color: var(--red);
-
-    font-size: 10px;
-    font-weight: 900;
-
-    letter-spacing: 2.2px;
-
-    margin-bottom: 10px;
-}
-
-.about-home h2 {
-    font-size: 36px;
-
-    letter-spacing: -1.5px;
-}
-
-.section-description {
-    max-width: 750px;
-
-    margin-top: 17px;
-
-    color: var(--muted);
-
-    line-height: 1.7;
-}
-
-.feature-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(4, 1fr);
-
-    gap: 12px;
-
-    margin-top: 40px;
-}
-
-.feature-card {
-    min-height: 260px;
-
-    padding: 25px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,0.035),
-            rgba(255,255,255,0.012)
-        );
-
-    border: 1px solid var(--border);
-
-    border-radius: 12px;
-
-    transition: 0.25s;
-}
-
-.feature-card:hover {
-    transform: translateY(-5px);
-
-    border-color: #333744;
-
-    background: var(--card2);
-}
-
-.feature-number {
-    color: #4b505d;
-
-    font-size: 11px;
-    font-weight: 900;
-
-    margin-bottom: 45px;
-}
-
-.feature-card h3 {
-    font-size: 17px;
-    margin-bottom: 11px;
-}
-
-.feature-card p {
-    color: var(--muted);
-
-    font-size: 13px;
-    line-height: 1.65;
-}
-
-.home-cta {
-    width: 86%;
-    max-width: 1250px;
-
-    margin: 0 auto 100px;
-
-    padding: 35px;
-
-    border: 1px solid var(--border);
-
-    border-radius: 14px;
-
-    background:
-        radial-gradient(
-            circle at 100% 50%,
-            rgba(255,48,48,0.12),
-            transparent 35%
-        ),
-        var(--card);
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.home-cta h2 {
-    font-size: 27px;
-}
-
-
-/* =========================
-LEADERBOARD PAGE
-========================= */
-
-.leaderboard-page {
-    width: 86%;
-    max-width: 1250px;
-
-    margin: auto;
-
-    padding: 80px 0 110px;
-}
-
-.leaderboard-title {
-    display: flex;
-
-    align-items: end;
-    justify-content: space-between;
-
-    gap: 30px;
-
-    margin-bottom: 35px;
-}
-
-.leaderboard-title h1 {
-    font-size: 43px;
-
-    letter-spacing: -2px;
-}
-
-.leaderboard-title p {
-    color: var(--muted);
-
-    margin-top: 9px;
-}
-
-.search-box {
-    display: flex;
-    align-items: center;
-
-    width: 270px;
-
-    padding: 0 13px;
-
-    background: var(--card);
-
-    border: 1px solid var(--border);
-
-    border-radius: 9px;
-}
-
-.search-box span {
-    color: #666c7b;
-
-    font-size: 22px;
-}
-
-.search-box input {
-    width: 100%;
-
-    padding: 14px 9px;
-
-    background: transparent;
-
-    border: 0;
-
-    outline: 0;
-
-    color: white;
-
-    font-size: 13px;
-}
-
-.search-box input::placeholder {
-    color: #5e6370;
-}
-
-
-/* =========================
-MODE SELECTOR
-========================= */
-
-.mode-selector {
-    display: grid;
-
-    grid-template-columns:
-        repeat(8, 1fr);
-
-    gap: 8px;
-
-    margin-bottom: 15px;
-}
-
-.mode {
-    min-height: 70px;
-
-    padding: 10px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
-    align-items: center;
-
-    gap: 5px;
-
-    cursor: pointer;
-
-    color: #777d8d;
-
-    border: 1px solid var(--border);
-
-    background:
-        linear-gradient(
-            145deg,
-            #101219,
-            #0d0f14
-        );
-
-    border-radius: 9px;
+let currentMode = "sword";
+let allPlayers = [];
 
-    transition: 0.2s;
-}
-
-.mode strong {
-    font-size: 17px;
-}
-
-.mode span {
-    font-size: 10px;
-    font-weight: 800;
-}
-
-.mode:hover {
-    color: white;
-
-    border-color: #363a47;
-
-    transform: translateY(-2px);
-}
-
-.mode.active {
-    color: white;
-
-    border-color: rgba(255, 48, 48, 0.55);
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,48,48,0.16),
-            rgba(255,48,48,0.035)
-        );
-
-    box-shadow:
-        inset 0 0 25px rgba(255,48,48,0.04);
-}
-
-
-/* =========================
-LEADERBOARD
-========================= */
-
-.leaderboard-card {
-    overflow: hidden;
-
-    border: 1px solid var(--border);
-
-    border-radius: 13px;
-
-    background: var(--card);
-}
-
-.leaderboard-head,
-.player-row {
-    display: grid;
-
-    grid-template-columns:
-        80px
-        minmax(220px, 1fr)
-        180px
-        130px;
-
-    align-items: center;
-}
-
-.leaderboard-head {
-    min-height: 51px;
-
-    padding: 0 25px;
-
-    background: #0c0e13;
-
-    border-bottom: 1px solid var(--border);
-
-    color: #666c79;
-
-    font-size: 9px;
-    font-weight: 900;
-
-    letter-spacing: 1.7px;
-}
-
-.player-row {
-    min-height: 78px;
-
-    padding: 0 25px;
-
-    border-bottom: 1px solid #1b1e26;
-
-    cursor: pointer;
-
-    transition: 0.16s;
-}
-
-.player-row:last-child {
-    border-bottom: 0;
-}
-
-.player-row:hover {
-    background: #151821;
-}
-
-.rank {
-    color: #666c79;
-
-    font-size: 13px;
-    font-weight: 900;
-}
-
-.player-name {
-    display: flex;
-
-    align-items: center;
-
-    gap: 13px;
-
-    font-size: 14px;
-    font-weight: 850;
-}
-
-.player-avatar {
-    width: 39px;
-    height: 39px;
-
-    border-radius: 7px;
-
-    image-rendering: pixelated;
-
-    background: #191c24;
-
-    border: 1px solid #303440;
-}
-
-.player-tier {
-    font-size: 13px;
-    font-weight: 950;
-
-    letter-spacing: .5px;
-}
-
-.player-elo {
-    font-size: 13px;
-    font-weight: 850;
-}
-
-
-/* =========================
-TIERS
-========================= */
-
-.tier-unranked {
-    color: #777d8b;
-}
-
-.tier-lt5 {
-    color: #a6a6a6;
-}
-
-.tier-ht5 {
-    color: #eeeeee;
-}
-
-.tier-lt4 {
-    color: #62d86f;
-}
-
-.tier-ht4 {
-    color: #37ef4b;
-}
-
-.tier-lt3 {
-    color: #37d9e8;
-}
-
-.tier-ht3 {
-    color: #4288ff;
-}
-
-.tier-lt2 {
-    color: #a85cff;
-}
-
-.tier-ht2 {
-    color: #ff4fc8;
-}
-
-.tier-lt1 {
-    color: #ff4141;
-}
-
-.tier-ht1 {
-    color: #ffc438;
-}
-
-
-/* =========================
-PROFILE
-========================= */
-
-.profile-page {
-    width: 86%;
-    max-width: 1100px;
-
-    margin: auto;
-
-    padding: 80px 0 110px;
-}
-
-.profile-header {
-    padding: 38px;
-
-    border: 1px solid var(--border);
-
-    border-radius: 14px;
-
-    background:
-        radial-gradient(
-            circle at 100% 0%,
-            rgba(255,48,48,0.11),
-            transparent 35%
-        ),
-        var(--card);
-
-    margin-bottom: 35px;
-}
-
-.profile-user {
-    display: flex;
-
-    align-items: center;
-
-    gap: 22px;
-}
-
-.profile-avatar-image {
-    width: 100px;
-    height: 100px;
-
-    border-radius: 13px;
-
-    image-rendering: pixelated;
-
-    border: 1px solid #343946;
-
-    background: #171a22;
-}
-
-.profile-label {
-    color: #6c7280;
-
-    font-size: 9px;
-    font-weight: 900;
-
-    letter-spacing: 2px;
-
-    margin-bottom: 7px;
-}
-
-.profile-user h1 {
-    font-size: 37px;
-
-    letter-spacing: -1.5px;
-}
-
-.profile-user p {
-    color: var(--muted);
-
-    margin-top: 7px;
-
-    font-size: 13px;
-}
-
-.stats-header {
-    margin-bottom: 15px;
-}
-
-.stats-header h2 {
-    font-size: 27px;
-}
-
-.stats-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(4, 1fr);
-
-    gap: 11px;
-}
-
-.mode-card {
-    padding: 22px;
-
-    min-height: 150px;
-
-    border: 1px solid var(--border);
-
-    border-radius: 11px;
-
-    background: var(--card);
-
-    transition: 0.2s;
-}
-
-.mode-card:hover {
-    transform: translateY(-3px);
-
-    background: var(--card2);
-
-    border-color: #343946;
-}
-
-.mode-name {
-    color: #717786;
-
-    font-size: 10px;
-    font-weight: 900;
-
-    letter-spacing: 1.4px;
-
-    margin-bottom: 22px;
-}
-
-.mode-tier {
-    font-size: 23px;
-    font-weight: 950;
-}
-
-.mode-elo {
-    color: #a1a5b0;
-
-    font-size: 13px;
-
-    margin-top: 7px;
-}
-
-
-/* =========================
-CONNECT
-========================= */
-
-.connect-page {
-    min-height: 700px;
-
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-
-    padding: 70px 20px;
-}
-
-.connect-card {
-    width: 100%;
-    max-width: 570px;
-
-    padding: 45px;
-
-    text-align: center;
-
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            rgba(255,48,48,0.13),
-            transparent 40%
-        ),
-        var(--card);
-
-    border: 1px solid var(--border);
-
-    border-radius: 15px;
-}
-
-.connect-icon {
-    width: 65px;
-    height: 65px;
-
-    margin: 0 auto 25px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 13px;
-
-    background: rgba(255,48,48,0.1);
-
-    border: 1px solid rgba(255,48,48,0.25);
-
-    color: var(--red);
-
-    font-size: 26px;
-}
-
-.connect-card h1 {
-    font-size: 38px;
-
-    letter-spacing: -1.5px;
-
-    margin-bottom: 13px;
-}
-
-.connect-card > p {
-    color: var(--muted);
+const leaderboardList =
+    document.getElementById("leaderboardList");
 
-    line-height: 1.65;
+const searchInput =
+    document.getElementById("searchInput");
 
-    font-size: 14px;
+const modeSelect =
+    document.getElementById("modeSelect");
 
-    margin-bottom: 30px;
-}
-
-.connect-info {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 9px;
-
-    margin-top: 30px;
-
-    text-align: left;
-}
-
-.connect-info div {
-    padding: 13px;
-
-    background: #0c0e13;
-
-    border: 1px solid #1d2028;
-
-    border-radius: 8px;
-
-    color: #999eab;
-
-    font-size: 12px;
-}
-
-.connect-info span {
-    display: inline-flex;
-
-    width: 25px;
-
-    color: var(--red);
-
-    font-weight: 900;
-}
-
-.verification-code {
-    padding: 25px;
-
-    background: #0b0d12;
-
-    border: 1px solid rgba(255,48,48,0.25);
-
-    border-radius: 11px;
-}
-
-.code-label {
-    color: #777d8a;
-
-    font-size: 9px;
-
-    font-weight: 900;
-
-    letter-spacing: 1.5px;
-}
-
-.code {
-    margin: 13px 0;
 
-    color: white;
+async function loadPlayers() {
 
-    font-size: 32px;
+    leaderboardList.innerHTML =
+        '<div class="loading">Loading players...</div>';
 
-    font-weight: 950;
+    try {
 
-    letter-spacing: 5px;
-}
-
-.code-status {
-    color: #ff6868;
-
-    font-size: 12px;
-
-    font-weight: 800;
-}
-
-.code-expiry {
-    margin-top: 7px;
-
-    color: #555b68;
-
-    font-size: 11px;
-}
-
-.connected-box {
-    padding: 10px 0;
-}
-
-.connected-check {
-    width: 55px;
-    height: 55px;
-
-    margin: 0 auto 20px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
+        const snapshot =
+            await db
+                .collection("players")
+                .get();
 
-    background: rgba(55,239,75,0.1);
+        allPlayers = [];
 
-    color: #37ef4b;
+        snapshot.forEach(doc => {
 
-    font-size: 25px;
-}
-
-.connected-box h2 {
-    font-size: 27px;
-
-    margin-bottom: 8px;
-}
-
-.connected-box p {
-    color: var(--muted);
-
-    font-size: 13px;
-
-    margin-bottom: 23px;
-}
-
+            allPlayers.push({
+                id: doc.id,
+                ...doc.data()
+            });
 
-/* =========================
-LOADING
-========================= */
+        });
 
-.loading,
-.empty {
-    padding: 55px;
+        renderLeaderboard();
 
-    text-align: center;
+    } catch (error) {
 
-    color: var(--muted);
+        console.error(error);
 
-    font-size: 13px;
+        leaderboardList.innerHTML =
+            '<div class="empty">Could not load leaderboard.</div>';
+    }
 }
-
-
-/* =========================
-FOOTER
-========================= */
 
-footer {
-    min-height: 100px;
 
-    padding: 25px 7%;
+function renderLeaderboard() {
 
-    border-top: 1px solid var(--border);
+    const search =
+        searchInput.value
+            .trim()
+            .toLowerCase();
 
-    display: flex;
+    let players = allPlayers
+        .filter(player => {
 
-    align-items: center;
+            const username =
+                player.username || "";
 
-    justify-content: space-between;
+            return username
+                .toLowerCase()
+                .includes(search);
+        })
+        .map(player => {
 
-    color: #646a78;
+            const stats =
+                player[currentMode] || {};
 
-    font-size: 12px;
-}
+            const elo =
+                Number(stats.elo) || 0;
 
-.footer-brand {
-    color: #aeb3bf;
+            const tier =
+                stats.tier || getTierFromElo(elo);
 
-    font-weight: 900;
-}
+            return {
+                ...player,
+                elo,
+                tier
+            };
+        });
 
-.footer-links {
-    display: flex;
 
-    gap: 22px;
-}
+    players.sort((a, b) => b.elo - a.elo);
 
-.footer-links a:hover {
-    color: white;
-}
+    leaderboardList.innerHTML = "";
 
 
-/* =========================
-RESPONSIVE
-========================= */
+    if (players.length === 0) {
 
-@media (max-width: 1000px) {
+        leaderboardList.innerHTML =
+            '<div class="empty">No players found.</div>';
 
-    .feature-grid {
-        grid-template-columns:
-            repeat(2, 1fr);
+        return;
     }
 
-    .mode-selector {
-        grid-template-columns:
-            repeat(4, 1fr);
-    }
 
-    .stats-grid {
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
+    players.forEach((player, index) => {
 
+        const row =
+            document.createElement("div");
+
+        row.className = "player-row";
+
+
+        const rank =
+            document.createElement("div");
+
+        rank.className = "rank";
+
+        rank.textContent =
+            "#" + (index + 1);
+
+
+        const name =
+            document.createElement("div");
+
+        name.className = "player-name";
+
+
+        const avatar =
+            document.createElement("img");
+
+        avatar.className =
+            "player-avatar";
+
+        avatar.src =
+            "https://mc-heads.net/avatar/" +
+            encodeURIComponent(player.username) +
+            "/100";
+
+        avatar.alt =
+            player.username;
+
+        avatar.onerror = function() {
+
+            this.src =
+                "https://mc-heads.net/avatar/MHF_Steve/100";
+        };
+
+
+        const username =
+            document.createElement("span");
+
+        username.textContent =
+            player.username || "Unknown";
+
+
+        name.appendChild(avatar);
+        name.appendChild(username);
+
+
+        const tier =
+            document.createElement("div");
+
+        tier.className =
+            "player-tier " +
+            getTierClass(player.tier);
+
+        tier.textContent =
+            player.tier;
+
+
+        const elo =
+            document.createElement("div");
+
+        elo.className =
+            "player-elo";
+
+        elo.innerHTML =
+            `<strong>${player.elo}</strong> ELO`;
+
+
+        row.appendChild(rank);
+        row.appendChild(name);
+        row.appendChild(tier);
+        row.appendChild(elo);
+
+
+        row.addEventListener("click", () => {
+
+            window.location.href =
+                "player.html?player=" +
+                encodeURIComponent(player.id);
+        });
+
+
+        leaderboardList.appendChild(row);
+
+    });
 }
 
-@media (max-width: 750px) {
 
-    .topbar {
-        height: auto;
+function getTierClass(tier) {
 
-        min-height: 70px;
-
-        padding: 14px 5%;
-
-        flex-wrap: wrap;
-
-        gap: 15px;
+    if (!tier) {
+        return "tier-unranked";
     }
 
-    .topbar nav {
-        order: 3;
-
-        width: 100%;
-
-        overflow-x: auto;
-
-        gap: 20px;
-
-        padding-bottom: 3px;
-    }
-
-    .home-hero {
-        min-height: 560px;
-
-        padding: 80px 7%;
-    }
-
-    .hero-content h1 {
-        letter-spacing: -3px;
-    }
-
-    .hero-buttons {
-        flex-direction: column;
-    }
-
-    .about-home,
-    .leaderboard-page,
-    .profile-page {
-        width: 92%;
-    }
-
-    .feature-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .home-cta {
-        width: 92%;
-
-        flex-direction: column;
-
-        align-items: flex-start;
-
-        gap: 25px;
-    }
-
-    .leaderboard-title {
-        flex-direction: column;
-
-        align-items: stretch;
-    }
-
-    .search-box {
-        width: 100%;
-    }
-
-    .mode-selector {
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
-
-    .leaderboard-head,
-    .player-row {
-        grid-template-columns:
-            45px
-            minmax(140px, 1fr)
-            90px
-            80px;
-
-        padding: 0 13px;
-    }
-
-    .player-name {
-        font-size: 12px;
-    }
-
-    .player-avatar {
-        width: 32px;
-        height: 32px;
-    }
-
-    .leaderboard-head {
-        font-size: 8px;
-    }
-
-    .stats-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .profile-user {
-        align-items: flex-start;
-
-        flex-direction: column;
-    }
-
-    .connect-card {
-        padding: 30px 20px;
-    }
-
-    .connect-card h1 {
-        font-size: 30px;
-    }
-
-    .code {
-        font-size: 24px;
-
-        letter-spacing: 3px;
-    }
-
-    footer {
-        flex-direction: column;
-
-        align-items: flex-start;
-
-        gap: 15px;
-    }
-
-    .footer-links {
-        flex-wrap: wrap;
-    }
-
+    return "tier-" +
+        tier
+            .toLowerCase()
+            .replace(/\s+/g, "-");
 }
+
+
+function getTierFromElo(elo) {
+
+    if (elo >= 2250) return "HT1";
+    if (elo >= 2000) return "LT1";
+    if (elo >= 1900) return "HT2";
+    if (elo >= 1800) return "LT2";
+    if (elo >= 1650) return "HT3";
+    if (elo >= 1500) return "LT3";
+    if (elo >= 1300) return "HT4";
+    if (elo >= 1200) return "LT4";
+    if (elo >= 1100) return "HT5";
+    if (elo >= 1000) return "LT5";
+
+    return "UNRANKED";
+}
+
+
+modeSelect.addEventListener(
+    "change",
+    () => {
+
+        currentMode =
+            modeSelect.value;
+
+        renderLeaderboard();
+    }
+);
+
+
+searchInput.addEventListener(
+    "input",
+    renderLeaderboard
+);
+
+
+loadPlayers();
