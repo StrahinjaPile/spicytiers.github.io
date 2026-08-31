@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>SpicyTiers — Leaderboard</title>
@@ -11,6 +13,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
 </head>
 
 <body>
@@ -24,10 +27,23 @@
         </a>
 
         <nav>
-            <a href="index.html">Home</a>
-            <a href="leaderboard.html" class="active">Leaderboard</a>
-            <a href="client.html">Client</a>
-            <a href="discord.html">Discord</a>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="leaderboard.html" class="active">
+                Leaderboard
+            </a>
+
+            <a href="client.html">
+                Client
+            </a>
+
+            <a href="rules.html">
+                Rules
+            </a>
+
         </nav>
 
         <a href="login.html" class="login-button">
@@ -41,216 +57,79 @@
 
         <section class="leaderboard-page">
 
-            <div class="leaderboard-heading">
+            <div class="leaderboard-intro">
 
-                <div>
-
-                    <div class="small-title">
-                        SPICYTIERS RANKINGS
-                    </div>
-
-                    <h1>
-                        Global Leaderboard
-                    </h1>
-
-                    <p>
-                        See who dominates Minecraft PvP.
-                    </p>
-
+                <div class="section-label">
+                    SPICYTIERS RANKINGS
                 </div>
+
+                <h1>
+                    Global
+                    <span>Leaderboard</span>
+                </h1>
+
+                <p>
+                    See the best PvP players across every
+                    SpicyTiers game mode.
+                </p>
 
             </div>
 
 
             <div class="leaderboard-controls">
 
-                <!-- CUSTOM DROPDOWN -->
+                <div class="game-selector">
 
-                <div class="custom-select" id="gameModeDropdown">
-
-                    <button
-                        class="select-button"
-                        id="selectButton"
-                    >
-
-                        <div class="select-left">
-
-                            <span
-                                class="select-icon"
-                                id="selectIcon"
-                            >
-                                ⚔
-                            </span>
-
-                            <div>
-
-                                <small>
-                                    GAMEMODE
-                                </small>
-
-                                <strong id="selectText">
-                                    Sword
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-                        <span class="select-arrow">
-                           ⌄
-                        </span>
-
+                    <button class="mode active" data-mode="sword">
+                        ⚔ Sword
                     </button>
 
+                    <button class="mode" data-mode="axe">
+                        🪓 Axe
+                    </button>
 
-                    <div
-                        class="select-menu"
-                        id="selectMenu"
-                    >
+                    <button class="mode" data-mode="vanilla">
+                        Vanilla
+                    </button>
 
-                        <div
-                            class="select-option active"
-                            data-mode="sword"
-                            data-icon="⚔"
-                        >
-                            <span>⚔</span>
-                            <div>
-                                <strong>Sword</strong>
-                                <small>Classic Sword PvP</small>
-                            </div>
-                        </div>
+                    <button class="mode" data-mode="uhc">
+                        UHC
+                    </button>
 
+                    <button class="mode" data-mode="smp">
+                        SMP
+                    </button>
 
-                        <div
-                            class="select-option"
-                            data-mode="axe"
-                            data-icon="🪓"
-                        >
-                            <span>🪓</span>
-                            <div>
-                                <strong>Axe</strong>
-                                <small>Axe PvP</small>
-                            </div>
-                        </div>
+                    <button class="mode" data-mode="netheriteop">
+                        Netherite OP
+                    </button>
 
+                    <button class="mode" data-mode="pot">
+                        Pot
+                    </button>
 
-                        <div
-                            class="select-option"
-                            data-mode="vanilla"
-                            data-icon="◈"
-                        >
-                            <span>◈</span>
-                            <div>
-                                <strong>Vanilla</strong>
-                                <small>Vanilla PvP</small>
-                            </div>
-                        </div>
-
-
-                        <div
-                            class="select-option"
-                            data-mode="uhc"
-                            data-icon="♥"
-                        >
-                            <span>♥</span>
-                            <div>
-                                <strong>UHC</strong>
-                                <small>Ultra Hardcore</small>
-                            </div>
-                        </div>
-
-
-                        <div
-                            class="select-option"
-                            data-mode="smp"
-                            data-icon="✦"
-                        >
-                            <span>✦</span>
-                            <div>
-                                <strong>SMP</strong>
-                                <small>SMP Combat</small>
-                            </div>
-                        </div>
-
-
-                        <div
-                            class="select-option"
-                            data-mode="netheriteop"
-                            data-icon="◆"
-                        >
-                            <span>◆</span>
-                            <div>
-                                <strong>Netherite OP</strong>
-                                <small>Overpowered PvP</small>
-                            </div>
-                        </div>
-
-
-                        <div
-                            class="select-option"
-                            data-mode="pot"
-                            data-icon="🧪"
-                        >
-                            <span>🧪</span>
-                            <div>
-                                <strong>Pot</strong>
-                                <small>Pot PvP</small>
-                            </div>
-                        </div>
-
-
-                        <div
-                            class="select-option"
-                            data-mode="mace"
-                            data-icon="✹"
-                        >
-                            <span>✹</span>
-                            <div>
-                                <strong>Mace</strong>
-                                <small>Mace PvP</small>
-                            </div>
-                        </div>
-
-                    </div>
+                    <button class="mode" data-mode="mace">
+                        Mace
+                    </button>
 
                 </div>
 
 
-                <div class="search-box">
-
-                    <span>⌕</span>
-
-                    <input
-                        id="searchInput"
-                        type="text"
-                        placeholder="Search player..."
-                        autocomplete="off"
-                    >
-
-                </div>
+                <input
+                    id="searchInput"
+                    type="text"
+                    placeholder="Search player..."
+                    autocomplete="off"
+                >
 
             </div>
 
 
-            <div class="leaderboard-card">
-
-                <div class="leaderboard-bar">
-
-                    <div>
-                        <span class="online-dot"></span>
-                        LIVE RANKINGS
-                    </div>
-
-                    <span id="currentMode">
-                        SWORD
-                    </span>
-
-                </div>
-
+            <div class="leaderboard">
 
                 <div class="leaderboard-head">
 
-                    <span>RANK</span>
+                    <span>#</span>
                     <span>PLAYER</span>
                     <span>TIER</span>
                     <span>ELO</span>
@@ -275,13 +154,71 @@
 
     <footer>
 
-        <div>
-            ⚡ SpicyTiers
-        </div>
+        <div class="footer-top">
 
-        <span>
-            Minecraft PvP Ranking System
-        </span>
+            <div class="footer-brand">
+
+                <div class="footer-logo">
+                    ⚡ SpicyTiers
+                </div>
+
+                <p>
+                    The future of Minecraft PvP.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <div>
+
+                    <h4>
+                        SpicyTiers
+                    </h4>
+
+                    <a href="index.html">
+                        Home
+                    </a>
+
+                    <a href="leaderboard.html">
+                        Leaderboard
+                    </a>
+
+                    <a href="client.html">
+                        Client
+                    </a>
+
+                    <a href="rules.html">
+                        Rules
+                    </a>
+
+                </div>
+
+
+                <div>
+
+                    <h4>
+                        Information
+                    </h4>
+
+                    <a href="faq.html">
+                        FAQ
+                    </a>
+
+                    <a href="about.html">
+                        About Us
+                    </a>
+
+                    <a href="terms.html">
+                        Terms of Service
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </footer>
 
