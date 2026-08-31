@@ -1,1 +1,211 @@
+* {
+    box-sizing: border-box;
+}
 
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    font-family: Arial, sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0b0f1a,
+            #1a0f2a
+        );
+
+    color: white;
+
+}
+
+
+.container {
+
+    width: min(900px, 90%);
+
+    margin: auto;
+
+    padding-top: 50px;
+
+}
+
+
+h1 {
+
+    font-size: 42px;
+
+}
+
+
+h1 span {
+
+    color: #ff2a4d;
+
+}
+
+
+h2 {
+
+    margin-top: 40px;
+
+}
+
+
+#leaderboard {
+
+    margin-top: 25px;
+
+}
+
+
+.player-row {
+
+    display: grid;
+
+    grid-template-columns:
+        70px
+        1fr
+        100px
+        130px;
+
+    gap: 15px;
+
+    align-items: center;
+
+    padding: 18px;
+
+    margin-bottom: 10px;
+
+
+    background:
+
+        rgba(
+            17,
+            17,
+            34,
+            0.85
+        );
+
+
+    border:
+
+        2px solid
+        rgba(
+            58,
+            58,
+            85,
+            0.8
+        );
+
+}
+
+
+.player-row:hover {
+
+    background:
+
+        rgba(
+            26,
+            31,
+            53,
+            0.9
+        );
+
+}
+
+
+.rank {
+
+    color: #ff2a4d;
+
+    font-weight: bold;
+
+}
+
+
+.tier {
+
+    color: #aaaaff;
+
+}
+
+
+.elo {
+
+    color: #ffffff;
+
+}
+
+
+input,
+select {
+
+    width: 100%;
+
+    padding: 14px;
+
+    margin-top: 10px;
+
+    margin-bottom: 10px;
+
+
+    background:
+        #111122;
+
+
+    border:
+        2px solid
+        #3a3a55;
+
+
+    color: white;
+
+}
+
+
+button {
+
+    width: 100%;
+
+    padding: 14px;
+
+    margin-top: 10px;
+
+
+    cursor: pointer;
+
+
+    background:
+        #111122;
+
+
+    color: white;
+
+
+    border:
+        2px solid
+        #ff2a4d;
+
+}
+
+
+button:hover {
+
+    background:
+        #1a1f35;
+
+}
+
+
+.admin-link {
+
+    display: block;
+
+    margin-top: 40px;
+
+    color: #aaaaFF;
+
+}
