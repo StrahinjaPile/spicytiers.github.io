@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Account — SpicyTiers</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+</head>
+
+<body>
+
+<div class="site">
+
+<header class="topbar">
+
+    <a href="index.html" class="logo">
+        <span>⚡</span> SpicyTiers
+    </a>
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="leaderboard.html">
+            Leaderboard
+        </a>
+
+        <a href="client.html">
+            Client
+        </a>
+
+        <a href="discord.html">
+            Discord
+        </a>
+
+    </nav>
+
+    <button id="logoutButton" class="login-button">
+        LOGOUT
+    </button>
+
+</header>
+
+
+<main>
+
+<section class="account-page">
+
+    <div class="account-header">
+
+        <img
+            id="profileImage"
+            class="profile-image"
+            src=""
+            alt=""
+        >
+
+        <div>
+
+            <div class="small-title">
+                SPICYTIERS ACCOUNT
+            </div>
+
+            <h1 id="displayName">
+                Loading...
+            </h1>
+
+            <p id="email">
+                Loading...
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="account-grid">
+
+
+        <div class="account-card">
+
+            <div class="card-label">
+                MINECRAFT ACCOUNT
+            </div>
+
+            <h2 id="minecraftName">
+                Not connected
+            </h2>
+
+            <p id="minecraftStatus">
+                Connect your Minecraft account
+                to appear on SpicyTiers.
+            </p>
+
+
+            <div
+                id="verificationBox"
+                style="display:none;"
+            >
+
+                <div class="verification-code"
+                     id="verificationCode">
+                </div>
+
+                <p>
+                    Enter this code in the
+                    SpicyTiers Minecraft mod.
+                </p>
+
+            </div>
+
+
+            <button
+                id="connectMinecraft"
+                class="primary-button"
+            >
+                CONNECT MINECRAFT
+            </button>
+
+        </div>
+
+
+        <div class="account-card">
+
+            <div class="card-label">
+                DISCORD
+            </div>
+
+            <h2>
+                Discord Account
+            </h2>
+
+            <p>
+                Connect Discord to your
+                SpicyTiers profile.
+            </p>
+
+            <button
+                class="secondary-button"
+                id="connectDiscord"
+            >
+                CONNECT DISCORD
+            </button>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+</main>
+
+</div>
+
+
+<script src="firebase-config.js"></script>
+<script src="account.js"></script>
+
+</body>
+</html>
