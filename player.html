@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Player — SpicyTiers</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+</head>
+
+
+<body>
+
+<div class="site">
+
+    <header class="topbar">
+
+        <a
+            href="index.html"
+            class="logo"
+        >
+            <span>⚡</span> SpicyTiers
+        </a>
+
+        <nav>
+
+            <a href="index.html">
+                Leaderboard
+            </a>
+
+            <a href="admin.html">
+                Admin
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <main class="profile-page">
+
+        <div
+            id="profileHeader"
+            class="profile-header"
+        >
+
+            <div class="loading">
+                Loading player...
+            </div>
+
+        </div>
+
+
+        <div
+            id="statsGrid"
+            class="stats-grid"
+        >
+
+        </div>
+
+    </main>
+
+
+    <footer>
+
+        <div>
+            ⚡ SpicyTiers
+        </div>
+
+        <span>
+            Minecraft PvP Ranking System
+        </span>
+
+    </footer>
+
+</div>
+
+
+<script src="firebase-config.js"></script>
+
+<script src="player.js"></script>
+
+</body>
+
+</html>
