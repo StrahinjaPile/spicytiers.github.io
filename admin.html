@@ -14,232 +14,440 @@
 
     <link rel="stylesheet" href="style.css">
 
-    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 </head>
 
+
 <body>
 
-<div class="container">
+<div class="site">
 
-    <!-- HEADER -->
+    <header class="topbar">
 
-    <div class="header">
+        <div class="brand">
 
-        <h1>
-            <span class="red">⚡ Spicy</span>Tiers
-        </h1>
+            <span>⚡</span>
 
-        <p>
-            Leaderboard Administration
-        </p>
+            <strong>
+                <b>Spicy</b>Tiers
+            </strong>
 
-    </div>
+        </div>
+
+        <div class="status">
+
+            <span class="status-dot"></span>
+
+            ADMIN PANEL
+
+        </div>
+
+    </header>
 
 
-    <!-- LOGIN -->
+    <main>
 
-    <div
-        id="loginPanel"
-        class="panel"
-    >
+        <section class="hero">
 
-        <h2>ADMIN LOGIN</h2>
+            <div>
 
-        <input
-            id="email"
-            type="email"
-            placeholder="Email"
-            autocomplete="email"
-        >
+                <div class="eyebrow">
+                    SPICYTIERS ADMINISTRATION
+                </div>
 
-        <input
-            id="password"
-            type="password"
-            placeholder="Password"
-            autocomplete="current-password"
-        >
+                <h1>
+                    Manage
+                    <span>Players</span>
+                </h1>
 
-        <button id="loginButton">
-            LOGIN
-        </button>
+                <p>
+                    Manage ELO and tiers across all SpicyTiers gamemodes.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- LOGIN -->
 
         <div
-            id="loginMessage"
-            class="message"
-        ></div>
-
-    </div>
-
-
-    <!-- ACCESS DENIED -->
-
-    <div
-        id="deniedPanel"
-        class="panel"
-        style="display:none;"
-    >
-
-        <h2>ACCESS DENIED</h2>
-
-        <p>
-            This account is not an administrator.
-        </p>
-
-        <button
-            id="logoutDenied"
-            class="gray"
+            id="loginPanel"
+            class="panel"
         >
-            LOGOUT
-        </button>
 
-    </div>
+            <h2>
+                ADMIN LOGIN
+            </h2>
 
-
-    <!-- ADMIN PANEL -->
-
-    <div
-        id="adminPanel"
-        style="display:none;"
-    >
-
-        <!-- PLAYER EDITOR -->
-
-        <div class="panel">
-
-            <h2>PLAYER EDITOR</h2>
 
             <input
-                id="username"
-                type="text"
-                placeholder="Minecraft Username"
-                maxlength="16"
+                id="email"
+                type="email"
+                placeholder="Email"
+                autocomplete="username"
             >
+
 
             <input
-                id="elo"
-                type="number"
-                min="0"
-                placeholder="ELO"
+                id="password"
+                type="password"
+                placeholder="Password"
+                autocomplete="current-password"
             >
 
-            <select id="tier">
 
-                <option value="UNRANKED">
-                    UNRANKED
-                </option>
-
-                <option value="LT5">
-                    LT5
-                </option>
-
-                <option value="HT5">
-                    HT5
-                </option>
-
-                <option value="LT4">
-                    LT4
-                </option>
-
-                <option value="HT4">
-                    HT4
-                </option>
-
-                <option value="LT3">
-                    LT3
-                </option>
-
-                <option value="HT3">
-                    HT3
-                </option>
-
-                <option value="LT2">
-                    LT2
-                </option>
-
-                <option value="HT2">
-                    HT2
-                </option>
-
-                <option value="LT1">
-                    LT1
-                </option>
-
-                <option value="HT1">
-                    HT1
-                </option>
-
-            </select>
-
-
-            <button id="savePlayer">
-                SAVE / UPDATE PLAYER
-            </button>
-
-
-            <button
-                id="deletePlayer"
-                class="danger"
-            >
-                DELETE PLAYER
+            <button id="loginButton">
+                LOGIN
             </button>
 
 
             <div
-                id="adminMessage"
+                id="loginMessage"
                 class="message"
             ></div>
 
         </div>
 
 
-        <!-- ALL PLAYERS -->
+        <!-- DENIED -->
 
-        <div class="panel">
+        <div
+            id="deniedPanel"
+            class="panel"
+            style="display:none;"
+        >
 
-            <h2>ALL PLAYERS</h2>
+            <h2>
+                ACCESS DENIED
+            </h2>
 
-            <div id="adminPlayerList">
-                Loading...
-            </div>
+            <p>
+                This account is not an administrator.
+            </p>
 
-        </div>
-
-
-        <!-- LOGOUT -->
-
-        <div class="panel">
 
             <button
-                id="logoutButton"
+                id="logoutDenied"
                 class="gray"
             >
                 LOGOUT
             </button>
 
-            <br>
-            <br>
+        </div>
 
-            <a href="index.html">
-                ← Back to Leaderboard
-            </a>
+
+        <!-- ADMIN -->
+
+        <div
+            id="adminPanel"
+            style="display:none;"
+        >
+
+
+            <!-- PLAYER EDITOR -->
+
+            <div class="panel">
+
+                <h2>
+                    PLAYER EDITOR
+                </h2>
+
+
+                <input
+                    id="username"
+                    type="text"
+                    placeholder="Minecraft Username"
+                    maxlength="16"
+                    autocomplete="off"
+                >
+
+
+                <h3>
+                    ⚔ Sword
+                </h3>
+
+                <input
+                    id="sword-elo"
+                    type="number"
+                    min="0"
+                    placeholder="Sword ELO"
+                >
+
+                <select id="sword-tier">
+
+                    <option value="UNRANKED">
+                        UNRANKED
+                    </option>
+
+                    <option value="LT5">LT5</option>
+                    <option value="HT5">HT5</option>
+                    <option value="LT4">LT4</option>
+                    <option value="HT4">HT4</option>
+                    <option value="LT3">LT3</option>
+                    <option value="HT3">HT3</option>
+                    <option value="LT2">LT2</option>
+                    <option value="HT2">HT2</option>
+                    <option value="LT1">LT1</option>
+                    <option value="HT1">HT1</option>
+
+                </select>
+
+
+                <h3>
+                    🪓 Axe
+                </h3>
+
+                <input
+                    id="axe-elo"
+                    type="number"
+                    min="0"
+                    placeholder="Axe ELO"
+                >
+
+                <select id="axe-tier">
+                    <option value="UNRANKED">UNRANKED</option>
+                    <option value="LT5">LT5</option>
+                    <option value="HT5">HT5</option>
+                    <option value="LT4">LT4</option>
+                    <option value="HT4">HT4</option>
+                    <option value="LT3">LT3</option>
+                    <option value="HT3">HT3</option>
+                    <option value="LT2">LT2</option>
+                    <option value="HT2">HT2</option>
+                    <option value="LT1">LT1</option>
+                    <option value="HT1">HT1</option>
+                </select>
+
+
+                <h3>
+                    🟫 Vanilla
+                </h3>
+
+                <input
+                    id="vanilla-elo"
+                    type="number"
+                    min="0"
+                    placeholder="Vanilla ELO"
+                >
+
+                <select id="vanilla-tier">
+                    <option value="UNRANKED">UNRANKED</option>
+                    <option value="LT5">LT5</option>
+                    <option value="HT5">HT5</option>
+                    <option value="LT4">LT4</option>
+                    <option value="HT4">HT4</option>
+                    <option value="LT3">LT3</option>
+                    <option value="HT3">HT3</option>
+                    <option value="LT2">LT2</option>
+                    <option value="HT2">HT2</option>
+                    <option value="LT1">LT1</option>
+                    <option value="HT1">HT1</option>
+                </select>
+
+
+                <h3>
+                    ❤️ UHC
+                </h3>
+
+                <input
+                    id="uhc-elo"
+                    type="number"
+                    min="0"
+                    placeholder="UHC ELO"
+                >
+
+                <select id="uhc-tier">
+                    <option value="UNRANKED">UNRANKED</option>
+                    <option value="LT5">LT5</option>
+                    <option value="HT5">HT5</option>
+                    <option value="LT4">LT4</option>
+                    <option value="HT4">HT4</option>
+                    <option value="LT3">LT3</option>
+                    <option value="HT3">HT3</option>
+                    <option value="LT2">LT2</option>
+                    <option value="HT2">HT2</option>
+                    <option value="LT1">LT1</option>
+                    <option value="HT1">HT1</option>
+                </select>
+
+
+                <h3>
+                    🌍 SMP
+                </h3>
+
+                <input
+                    id="smp-elo"
+                    type="number"
+                    min="0"
+                    placeholder="SMP ELO"
+                >
+
+                <select id="smp-tier">
+                    <option value="UNRANKED">UNRANKED</option>
+                    <option value="LT5">LT5</option>
+                    <option value="HT5">HT5</option>
+                    <option value="LT4">LT4</option>
+                    <option value="HT4">HT4</option>
+                    <option value="LT3">LT3</option>
+                    <option value="HT3">HT3</option>
+                    <option value="LT2">LT2</option>
+                    <option value="HT2">HT2</option>
+                    <option value="LT1">LT1</option>
+                    <option value="HT1">HT1</option>
+                </select>
+
+
+                <h3>
+                    💎 Netherite OP
+                </h3>
+
+                <input
+                    id="netheriteop-elo"
+                    type="number"
+                    min="0"
+                    placeholder="Netherite OP ELO"
+                >
+
+                <select id="netheriteop-tier">
+                    <option value="UNRANKED">UNRANKED</option>
+                    <option value="LT5">LT5</option>
+                    <option value="HT5">HT5</option>
+                    <option value="LT4">LT4</option>
+                    <option value="HT4">HT4</option>
+                    <option value="LT3">LT3</option>
+                    <option value="HT3">HT3</option>
+                    <option value="LT2">LT2</option>
+                    <option value="HT2">HT2</option>
+                    <option value="LT1">LT1</option>
+                    <option value="HT1">HT1</option>
+                </select>
+
+
+                <h3>
+                    🧪 Pot
+                </h3>
+
+                <input
+                    id="pot-elo"
+                    type="number"
+                    min="0"
+                    placeholder="Pot ELO"
+                >
+
+                <select id="pot-tier">
+                    <option value="UNRANKED">UNRANKED</option>
+                    <option value="LT5">LT5</option>
+                    <option value="HT5">HT5</option>
+                    <option value="LT4">LT4</option>
+                    <option value="HT4">HT4</option>
+                    <option value="LT3">LT3</option>
+                    <option value="HT3">HT3</option>
+                    <option value="LT2">LT2</option>
+                    <option value="HT2">HT2</option>
+                    <option value="LT1">LT1</option>
+                    <option value="HT1">HT1</option>
+                </select>
+
+
+                <h3>
+                    🔨 Mace
+                </h3>
+
+                <input
+                    id="mace-elo"
+                    type="number"
+                    min="0"
+                    placeholder="Mace ELO"
+                >
+
+                <select id="mace-tier">
+                    <option value="UNRANKED">UNRANKED</option>
+                    <option value="LT5">LT5</option>
+                    <option value="HT5">HT5</option>
+                    <option value="LT4">LT4</option>
+                    <option value="HT4">HT4</option>
+                    <option value="LT3">LT3</option>
+                    <option value="HT3">HT3</option>
+                    <option value="LT2">LT2</option>
+                    <option value="HT2">HT2</option>
+                    <option value="LT1">LT1</option>
+                    <option value="HT1">HT1</option>
+                </select>
+
+
+                <button id="savePlayer">
+                    SAVE / UPDATE PLAYER
+                </button>
+
+
+                <button
+                    id="deletePlayer"
+                    class="danger"
+                >
+                    DELETE PLAYER
+                </button>
+
+
+                <div
+                    id="adminMessage"
+                    class="message"
+                ></div>
+
+            </div>
+
+
+            <!-- PLAYERS -->
+
+            <div class="panel">
+
+                <h2>
+                    ALL PLAYERS
+                </h2>
+
+                <div id="adminPlayerList">
+                    Loading...
+                </div>
+
+            </div>
+
+
+            <!-- LOGOUT -->
+
+            <div class="panel">
+
+                <button
+                    id="logoutButton"
+                    class="gray"
+                >
+                    LOGOUT
+                </button>
+
+
+                <br><br>
+
+
+                <a href="index.html">
+                    ← Back to Leaderboard
+                </a>
+
+            </div>
 
         </div>
 
-    </div>
+    </main>
 
 </div>
 
-
-<!-- Firebase config MUST come before admin.js -->
 
 <script src="firebase-config.js"></script>
 
 <script src="admin.js"></script>
 
 </body>
-
 </html>
