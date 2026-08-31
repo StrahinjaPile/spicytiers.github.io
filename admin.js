@@ -15,23 +15,35 @@ const deletePlayerButton = document.getElementById("deletePlayer");
 let currentUser = null;
 let isAdmin = false;
 
-/* =========================
-AUTH STATE
-========================= */
+/* =========================================
+HIDE ALL PANELS
+========================================= */
+
+function hideEverything() {
+
+```
+loginPanel.style.display = "none";
+deniedPanel.style.display = "none";
+adminPanel.style.display = "none";
+```
+
+}
+
+/* =========================================
+FIREBASE AUTH STATE
+========================================= */
 
 auth.onAuthStateChanged(async (user) => {
 
 ```
+hideEverything();
+
 currentUser = user;
-
-loginPanel.style.display = "none";
-deniedPanel.style.display = "none";
-adminPanel.style.display = "none";
-
 isAdmin = false;
 
 
-// Nije ulogovan
+/* NOT LOGGED IN */
+
 if (!user) {
 
     loginPanel.style.display = "block";
@@ -39,6 +51,8 @@ if (!user) {
     return;
 }
 
+
+/* CHECK ADMIN */
 
 try {
 
@@ -48,7 +62,6 @@ try {
         .get();
 
 
-    // Provera da li je admin
     if (
         userDoc.exists &&
         userDoc.data().role === "admin"
@@ -58,9 +71,11 @@ try {
 
         adminPanel.style.display = "block";
 
-        loadAdminPlayers();
+        await loadAdminPlayers();
 
     } else {
+
+        isAdmin = false;
 
         deniedPanel.style.display = "block";
 
@@ -68,7 +83,10 @@ try {
 
 } catch (error) {
 
-    console.error(error);
+    console.error(
+        "Admin check error:",
+        error
+    );
 
     loginPanel.style.display = "block";
 
@@ -82,85 +100,114 @@ try {
 
 });
 
-/* =========================
+/* =========================================
 LOGIN
-========================= */
+========================================= */
 
-loginButton.addEventListener("click", async () => {
+loginButton.addEventListener(
+"click",
+async () => {
 
 ```
-const email = document
-    .getElementById("email")
-    .value
-    .trim();
+    const email = document
+        .getElementById("email")
+        .value
+        .trim();
 
 
-const password = document
-    .getElementById("password")
-    .value;
+    const password = document
+        .getElementById("password")
+        .value;
 
 
-if (!email || !password) {
+    if (!email || !password) {
 
-    showLoginMessage(
-        "Enter your email and password.",
-        false
-    );
+        showLoginMessage(
+            "Enter your email and password.",
+            false
+        );
 
-    return;
-}
-
-
-try {
-
-    await auth.signInWithEmailAndPassword(
-        email,
-        password
-    );
+        return;
+    }
 
 
-    showLoginMessage(
-        "Logged in successfully.",
-        true
-    );
+    try {
 
-} catch (error) {
+        await auth
+            .signInWithEmailAndPassword(
+                email,
+                password
+            );
 
-    console.error(error);
 
-    showLoginMessage(
-        error.message,
-        false
-    );
+        showLoginMessage(
+            "Logged in successfully!",
+            true
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        showLoginMessage(
+            error.message,
+            false
+        );
+
+    }
 
 }
 ```
 
-});
+);
 
-/* =========================
+/* =========================================
 LOGOUT
-========================= */
+========================================= */
 
-logoutButton.addEventListener("click", async () => {
-
-```
-await auth.signOut();
-```
-
-});
-
-logoutDenied.addEventListener("click", async () => {
+logoutButton.addEventListener(
+"click",
+async () => {
 
 ```
-await auth.signOut();
+    try {
+
+        await auth.signOut();
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
 ```
 
-});
+);
 
-/* =========================
+logoutDenied.addEventListener(
+"click",
+async () => {
+
+```
+    try {
+
+        await auth.signOut();
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+```
+
+);
+
+/* =========================================
 SAVE / UPDATE PLAYER
-========================= */
+========================================= */
 
 savePlayerButton.addEventListener(
 "click",
@@ -184,18 +231,21 @@ async () => {
         .trim();
 
 
-    const eloValue = document
+    const eloInput = document
         .getElementById("elo")
-        .value;
+        .value
+        .trim();
 
 
-    const elo = Number(eloValue);
+    const elo = Number(eloInput);
 
 
     const tier = document
         .getElementById("tier")
         .value;
 
+
+    /* VALIDATION */
 
     if (!username) {
 
@@ -208,7 +258,11 @@ async () => {
     }
 
 
-    if (!Number.isFinite(elo) || elo < 0) {
+    if (
+        eloInput === "" ||
+        !Number.isFinite(elo) ||
+        elo < 0
+    ) {
 
         showAdminMessage(
             "Enter a valid ELO.",
@@ -241,17 +295,21 @@ async () => {
 
 
         showAdminMessage(
-            username + " saved successfully!",
+            username +
+            " saved successfully!",
             true
         );
 
 
-        loadAdminPlayers();
-
+        await loadAdminPlayers();
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Save player error:",
+            error
+        );
+
 
         showAdminMessage(
             error.message,
@@ -265,16 +323,24 @@ async () => {
 
 );
 
-/* =========================
+/* =========================================
 DELETE PLAYER
-========================= */
+========================================= */
 
 deletePlayerButton.addEventListener(
 "click",
 async () => {
 
 ```
-    if (!isAdmin) return;
+    if (!isAdmin) {
+
+        showAdminMessage(
+            "Access denied.",
+            false
+        );
+
+        return;
+    }
 
 
     const username = document
@@ -286,7 +352,7 @@ async () => {
     if (!username) {
 
         showAdminMessage(
-            "Enter the player's username.",
+            "Enter the username to delete.",
             false
         );
 
@@ -301,7 +367,9 @@ async () => {
     );
 
 
-    if (!confirmed) return;
+    if (!confirmed) {
+        return;
+    }
 
 
     try {
@@ -313,7 +381,8 @@ async () => {
 
 
         showAdminMessage(
-            username + " deleted.",
+            username +
+            " deleted successfully!",
             true
         );
 
@@ -333,12 +402,15 @@ async () => {
             .value = "UNRANKED";
 
 
-        loadAdminPlayers();
-
+        await loadAdminPlayers();
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Delete player error:",
+            error
+        );
+
 
         showAdminMessage(
             error.message,
@@ -352,16 +424,17 @@ async () => {
 
 );
 
-/* =========================
+/* =========================================
 LOAD PLAYERS
-========================= */
+========================================= */
 
 async function loadAdminPlayers() {
 
 ```
-const list = document.getElementById(
-    "adminPlayerList"
-);
+const list =
+    document.getElementById(
+        "adminPlayerList"
+    );
 
 
 list.innerHTML = "Loading...";
@@ -380,7 +453,8 @@ try {
 
     if (snapshot.empty) {
 
-        list.innerHTML = "No players yet.";
+        list.innerHTML =
+            "No players yet.";
 
         return;
     }
@@ -399,25 +473,34 @@ try {
             "admin-player";
 
 
+        /* PLAYER NAME */
+
         const name =
             document.createElement("div");
 
         name.textContent =
-            player.username || "Unknown";
+            player.username ||
+            "Unknown";
 
+
+        /* TIER */
 
         const tier =
             document.createElement("div");
 
         tier.textContent =
-            player.tier || "UNRANKED";
+            player.tier ||
+            "UNRANKED";
 
+
+        /* ELO */
 
         const elo =
             document.createElement("div");
 
         elo.textContent =
-            (player.elo || 0) + " ELO";
+            (player.elo || 0) +
+            " ELO";
 
 
         row.appendChild(name);
@@ -425,36 +508,41 @@ try {
         row.appendChild(elo);
 
 
-        row.style.cursor = "pointer";
+        row.style.cursor =
+            "pointer";
 
 
-        // Klik na igraca = ucitaj podatke
+        /* CLICK PLAYER */
+
         row.addEventListener(
             "click",
             () => {
 
                 document
-                    .getElementById("username")
+                    .getElementById(
+                        "username"
+                    )
                     .value =
-                    player.username;
+                    player.username ||
+                    "";
 
 
                 document
-                    .getElementById("elo")
+                    .getElementById(
+                        "elo"
+                    )
                     .value =
-                    player.elo;
+                    player.elo ||
+                    0;
 
 
                 document
-                    .getElementById("tier")
+                    .getElementById(
+                        "tier"
+                    )
                     .value =
-                    player.tier;
-
-
-                window.scrollTo({
-                    top: 0,
-                    behavior: "smooth"
-                });
+                    player.tier ||
+                    "UNRANKED";
 
             }
         );
@@ -466,7 +554,11 @@ try {
 
 } catch (error) {
 
-    console.error(error);
+    console.error(
+        "Load players error:",
+        error
+    );
+
 
     list.innerHTML =
         "Could not load players.";
@@ -476,14 +568,18 @@ try {
 
 }
 
-/* =========================
-MESSAGES
-========================= */
+/* =========================================
+LOGIN MESSAGE
+========================================= */
 
-function showLoginMessage(message, success) {
+function showLoginMessage(
+message,
+success
+) {
 
 ```
-loginMessage.textContent = message;
+loginMessage.textContent =
+    message;
 
 
 loginMessage.className =
@@ -494,10 +590,18 @@ loginMessage.className =
 
 }
 
-function showAdminMessage(message, success) {
+/* =========================================
+ADMIN MESSAGE
+========================================= */
+
+function showAdminMessage(
+message,
+success
+) {
 
 ```
-adminMessage.textContent = message;
+adminMessage.textContent =
+    message;
 
 
 adminMessage.className =
