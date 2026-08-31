@@ -12,7 +12,10 @@
 
     <title>SpicyTiers Admin</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 
@@ -29,56 +32,39 @@
 
     <header class="topbar">
 
-        <div class="brand">
+        <a
+            href="index.html"
+            class="logo"
+        >
+            <span>⚡</span> SpicyTiers
+        </a>
 
-            <span>⚡</span>
+        <nav>
 
-            <strong>
-                <b>Spicy</b>Tiers
-            </strong>
+            <a href="index.html">
+                Leaderboard
+            </a>
 
-        </div>
+            <a
+                href="admin.html"
+                class="active"
+            >
+                Admin
+            </a>
 
-        <div class="status">
-
-            <span class="status-dot"></span>
-
-            ADMIN PANEL
-
-        </div>
+        </nav>
 
     </header>
 
 
-    <main>
-
-        <section class="hero">
-
-            <div>
-
-                <div class="eyebrow">
-                    SPICYTIERS ADMINISTRATION
-                </div>
-
-                <h1>
-                    Manage
-                    <span>Players</span>
-                </h1>
-
-                <p>
-                    Manage ELO and tiers across all SpicyTiers gamemodes.
-                </p>
-
-            </div>
-
-        </section>
+    <main class="admin-page">
 
 
         <!-- LOGIN -->
 
         <div
             id="loginPanel"
-            class="panel"
+            class="panel login-box"
         >
 
             <h2>
@@ -131,10 +117,11 @@
                 This account is not an administrator.
             </p>
 
+            <br>
 
             <button
                 id="logoutDenied"
-                class="gray"
+                class="gray-btn"
             >
                 LOGOUT
             </button>
@@ -149,8 +136,20 @@
             style="display:none;"
         >
 
+            <div class="admin-title">
 
-            <!-- PLAYER EDITOR -->
+                <div class="small-title">
+                    ADMINISTRATION
+                </div>
+
+                <h1>
+                    Player Manager
+                </h1>
+
+            </div>
+
+
+            <!-- EDITOR -->
 
             <div class="panel">
 
@@ -159,239 +158,270 @@
                 </h2>
 
 
-                <input
-                    id="username"
-                    type="text"
-                    placeholder="Minecraft Username"
-                    maxlength="16"
-                    autocomplete="off"
-                >
+                <div class="form-grid">
 
 
-                <h3>
-                    ⚔ Sword
-                </h3>
+                    <div class="form-group full">
 
-                <input
-                    id="sword-elo"
-                    type="number"
-                    min="0"
-                    placeholder="Sword ELO"
-                >
+                        <label>
+                            MINECRAFT USERNAME
+                        </label>
 
-                <select id="sword-tier">
+                        <input
+                            id="username"
+                            type="text"
+                            placeholder="Minecraft Username"
+                            maxlength="16"
+                            autocomplete="off"
+                        >
 
-                    <option value="UNRANKED">
-                        UNRANKED
-                    </option>
-
-                    <option value="LT5">LT5</option>
-                    <option value="HT5">HT5</option>
-                    <option value="LT4">LT4</option>
-                    <option value="HT4">HT4</option>
-                    <option value="LT3">LT3</option>
-                    <option value="HT3">HT3</option>
-                    <option value="LT2">LT2</option>
-                    <option value="HT2">HT2</option>
-                    <option value="LT1">LT1</option>
-                    <option value="HT1">HT1</option>
-
-                </select>
+                    </div>
 
 
-                <h3>
-                    🪓 Axe
-                </h3>
+                    <!-- SWORD -->
 
-                <input
-                    id="axe-elo"
-                    type="number"
-                    min="0"
-                    placeholder="Axe ELO"
-                >
+                    <div class="form-group">
 
-                <select id="axe-tier">
-                    <option value="UNRANKED">UNRANKED</option>
-                    <option value="LT5">LT5</option>
-                    <option value="HT5">HT5</option>
-                    <option value="LT4">LT4</option>
-                    <option value="HT4">HT4</option>
-                    <option value="LT3">LT3</option>
-                    <option value="HT3">HT3</option>
-                    <option value="LT2">LT2</option>
-                    <option value="HT2">HT2</option>
-                    <option value="LT1">LT1</option>
-                    <option value="HT1">HT1</option>
-                </select>
+                        <label>
+                            ⚔ SWORD ELO
+                        </label>
 
+                        <input
+                            id="swordElo"
+                            type="number"
+                            min="0"
+                            value="0"
+                        >
 
-                <h3>
-                    🟫 Vanilla
-                </h3>
+                    </div>
 
-                <input
-                    id="vanilla-elo"
-                    type="number"
-                    min="0"
-                    placeholder="Vanilla ELO"
-                >
+                    <div class="form-group">
 
-                <select id="vanilla-tier">
-                    <option value="UNRANKED">UNRANKED</option>
-                    <option value="LT5">LT5</option>
-                    <option value="HT5">HT5</option>
-                    <option value="LT4">LT4</option>
-                    <option value="HT4">HT4</option>
-                    <option value="LT3">LT3</option>
-                    <option value="HT3">HT3</option>
-                    <option value="LT2">LT2</option>
-                    <option value="HT2">HT2</option>
-                    <option value="LT1">LT1</option>
-                    <option value="HT1">HT1</option>
-                </select>
+                        <label>
+                            SWORD TIER
+                        </label>
+
+                        <select id="swordTier"></select>
+
+                    </div>
 
 
-                <h3>
-                    ❤️ UHC
-                </h3>
+                    <!-- AXE -->
 
-                <input
-                    id="uhc-elo"
-                    type="number"
-                    min="0"
-                    placeholder="UHC ELO"
-                >
+                    <div class="form-group">
 
-                <select id="uhc-tier">
-                    <option value="UNRANKED">UNRANKED</option>
-                    <option value="LT5">LT5</option>
-                    <option value="HT5">HT5</option>
-                    <option value="LT4">LT4</option>
-                    <option value="HT4">HT4</option>
-                    <option value="LT3">LT3</option>
-                    <option value="HT3">HT3</option>
-                    <option value="LT2">LT2</option>
-                    <option value="HT2">HT2</option>
-                    <option value="LT1">LT1</option>
-                    <option value="HT1">HT1</option>
-                </select>
+                        <label>
+                            🪓 AXE ELO
+                        </label>
 
+                        <input
+                            id="axeElo"
+                            type="number"
+                            min="0"
+                            value="0"
+                        >
 
-                <h3>
-                    🌍 SMP
-                </h3>
+                    </div>
 
-                <input
-                    id="smp-elo"
-                    type="number"
-                    min="0"
-                    placeholder="SMP ELO"
-                >
+                    <div class="form-group">
 
-                <select id="smp-tier">
-                    <option value="UNRANKED">UNRANKED</option>
-                    <option value="LT5">LT5</option>
-                    <option value="HT5">HT5</option>
-                    <option value="LT4">LT4</option>
-                    <option value="HT4">HT4</option>
-                    <option value="LT3">LT3</option>
-                    <option value="HT3">HT3</option>
-                    <option value="LT2">LT2</option>
-                    <option value="HT2">HT2</option>
-                    <option value="LT1">LT1</option>
-                    <option value="HT1">HT1</option>
-                </select>
+                        <label>
+                            AXE TIER
+                        </label>
+
+                        <select id="axeTier"></select>
+
+                    </div>
 
 
-                <h3>
-                    💎 Netherite OP
-                </h3>
+                    <!-- VANILLA -->
 
-                <input
-                    id="netheriteop-elo"
-                    type="number"
-                    min="0"
-                    placeholder="Netherite OP ELO"
-                >
+                    <div class="form-group">
 
-                <select id="netheriteop-tier">
-                    <option value="UNRANKED">UNRANKED</option>
-                    <option value="LT5">LT5</option>
-                    <option value="HT5">HT5</option>
-                    <option value="LT4">LT4</option>
-                    <option value="HT4">HT4</option>
-                    <option value="LT3">LT3</option>
-                    <option value="HT3">HT3</option>
-                    <option value="LT2">LT2</option>
-                    <option value="HT2">HT2</option>
-                    <option value="LT1">LT1</option>
-                    <option value="HT1">HT1</option>
-                </select>
+                        <label>
+                            VANILLA ELO
+                        </label>
 
+                        <input
+                            id="vanillaElo"
+                            type="number"
+                            min="0"
+                            value="0"
+                        >
 
-                <h3>
-                    🧪 Pot
-                </h3>
+                    </div>
 
-                <input
-                    id="pot-elo"
-                    type="number"
-                    min="0"
-                    placeholder="Pot ELO"
-                >
+                    <div class="form-group">
 
-                <select id="pot-tier">
-                    <option value="UNRANKED">UNRANKED</option>
-                    <option value="LT5">LT5</option>
-                    <option value="HT5">HT5</option>
-                    <option value="LT4">LT4</option>
-                    <option value="HT4">HT4</option>
-                    <option value="LT3">LT3</option>
-                    <option value="HT3">HT3</option>
-                    <option value="LT2">LT2</option>
-                    <option value="HT2">HT2</option>
-                    <option value="LT1">LT1</option>
-                    <option value="HT1">HT1</option>
-                </select>
+                        <label>
+                            VANILLA TIER
+                        </label>
+
+                        <select id="vanillaTier"></select>
+
+                    </div>
 
 
-                <h3>
-                    🔨 Mace
-                </h3>
+                    <!-- UHC -->
 
-                <input
-                    id="mace-elo"
-                    type="number"
-                    min="0"
-                    placeholder="Mace ELO"
-                >
+                    <div class="form-group">
 
-                <select id="mace-tier">
-                    <option value="UNRANKED">UNRANKED</option>
-                    <option value="LT5">LT5</option>
-                    <option value="HT5">HT5</option>
-                    <option value="LT4">LT4</option>
-                    <option value="HT4">HT4</option>
-                    <option value="LT3">LT3</option>
-                    <option value="HT3">HT3</option>
-                    <option value="LT2">LT2</option>
-                    <option value="HT2">HT2</option>
-                    <option value="LT1">LT1</option>
-                    <option value="HT1">HT1</option>
-                </select>
+                        <label>
+                            UHC ELO
+                        </label>
 
+                        <input
+                            id="uhcElo"
+                            type="number"
+                            min="0"
+                            value="0"
+                        >
 
-                <button id="savePlayer">
-                    SAVE / UPDATE PLAYER
-                </button>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            UHC TIER
+                        </label>
+
+                        <select id="uhcTier"></select>
+
+                    </div>
 
 
-                <button
-                    id="deletePlayer"
-                    class="danger"
-                >
-                    DELETE PLAYER
-                </button>
+                    <!-- SMP -->
+
+                    <div class="form-group">
+
+                        <label>
+                            SMP ELO
+                        </label>
+
+                        <input
+                            id="smpElo"
+                            type="number"
+                            min="0"
+                            value="0"
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            SMP TIER
+                        </label>
+
+                        <select id="smpTier"></select>
+
+                    </div>
+
+
+                    <!-- NETHERITE OP -->
+
+                    <div class="form-group">
+
+                        <label>
+                            NETHERITE OP ELO
+                        </label>
+
+                        <input
+                            id="netheriteopElo"
+                            type="number"
+                            min="0"
+                            value="0"
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            NETHERITE OP TIER
+                        </label>
+
+                        <select id="netheriteopTier"></select>
+
+                    </div>
+
+
+                    <!-- POT -->
+
+                    <div class="form-group">
+
+                        <label>
+                            🧪 POT ELO
+                        </label>
+
+                        <input
+                            id="potElo"
+                            type="number"
+                            min="0"
+                            value="0"
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            POT TIER
+                        </label>
+
+                        <select id="potTier"></select>
+
+                    </div>
+
+
+                    <!-- MACE -->
+
+                    <div class="form-group">
+
+                        <label>
+                            🔨 MACE ELO
+                        </label>
+
+                        <input
+                            id="maceElo"
+                            type="number"
+                            min="0"
+                            value="0"
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            MACE TIER
+                        </label>
+
+                        <select id="maceTier"></select>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="admin-buttons">
+
+                    <button
+                        id="savePlayer"
+                        class="save-btn"
+                    >
+                        SAVE / UPDATE
+                    </button>
+
+                    <button
+                        id="deletePlayer"
+                        class="delete-btn"
+                    >
+                        DELETE
+                    </button>
+
+                </div>
 
 
                 <div
@@ -417,20 +447,16 @@
             </div>
 
 
-            <!-- LOGOUT -->
-
             <div class="panel">
 
                 <button
                     id="logoutButton"
-                    class="gray"
+                    class="gray-btn"
                 >
                     LOGOUT
                 </button>
 
-
                 <br><br>
-
 
                 <a href="index.html">
                     ← Back to Leaderboard
