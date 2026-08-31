@@ -1,19 +1,111 @@
-const loginPanel = document.getElementById("loginPanel");
-const deniedPanel = document.getElementById("deniedPanel");
-const adminPanel = document.getElementById("adminPanel");
+const loginPanel =
+    document.getElementById("loginPanel");
 
-const loginMessage = document.getElementById("loginMessage");
-const adminMessage = document.getElementById("adminMessage");
+const deniedPanel =
+    document.getElementById("deniedPanel");
 
-const loginButton = document.getElementById("loginButton");
-const logoutButton = document.getElementById("logoutButton");
-const logoutDenied = document.getElementById("logoutDenied");
+const adminPanel =
+    document.getElementById("adminPanel");
 
-const savePlayerButton = document.getElementById("savePlayer");
-const deletePlayerButton = document.getElementById("deletePlayer");
+const loginMessage =
+    document.getElementById("loginMessage");
+
+const adminMessage =
+    document.getElementById("adminMessage");
+
+const loginButton =
+    document.getElementById("loginButton");
+
+const logoutButton =
+    document.getElementById("logoutButton");
+
+const logoutDenied =
+    document.getElementById("logoutDenied");
+
+const savePlayerButton =
+    document.getElementById("savePlayer");
+
+const deletePlayerButton =
+    document.getElementById("deletePlayer");
+
+const eloInput =
+    document.getElementById("elo");
+
+const tierInput =
+    document.getElementById("tier");
+
+const gameModeInput =
+    document.getElementById("gameMode");
+
 
 let currentUser = null;
 let isAdmin = false;
+
+
+/* =========================
+TIER FROM ELO
+========================= */
+
+function getTierFromElo(elo) {
+
+    elo = Number(elo);
+
+    if (!Number.isFinite(elo) || elo < 1000) {
+        return "UNRANKED";
+    }
+
+    if (elo >= 2250) {
+        return "HT1";
+    }
+
+    if (elo >= 2000) {
+        return "LT1";
+    }
+
+    if (elo >= 1900) {
+        return "HT2";
+    }
+
+    if (elo >= 1800) {
+        return "LT2";
+    }
+
+    if (elo >= 1650) {
+        return "HT3";
+    }
+
+    if (elo >= 1500) {
+        return "LT3";
+    }
+
+    if (elo >= 1300) {
+        return "HT4";
+    }
+
+    if (elo >= 1200) {
+        return "LT4";
+    }
+
+    if (elo >= 1100) {
+        return "HT5";
+    }
+
+    return "LT5";
+}
+
+
+/* =========================
+UPDATE TIER PREVIEW
+========================= */
+
+eloInput.addEventListener("input", () => {
+
+    const elo = Number(eloInput.value);
+
+    tierInput.value =
+        getTierFromElo(elo);
+
+});
 
 
 /* =========================
@@ -30,17 +122,23 @@ auth.onAuthStateChanged(async (user) => {
 
     isAdmin = false;
 
+
     if (!user) {
+
         loginPanel.style.display = "block";
+
         return;
     }
 
+
     try {
 
-        const userDoc = await db
-            .collection("users")
-            .doc(user.uid)
-            .get();
+        const userDoc =
+            await db
+                .collection("users")
+                .doc(user.uid)
+                .get();
+
 
         if (
             userDoc.exists &&
@@ -69,7 +167,9 @@ auth.onAuthStateChanged(async (user) => {
             "Could not check admin permissions.",
             false
         );
+
     }
+
 });
 
 
@@ -77,245 +177,359 @@ auth.onAuthStateChanged(async (user) => {
 LOGIN
 ========================= */
 
-loginButton.addEventListener("click", async () => {
+loginButton.addEventListener(
+    "click",
+    async () => {
 
-    const email = document
-        .getElementById("email")
-        .value
-        .trim();
+        const email =
+            document
+                .getElementById("email")
+                .value
+                .trim();
 
-    const password = document
-        .getElementById("password")
-        .value;
+        const password =
+            document
+                .getElementById("password")
+                .value;
 
-    if (!email || !password) {
 
-        showLoginMessage(
-            "Enter your email and password.",
-            false
-        );
+        if (!email || !password) {
 
-        return;
+            showLoginMessage(
+                "Enter your email and password.",
+                false
+            );
+
+            return;
+        }
+
+
+        try {
+
+            await auth
+                .signInWithEmailAndPassword(
+                    email,
+                    password
+                );
+
+
+            showLoginMessage(
+                "Logged in successfully.",
+                true
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            showLoginMessage(
+                error.message,
+                false
+            );
+
+        }
+
     }
-
-    try {
-
-        await auth.signInWithEmailAndPassword(
-            email,
-            password
-        );
-
-        showLoginMessage(
-            "Logged in successfully.",
-            true
-        );
-
-    } catch (error) {
-
-        console.error(error);
-
-        showLoginMessage(
-            error.message,
-            false
-        );
-    }
-});
+);
 
 
 /* =========================
 LOGOUT
 ========================= */
 
-logoutButton.addEventListener("click", async () => {
+logoutButton.addEventListener(
+    "click",
+    async () => {
 
-    await auth.signOut();
+        await auth.signOut();
 
-});
+    }
+);
 
-logoutDenied.addEventListener("click", async () => {
 
-    await auth.signOut();
+logoutDenied.addEventListener(
+    "click",
+    async () => {
 
-});
+        await auth.signOut();
+
+    }
+);
 
 
 /* =========================
-SAVE / UPDATE PLAYER
+SAVE PLAYER
 ========================= */
 
-savePlayerButton.addEventListener("click", async () => {
+savePlayerButton.addEventListener(
+    "click",
+    async () => {
 
-    if (!isAdmin) {
+        if (!isAdmin) {
 
-        showAdminMessage(
-            "Access denied.",
-            false
-        );
+            showAdminMessage(
+                "Access denied.",
+                false
+            );
 
-        return;
+            return;
+        }
+
+
+        const username =
+            document
+                .getElementById("username")
+                .value
+                .trim();
+
+
+        const elo =
+            Number(
+                document
+                    .getElementById("elo")
+                    .value
+            );
+
+
+        const gameMode =
+            gameModeInput.value;
+
+
+        if (!username) {
+
+            showAdminMessage(
+                "Enter a Minecraft username.",
+                false
+            );
+
+            return;
+        }
+
+
+        if (
+            !Number.isFinite(elo) ||
+            elo < 0
+        ) {
+
+            showAdminMessage(
+                "Enter a valid ELO.",
+                false
+            );
+
+            return;
+        }
+
+
+        const tier =
+            getTierFromElo(elo);
+
+
+        try {
+
+            const playerRef =
+                db
+                    .collection("players")
+                    .doc(username.toLowerCase());
+
+
+            const playerDoc =
+                await playerRef.get();
+
+
+            let playerData =
+                playerDoc.exists
+                    ? playerDoc.data()
+                    : {
+                        username: username
+                    };
+
+
+            playerData.username =
+                username;
+
+
+            if (!playerData[gameMode]) {
+
+                playerData[gameMode] = {
+                    elo: 0,
+                    tier: "UNRANKED"
+                };
+
+            }
+
+
+            playerData[gameMode].elo =
+                elo;
+
+            playerData[gameMode].tier =
+                tier;
+
+
+            playerData.updatedAt =
+                firebase.firestore
+                    .FieldValue
+                    .serverTimestamp();
+
+
+            await playerRef.set(
+                playerData
+            );
+
+
+            showAdminMessage(
+                username +
+                " updated for " +
+                gameMode.toUpperCase() +
+                " — " +
+                tier +
+                " (" +
+                elo +
+                " ELO)",
+                true
+            );
+
+
+            loadAdminPlayers();
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            showAdminMessage(
+                error.message,
+                false
+            );
+
+        }
+
     }
-
-    const username = document
-        .getElementById("username")
-        .value
-        .trim();
-
-    const eloValue = document
-        .getElementById("elo")
-        .value;
-
-    const elo = Number(eloValue);
-
-    const tier = document
-        .getElementById("tier")
-        .value;
-
-    if (!username) {
-
-        showAdminMessage(
-            "Enter a Minecraft username.",
-            false
-        );
-
-        return;
-    }
-
-    if (!Number.isFinite(elo) || elo < 0) {
-
-        showAdminMessage(
-            "Enter a valid ELO.",
-            false
-        );
-
-        return;
-    }
-
-    try {
-
-        await db
-            .collection("players")
-            .doc(username.toLowerCase())
-            .set({
-
-                username: username,
-
-                elo: elo,
-
-                tier: tier,
-
-                updatedAt:
-                    firebase.firestore
-                        .FieldValue
-                        .serverTimestamp()
-
-            });
-
-        showAdminMessage(
-            username + " saved successfully!",
-            true
-        );
-
-        /*
-        =====================================
-        NE UCITAVAMO SVE PLAYERE PONOVO
-
-        Menjamo samo ovog playera
-        =====================================
-        */
-
-        updatePlayerInList({
-            username: username,
-            elo: elo,
-            tier: tier
-        });
-
-    } catch (error) {
-
-        console.error(error);
-
-        showAdminMessage(
-            error.message,
-            false
-        );
-    }
-
-});
+);
 
 
 /* =========================
-DELETE PLAYER
+DELETE PLAYER FROM MODE
 ========================= */
 
-deletePlayerButton.addEventListener("click", async () => {
+deletePlayerButton.addEventListener(
+    "click",
+    async () => {
 
-    if (!isAdmin) return;
+        if (!isAdmin) {
 
-    const username = document
-        .getElementById("username")
-        .value
-        .trim();
+            showAdminMessage(
+                "Access denied.",
+                false
+            );
 
-    if (!username) {
+            return;
+        }
 
-        showAdminMessage(
-            "Enter the player's username.",
-            false
-        );
 
-        return;
+        const username =
+            document
+                .getElementById("username")
+                .value
+                .trim();
+
+
+        const gameMode =
+            gameModeInput.value;
+
+
+        if (!username) {
+
+            showAdminMessage(
+                "Enter the player's username.",
+                false
+            );
+
+            return;
+        }
+
+
+        const confirmed =
+            confirm(
+                "Delete " +
+                gameMode.toUpperCase() +
+                " data for " +
+                username +
+                "?"
+            );
+
+
+        if (!confirmed) {
+            return;
+        }
+
+
+        try {
+
+            const playerRef =
+                db
+                    .collection("players")
+                    .doc(username.toLowerCase());
+
+
+            const playerDoc =
+                await playerRef.get();
+
+
+            if (!playerDoc.exists) {
+
+                showAdminMessage(
+                    "Player does not exist.",
+                    false
+                );
+
+                return;
+            }
+
+
+            const data =
+                playerDoc.data();
+
+
+            delete data[gameMode];
+
+
+            await playerRef.set(data);
+
+
+            showAdminMessage(
+                username +
+                " " +
+                gameMode.toUpperCase() +
+                " data deleted.",
+                true
+            );
+
+
+            document
+                .getElementById("elo")
+                .value = "";
+
+
+            tierInput.value =
+                "UNRANKED";
+
+
+            loadAdminPlayers();
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            showAdminMessage(
+                error.message,
+                false
+            );
+
+        }
+
     }
-
-    const confirmed = confirm(
-        "Are you sure you want to delete " +
-        username +
-        "?"
-    );
-
-    if (!confirmed) return;
-
-    try {
-
-        await db
-            .collection("players")
-            .doc(username.toLowerCase())
-            .delete();
-
-        showAdminMessage(
-            username + " deleted.",
-            true
-        );
-
-        document
-            .getElementById("username")
-            .value = "";
-
-        document
-            .getElementById("elo")
-            .value = "";
-
-        document
-            .getElementById("tier")
-            .value = "UNRANKED";
-
-        /*
-        =====================================
-        SAMO OBRISI OVOG PLAYERA IZ LISTE
-        =====================================
-        */
-
-        removePlayerFromList(username);
-
-    } catch (error) {
-
-        console.error(error);
-
-        showAdminMessage(
-            error.message,
-            false
-        );
-    }
-
-});
+);
 
 
 /* =========================
@@ -324,33 +538,146 @@ LOAD PLAYERS
 
 async function loadAdminPlayers() {
 
-    const list = document.getElementById(
-        "adminPlayerList"
-    );
+    const list =
+        document.getElementById(
+            "adminPlayerList"
+        );
 
-    list.innerHTML = "Loading...";
+
+    list.innerHTML =
+        "Loading...";
+
 
     try {
 
-        const snapshot = await db
-            .collection("players")
-            .orderBy("elo", "desc")
-            .get();
+        const snapshot =
+            await db
+                .collection("players")
+                .get();
+
 
         list.innerHTML = "";
 
+
         if (snapshot.empty) {
 
-            list.innerHTML = "No players yet.";
+            list.innerHTML =
+                "No players yet.";
 
             return;
         }
 
+
         snapshot.forEach((doc) => {
 
-            const player = doc.data();
+            const player =
+                doc.data();
 
-            createPlayerRow(player);
+
+            const mode =
+                gameModeInput.value;
+
+
+            const stats =
+                player[mode] || {
+                    elo: 0,
+                    tier: "UNRANKED"
+                };
+
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "admin-player";
+
+
+            const name =
+                document.createElement(
+                    "div"
+                );
+
+
+            name.textContent =
+                player.username ||
+                "Unknown";
+
+
+            const tier =
+                document.createElement(
+                    "div"
+                );
+
+
+            tier.className =
+                getTierClass(
+                    stats.tier
+                );
+
+
+            tier.textContent =
+                stats.tier ||
+                "UNRANKED";
+
+
+            const elo =
+                document.createElement(
+                    "div"
+                );
+
+
+            elo.textContent =
+                (stats.elo || 0) +
+                " ELO";
+
+
+            row.appendChild(name);
+            row.appendChild(tier);
+            row.appendChild(elo);
+
+
+            row.style.cursor =
+                "pointer";
+
+
+            row.addEventListener(
+                "click",
+                () => {
+
+                    document
+                        .getElementById(
+                            "username"
+                        )
+                        .value =
+                        player.username;
+
+
+                    document
+                        .getElementById(
+                            "elo"
+                        )
+                        .value =
+                        stats.elo || 0;
+
+
+                    tierInput.value =
+                        stats.tier ||
+                        "UNRANKED";
+
+
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth"
+                    });
+
+                }
+            );
+
+
+            list.appendChild(row);
 
         });
 
@@ -362,213 +689,103 @@ async function loadAdminPlayers() {
             "Could not load players.";
 
     }
+
 }
 
 
 /* =========================
-CREATE PLAYER ROW
+GAME MODE CHANGE
 ========================= */
 
-function createPlayerRow(player) {
+gameModeInput.addEventListener(
+    "change",
+    () => {
 
-    const list = document.getElementById(
-        "adminPlayerList"
-    );
-
-    const row = document.createElement("div");
-
-    row.className = "admin-player";
-
-    /*
-    ID koristimo da možemo kasnije
-    pronaći samo ovog playera
-    */
-
-    row.dataset.playerId =
-        player.username.toLowerCase();
+        const username =
+            document
+                .getElementById(
+                    "username"
+                )
+                .value
+                .trim();
 
 
-    const name =
-        document.createElement("div");
+        if (!username) {
 
-    name.className = "player-name";
+            loadAdminPlayers();
 
-    name.textContent =
-        player.username || "Unknown";
-
-
-    const tier =
-        document.createElement("div");
-
-    tier.className = "player-tier";
-
-    tier.textContent =
-        player.tier || "UNRANKED";
+            return;
+        }
 
 
-    const elo =
-        document.createElement("div");
+        db
+            .collection("players")
+            .doc(username.toLowerCase())
+            .get()
+            .then((doc) => {
 
-    elo.className = "player-elo";
+                if (!doc.exists) {
 
-    elo.textContent =
-        (player.elo || 0) + " ELO";
+                    eloInput.value = "";
+                    tierInput.value =
+                        "UNRANKED";
 
-
-    row.appendChild(name);
-    row.appendChild(tier);
-    row.appendChild(elo);
-
-
-    row.style.cursor = "pointer";
-
-
-    /*
-    Klik na playera
-    */
-
-    row.addEventListener("click", () => {
-
-        document
-            .getElementById("username")
-            .value =
-            player.username || "";
-
-        document
-            .getElementById("elo")
-            .value =
-            player.elo || 0;
-
-        document
-            .getElementById("tier")
-            .value =
-            player.tier || "UNRANKED";
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-
-    });
+                    return;
+                }
 
 
-    list.appendChild(row);
-}
+                const player =
+                    doc.data();
+
+
+                const stats =
+                    player[
+                        gameModeInput.value
+                    ] || {};
+
+
+                eloInput.value =
+                    stats.elo || 0;
+
+
+                tierInput.value =
+                    stats.tier ||
+                    getTierFromElo(
+                        stats.elo || 0
+                    );
+
+            })
+            .catch((error) => {
+
+                console.error(error);
+
+            });
+
+
+        loadAdminPlayers();
+
+    }
+);
 
 
 /* =========================
-UPDATE ONLY ONE PLAYER
+TIER CLASS
 ========================= */
 
-function updatePlayerInList(player) {
+function getTierClass(tier) {
 
-    const list = document.getElementById(
-        "adminPlayerList"
+    if (!tier) {
+        return "tier-unranked";
+    }
+
+
+    return (
+        "tier-" +
+        tier
+            .toLowerCase()
+            .replace(" ", "-")
     );
 
-    const playerId =
-        player.username.toLowerCase();
-
-
-    /*
-    Proveravamo da li player već postoji
-    */
-
-    let row = list.querySelector(
-        `[data-player-id="${playerId}"]`
-    );
-
-
-    /*
-    Ako NE postoji,
-    samo napravimo novi row.
-    */
-
-    if (!row) {
-
-        createPlayerRow(player);
-
-        return;
-    }
-
-
-    /*
-    Ako postoji,
-    menjamo samo njegove podatke.
-    */
-
-    const name =
-        row.querySelector(".player-name");
-
-    const tier =
-        row.querySelector(".player-tier");
-
-    const elo =
-        row.querySelector(".player-elo");
-
-
-    if (name) {
-
-        name.textContent =
-            player.username;
-    }
-
-
-    if (tier) {
-
-        tier.textContent =
-            player.tier;
-    }
-
-
-    if (elo) {
-
-        elo.textContent =
-            player.elo + " ELO";
-    }
-}
-
-
-/* =========================
-REMOVE ONLY ONE PLAYER
-========================= */
-
-function removePlayerFromList(username) {
-
-    const playerId =
-        username.toLowerCase();
-
-    const row =
-        document.querySelector(
-            `[data-player-id="${playerId}"]`
-        );
-
-    if (row) {
-
-        row.remove();
-
-    }
-
-
-    /*
-    Ako više nema playera,
-    prikaži poruku.
-    */
-
-    const list =
-        document.getElementById(
-            "adminPlayerList"
-        );
-
-    if (
-        list &&
-        list.children.length === 0
-    ) {
-
-        list.innerHTML =
-            "No players yet.";
-
-    }
 }
 
 
@@ -584,10 +801,12 @@ function showLoginMessage(
     loginMessage.textContent =
         message;
 
+
     loginMessage.className =
         success
             ? "message success"
             : "message error";
+
 }
 
 
@@ -599,8 +818,10 @@ function showAdminMessage(
     adminMessage.textContent =
         message;
 
+
     adminMessage.className =
         success
             ? "message success"
             : "message error";
+
 }
