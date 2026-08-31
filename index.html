@@ -2,23 +2,23 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>SpicyTiers — PvP Leaderboard</title>
+    <title>SpicyTiers — Minecraft PvP</title>
 
     <link rel="stylesheet" href="style.css">
 
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
 </head>
 
 <body>
 
 <div class="site">
-
-    <!-- TOPBAR -->
 
     <header class="topbar">
 
@@ -27,245 +27,119 @@
         </a>
 
         <nav>
+
             <a href="index.html" class="active">
+                Home
+            </a>
+
+            <a href="leaderboard.html">
                 Leaderboard
             </a>
 
-            <a href="admin.html">
-                Admin
+            <a href="client.html">
+                Client
             </a>
+
+            <a href="discord.html">
+                Discord
+            </a>
+
         </nav>
+
+        <a href="login.html" class="login-button">
+            LOGIN
+        </a>
 
     </header>
 
 
-    <!-- HERO -->
-
     <main>
 
-        <section class="hero">
+        <section class="home-hero">
 
-            <div class="hero-glow"></div>
+            <div class="hero-badge">
+                MINECRAFT PVP RANKING SYSTEM
+            </div>
 
-            <div class="hero-content">
+            <h1>
+                Become the
+                <span>best.</span>
+            </h1>
 
-                <div class="hero-badge">
-                    SPICYTIERS
-                </div>
+            <p>
+                SpicyTiers is a competitive Minecraft PvP
+                ranking system built for players who want
+                to compete, improve and prove themselves.
+            </p>
 
-                <h1>
-                    Minecraft PvP<br>
-                    <span>Leaderboard</span>
-                </h1>
+            <div class="hero-buttons">
 
-                <p>
-                    Compete. Rank up. Become the best.
-                </p>
+                <a href="leaderboard.html" class="primary-button">
+                    VIEW LEADERBOARD
+                </a>
+
+                <a href="client.html" class="secondary-button">
+                    DOWNLOAD CLIENT
+                </a>
 
             </div>
 
         </section>
 
 
-        <!-- LEADERBOARD -->
+        <section class="info-section">
 
-        <section class="leaderboard-section">
+            <div class="info-card">
 
-            <div class="leaderboard-top">
-
-                <div class="leaderboard-title">
-
-                    <div class="small-title">
-                        GLOBAL LEADERBOARD
-                    </div>
-
-                    <h2>
-                        Global Rankings
-                    </h2>
-
+                <div class="info-icon">
+                    🏆
                 </div>
 
+                <h2>
+                    Competitive Tiers
+                </h2>
 
-                <!-- GAME MODE SELECTOR -->
-
-                <div class="mode-selector">
-
-                    <div class="mode-label">
-                        GAME MODE
-                    </div>
-
-                    <button
-                        id="modeButton"
-                        class="mode-selector-button"
-                    >
-
-                        <span id="selectedModeIcon">
-                            ⚔
-                        </span>
-
-                        <span id="selectedMode">
-                            Sword
-                        </span>
-
-                        <span class="arrow">
-                            ▼
-                        </span>
-
-                    </button>
-
-
-                    <div
-                        id="modeDropdown"
-                        class="mode-dropdown"
-                    >
-
-                        <button
-                            class="mode-option active"
-                            data-mode="sword"
-                            data-name="Sword"
-                            data-icon="⚔"
-                        >
-                            <span>⚔</span>
-                            Sword
-                        </button>
-
-                        <button
-                            class="mode-option"
-                            data-mode="axe"
-                            data-name="Axe"
-                            data-icon="🪓"
-                        >
-                            <span>🪓</span>
-                            Axe
-                        </button>
-
-                        <button
-                            class="mode-option"
-                            data-mode="vanilla"
-                            data-name="Vanilla"
-                            data-icon="◆"
-                        >
-                            <span>◆</span>
-                            Vanilla
-                        </button>
-
-                        <button
-                            class="mode-option"
-                            data-mode="uhc"
-                            data-name="UHC"
-                            data-icon="♥"
-                        >
-                            <span>♥</span>
-                            UHC
-                        </button>
-
-                        <button
-                            class="mode-option"
-                            data-mode="smp"
-                            data-name="SMP"
-                            data-icon="🌲"
-                        >
-                            <span>🌲</span>
-                            SMP
-                        </button>
-
-                        <button
-                            class="mode-option"
-                            data-mode="netheriteop"
-                            data-name="Netherite OP"
-                            data-icon="◆"
-                        >
-                            <span>◆</span>
-                            Netherite OP
-                        </button>
-
-                        <button
-                            class="mode-option"
-                            data-mode="pot"
-                            data-name="Pot"
-                            data-icon="⚗"
-                        >
-                            <span>⚗</span>
-                            Pot
-                        </button>
-
-                        <button
-                            class="mode-option"
-                            data-mode="mace"
-                            data-name="Mace"
-                            data-icon="🔨"
-                        >
-                            <span>🔨</span>
-                            Mace
-                        </button>
-
-                    </div>
-
-                </div>
+                <p>
+                    Compete across multiple Minecraft PvP
+                    gamemodes and climb from LT5 all the
+                    way to HT1.
+                </p>
 
             </div>
 
 
-            <!-- SEARCH -->
+            <div class="info-card">
 
-            <div class="leaderboard-tools">
-
-                <div class="current-mode">
-
-                    <span id="currentModeText">
-                        ⚔ Sword Rankings
-                    </span>
-
+                <div class="info-icon">
+                    📈
                 </div>
 
-                <div class="search-wrapper">
+                <h2>
+                    ELO System
+                </h2>
 
-                    <span class="search-icon">
-                        ⌕
-                    </span>
-
-                    <input
-                        id="searchInput"
-                        type="text"
-                        placeholder="Search player..."
-                        autocomplete="off"
-                    >
-
-                </div>
+                <p>
+                    Win matches, gain ELO and automatically
+                    climb the rankings.
+                </p>
 
             </div>
 
 
-            <!-- TABLE -->
+            <div class="info-card">
 
-            <div class="leaderboard">
-
-                <div class="leaderboard-head">
-
-                    <span>#</span>
-
-                    <span>
-                        PLAYER
-                    </span>
-
-                    <span>
-                        TIER
-                    </span>
-
-                    <span>
-                        ELO
-                    </span>
-
+                <div class="info-icon">
+                    ⚔️
                 </div>
 
+                <h2>
+                    Multiple Gamemodes
+                </h2>
 
-                <div id="leaderboardList">
-
-                    <div class="loading">
-                        Loading players...
-                    </div>
-
-                </div>
+                <p>
+                    Sword, Axe, Vanilla, UHC, SMP,
+                    Netherite OP, Pot and Mace.
+                </p>
 
             </div>
 
@@ -274,13 +148,11 @@
     </main>
 
 
-    <!-- FOOTER -->
-
     <footer>
 
-        <div>
+        <strong>
             ⚡ SpicyTiers
-        </div>
+        </strong>
 
         <span>
             Minecraft PvP Ranking System
@@ -289,10 +161,6 @@
     </footer>
 
 </div>
-
-
-<script src="firebase-config.js"></script>
-<script src="app.js"></script>
 
 </body>
 </html>
