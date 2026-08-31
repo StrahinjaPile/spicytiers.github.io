@@ -1,12 +1,27 @@
 let currentMode = "sword";
-let allPlayers = [];
 
+let allPlayers = [];
 
 const leaderboardList =
     document.getElementById("leaderboardList");
 
 const searchInput =
     document.getElementById("searchInput");
+
+const modeButton =
+    document.getElementById("modeButton");
+
+const modeSelector =
+    document.querySelector(".mode-selector");
+
+const selectedMode =
+    document.getElementById("selectedMode");
+
+const selectedModeIcon =
+    document.getElementById("selectedModeIcon");
+
+const currentModeText =
+    document.getElementById("currentModeText");
 
 
 /* =========================
@@ -51,7 +66,7 @@ async function loadPlayers() {
 
 
 /* =========================
-RENDER
+RENDER LEADERBOARD
 ========================= */
 
 function renderLeaderboard() {
@@ -80,6 +95,7 @@ function renderLeaderboard() {
                     player[currentMode] || {};
 
                 return {
+
                     ...player,
 
                     elo:
@@ -87,12 +103,16 @@ function renderLeaderboard() {
 
                     tier:
                         stats.tier || "UNRANKED"
+
                 };
 
             });
 
 
-    players.sort((a, b) => b.elo - a.elo);
+    players.sort(
+        (a, b) =>
+            b.elo - a.elo
+    );
 
 
     leaderboardList.innerHTML = "";
@@ -112,22 +132,29 @@ function renderLeaderboard() {
         const row =
             document.createElement("div");
 
-        row.className = "player-row";
+        row.className =
+            "player-row";
 
+
+        /* RANK */
 
         const rank =
             document.createElement("div");
 
-        rank.className = "rank";
+        rank.className =
+            "rank";
 
         rank.textContent =
             "#" + (index + 1);
 
 
+        /* PLAYER */
+
         const name =
             document.createElement("div");
 
-        name.className = "player-name";
+        name.className =
+            "player-name";
 
 
         const avatar =
@@ -150,8 +177,11 @@ function renderLeaderboard() {
 
 
         name.appendChild(avatar);
+
         name.appendChild(username);
 
+
+        /* TIER */
 
         const tier =
             document.createElement("div");
@@ -164,6 +194,8 @@ function renderLeaderboard() {
             player.tier;
 
 
+        /* ELO */
+
         const elo =
             document.createElement("div");
 
@@ -175,10 +207,15 @@ function renderLeaderboard() {
 
 
         row.appendChild(rank);
+
         row.appendChild(name);
+
         row.appendChild(tier);
+
         row.appendChild(elo);
 
+
+        /* CLICK PLAYER */
 
         row.addEventListener(
             "click",
@@ -207,7 +244,9 @@ TIER CLASS
 function getTierClass(tier) {
 
     if (!tier) {
+
         return "tier-unranked";
+
     }
 
     return (
@@ -220,29 +259,73 @@ function getTierClass(tier) {
 
 
 /* =========================
-GAME MODE BUTTONS
+OPEN / CLOSE MODE MENU
+========================= */
+
+modeButton.addEventListener(
+    "click",
+    (event) => {
+
+        event.stopPropagation();
+
+        modeSelector.classList.toggle(
+            "open"
+        );
+
+    }
+);
+
+
+/* =========================
+MODE OPTIONS
 ========================= */
 
 document
-    .querySelectorAll(".mode")
-    .forEach(button => {
+    .querySelectorAll(".mode-option")
+    .forEach(option => {
 
-        button.addEventListener(
+        option.addEventListener(
             "click",
             () => {
 
                 document
-                    .querySelectorAll(".mode")
-                    .forEach(btn =>
-                        btn.classList.remove("active")
-                    );
+                    .querySelectorAll(".mode-option")
+                    .forEach(item => {
+
+                        item.classList.remove(
+                            "active"
+                        );
+
+                    });
 
 
-                button.classList.add("active");
+                option.classList.add(
+                    "active"
+                );
 
 
                 currentMode =
-                    button.dataset.mode;
+                    option.dataset.mode;
+
+
+                selectedMode.textContent =
+                    option.dataset.name;
+
+
+                selectedModeIcon.textContent =
+                    option.dataset.icon;
+
+
+                currentModeText.textContent =
+                    option.dataset.icon +
+                    " " +
+                    option.dataset.name +
+                    " Rankings";
+
+
+                modeSelector.classList.remove(
+                    "open"
+                );
 
 
                 renderLeaderboard();
@@ -251,6 +334,22 @@ document
         );
 
     });
+
+
+/* =========================
+CLICK OUTSIDE
+========================= */
+
+document.addEventListener(
+    "click",
+    () => {
+
+        modeSelector.classList.remove(
+            "open"
+        );
+
+    }
+);
 
 
 /* =========================
