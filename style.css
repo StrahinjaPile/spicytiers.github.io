@@ -7,8 +7,10 @@
 :root {
     --background: #08090d;
     --background2: #0d0f15;
+
     --card: #11131a;
     --card2: #151821;
+
     --border: #242733;
 
     --text: #f5f5f7;
@@ -44,6 +46,10 @@ button,
 input,
 select {
     font-family: inherit;
+}
+
+button {
+    border: 0;
 }
 
 a {
@@ -89,6 +95,7 @@ TOPBAR
 .logo {
     font-size: 21px;
     font-weight: 800;
+
     letter-spacing: -0.5px;
 }
 
@@ -103,6 +110,7 @@ TOPBAR
 
 .topbar nav a {
     color: var(--muted);
+
     font-size: 14px;
     font-weight: 600;
 
@@ -172,6 +180,7 @@ HERO
     border-radius: 7px;
 
     font-size: 11px;
+
     font-weight: 800;
 
     letter-spacing: 2px;
@@ -203,7 +212,7 @@ HERO
 
 
 /* =========================
-LEADERBOARD
+LEADERBOARD SECTION
 ========================= */
 
 .leaderboard-section {
@@ -215,15 +224,21 @@ LEADERBOARD
     padding-bottom: 100px;
 }
 
-.section-title {
+
+/* =========================
+TOP AREA
+========================= */
+
+.leaderboard-top {
     display: flex;
 
-    align-items: end;
+    align-items: flex-end;
+
     justify-content: space-between;
 
-    gap: 20px;
+    gap: 30px;
 
-    margin-bottom: 28px;
+    margin-bottom: 25px;
 }
 
 .small-title {
@@ -238,19 +253,220 @@ LEADERBOARD
     margin-bottom: 7px;
 }
 
-.section-title h2 {
+.leaderboard-title h2 {
     font-size: 30px;
+
+    letter-spacing: -0.5px;
 }
 
 
 /* =========================
-SEARCH
+MODE SELECTOR
 ========================= */
+
+.mode-selector {
+    position: relative;
+
+    min-width: 220px;
+}
+
+.mode-label {
+    color: #696e7d;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+
+    margin-bottom: 7px;
+}
+
+.mode-selector-button {
+    width: 220px;
+
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 0 15px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    font-weight: 750;
+
+    text-align: left;
+
+    transition: 0.2s;
+}
+
+.mode-selector-button:hover {
+    border-color: #3b3e4b;
+
+    background: var(--card2);
+}
+
+.mode-selector-button #selectedModeIcon {
+    width: 23px;
+
+    color: var(--red);
+
+    font-size: 16px;
+
+    text-align: center;
+}
+
+.arrow {
+    margin-left: auto;
+
+    color: #707583;
+
+    font-size: 9px;
+
+    transition: 0.2s;
+}
+
+.mode-selector.open .arrow {
+    transform: rotate(180deg);
+}
+
+
+/* =========================
+DROPDOWN
+========================= */
+
+.mode-dropdown {
+    position: absolute;
+
+    top: calc(100% + 7px);
+
+    left: 0;
+
+    width: 220px;
+
+    padding: 6px;
+
+    background: #11131a;
+
+    border: 1px solid var(--border);
+
+    border-radius: 9px;
+
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.45);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform: translateY(-5px);
+
+    transition: 0.15s;
+
+    z-index: 50;
+}
+
+.mode-selector.open .mode-dropdown {
+    opacity: 1;
+
+    visibility: visible;
+
+    transform: translateY(0);
+}
+
+.mode-option {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 11px 12px;
+
+    border-radius: 6px;
+
+    background: transparent;
+
+    color: #9297a5;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    font-weight: 650;
+
+    text-align: left;
+
+    transition: 0.15s;
+}
+
+.mode-option span {
+    width: 22px;
+
+    text-align: center;
+}
+
+.mode-option:hover {
+    background: #1a1d26;
+
+    color: white;
+}
+
+.mode-option.active {
+    background: rgba(255, 48, 48, 0.10);
+
+    color: white;
+}
+
+
+/* =========================
+TOOLS
+========================= */
+
+.leaderboard-tools {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 14px;
+}
+
+.current-mode {
+    color: #707583;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+.search-wrapper {
+    position: relative;
+}
 
 .search-wrapper input {
     width: 250px;
 
-    padding: 13px 16px;
+    padding: 12px 15px 12px 38px;
 
     background: var(--card);
 
@@ -273,59 +489,19 @@ SEARCH
     color: #626776;
 }
 
+.search-icon {
+    position: absolute;
 
-/* =========================
-TABS
-========================= */
+    left: 14px;
+    top: 50%;
 
-.gamemode-tabs {
-    display: flex;
+    transform: translateY(-50%);
 
-    gap: 8px;
+    color: #6d7280;
 
-    overflow-x: auto;
+    font-size: 18px;
 
-    padding-bottom: 12px;
-
-    margin-bottom: 14px;
-
-    scrollbar-width: thin;
-}
-
-.mode {
-    flex-shrink: 0;
-
-    border: 1px solid var(--border);
-
-    background: var(--card);
-
-    color: var(--muted);
-
-    padding: 11px 17px;
-
-    border-radius: 7px;
-
-    cursor: pointer;
-
-    font-size: 13px;
-
-    font-weight: 700;
-
-    transition: 0.2s;
-}
-
-.mode:hover {
-    color: white;
-
-    border-color: #3b3e4b;
-}
-
-.mode.active {
-    color: white;
-
-    background: rgba(255, 45, 45, 0.12);
-
-    border-color: rgba(255, 55, 55, 0.5);
+    pointer-events: none;
 }
 
 
@@ -889,7 +1065,19 @@ RESPONSIVE
         width: 92%;
     }
 
-    .section-title {
+    .leaderboard-top {
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+    .mode-selector,
+    .mode-selector-button,
+    .mode-dropdown {
+        width: 100%;
+    }
+
+    .leaderboard-tools {
         align-items: stretch;
 
         flex-direction: column;
