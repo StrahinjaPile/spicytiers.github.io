@@ -1,5 +1,7 @@
 let currentMode = "sword";
+
 let allPlayers = [];
+
 
 const leaderboardList =
     document.getElementById("leaderboardList");
@@ -7,11 +9,20 @@ const leaderboardList =
 const searchInput =
     document.getElementById("searchInput");
 
-const gameModeSelect =
-    document.getElementById("gameModeSelect");
+const selectButton =
+    document.getElementById("selectButton");
+
+const selectMenu =
+    document.getElementById("selectMenu");
+
+const selectText =
+    document.getElementById("selectText");
+
+const selectIcon =
+    document.getElementById("selectIcon");
 
 const currentModeText =
-    document.getElementById("currentModeText");
+    document.getElementById("currentMode");
 
 
 /* =========================
@@ -30,18 +41,19 @@ async function loadPlayers() {
                 .collection("players")
                 .get();
 
+
         allPlayers = [];
+
 
         snapshot.forEach((doc) => {
 
-            const data = doc.data();
-
             allPlayers.push({
                 id: doc.id,
-                ...data
+                ...doc.data()
             });
 
         });
+
 
         renderLeaderboard();
 
@@ -53,6 +65,7 @@ async function loadPlayers() {
             '<div class="empty">Could not load leaderboard.</div>';
 
     }
+
 }
 
 
@@ -72,12 +85,11 @@ function renderLeaderboard() {
         allPlayers
             .filter(player => {
 
-                const username =
-                    player.username || "";
-
-                return username
-                    .toLowerCase()
-                    .includes(search);
+                return (
+                    player.username || ""
+                )
+                .toLowerCase()
+                .includes(search);
 
             })
             .map(player => {
@@ -85,7 +97,9 @@ function renderLeaderboard() {
                 const stats =
                     player[currentMode] || {};
 
+
                 return {
+
                     ...player,
 
                     elo:
@@ -99,7 +113,9 @@ function renderLeaderboard() {
             });
 
 
-    players.sort((a, b) => b.elo - a.elo);
+    players.sort(
+        (a, b) => b.elo - a.elo
+    );
 
 
     leaderboardList.innerHTML = "";
@@ -111,6 +127,7 @@ function renderLeaderboard() {
             '<div class="empty">No players found.</div>';
 
         return;
+
     }
 
 
@@ -122,22 +139,14 @@ function renderLeaderboard() {
         row.className = "player-row";
 
 
-        /* RANK */
-
         const rank =
             document.createElement("div");
 
         rank.className = "rank";
 
-        if (index === 0) {
-            rank.classList.add("rank-first");
-        }
-
         rank.textContent =
             "#" + (index + 1);
 
-
-        /* PLAYER */
 
         const name =
             document.createElement("div");
@@ -153,7 +162,7 @@ function renderLeaderboard() {
             "player-avatar";
 
         avatar.textContent =
-            (player.username || "?")
+            player.username
                 .charAt(0)
                 .toUpperCase();
 
@@ -162,14 +171,13 @@ function renderLeaderboard() {
             document.createElement("span");
 
         username.textContent =
-            player.username || "Unknown";
+            player.username;
 
 
         name.appendChild(avatar);
+
         name.appendChild(username);
 
-
-        /* TIER */
 
         const tier =
             document.createElement("div");
@@ -182,8 +190,6 @@ function renderLeaderboard() {
             player.tier;
 
 
-        /* ELO */
-
         const elo =
             document.createElement("div");
 
@@ -195,12 +201,13 @@ function renderLeaderboard() {
 
 
         row.appendChild(rank);
+
         row.appendChild(name);
+
         row.appendChild(tier);
+
         row.appendChild(elo);
 
-
-        /* PLAYER PROFILE */
 
         row.addEventListener(
             "click",
@@ -208,7 +215,9 @@ function renderLeaderboard() {
 
                 window.location.href =
                     "player.html?player=" +
-                    encodeURIComponent(player.id);
+                    encodeURIComponent(
+                        player.id
+                    );
 
             }
         );
@@ -222,7 +231,7 @@ function renderLeaderboard() {
 
 
 /* =========================
-TIER CLASS
+TIER COLORS
 ========================= */
 
 function getTierClass(tier) {
@@ -231,37 +240,110 @@ function getTierClass(tier) {
         return "tier-unranked";
     }
 
+
     return (
         "tier-" +
         tier
             .toLowerCase()
-            .replace(" ", "-")
+            .replaceAll(" ", "-")
     );
 
 }
 
 
 /* =========================
-GAME MODE DROPDOWN
+DROPDOWN
 ========================= */
 
-gameModeSelect.addEventListener(
-    "change",
+selectButton.addEventListener(
+    "click",
+    (event) => {
+
+        event.stopPropagation();
+
+        selectMenu.classList.toggle("open");
+
+        selectButton.classList.toggle(
+            "open"
+        );
+
+    }
+);
+
+
+document
+    .querySelectorAll(".select-option")
+    .forEach(option => {
+
+        option.addEventListener(
+            "click",
+            () => {
+
+                currentMode =
+                    option.dataset.mode;
+
+
+                selectText.textContent =
+                    option.querySelector(
+                        "strong"
+                    ).textContent;
+
+
+                selectIcon.textContent =
+                    option.dataset.icon;
+
+
+                currentModeText.textContent =
+                    currentMode.toUpperCase();
+
+
+                document
+                    .querySelectorAll(
+                        ".select-option"
+                    )
+                    .forEach(item => {
+
+                        item.classList.remove(
+                            "active"
+                        );
+
+                    });
+
+
+                option.classList.add(
+                    "active"
+                );
+
+
+                selectMenu.classList.remove(
+                    "open"
+                );
+
+
+                selectButton.classList.remove(
+                    "open"
+                );
+
+
+                renderLeaderboard();
+
+            }
+        );
+
+    });
+
+
+document.addEventListener(
+    "click",
     () => {
 
-        currentMode =
-            gameModeSelect.value;
+        selectMenu.classList.remove(
+            "open"
+        );
 
-
-        currentModeText.textContent =
-            gameModeSelect.options[
-                gameModeSelect.selectedIndex
-            ].text
-            .replace(/^[^\w]+/, "")
-            .toUpperCase();
-
-
-        renderLeaderboard();
+        selectButton.classList.remove(
+            "open"
+        );
 
     }
 );
