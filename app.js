@@ -1,7 +1,5 @@
 let currentMode = "sword";
-
 let allPlayers = [];
-
 
 const leaderboardList =
     document.getElementById("leaderboardList");
@@ -9,27 +7,14 @@ const leaderboardList =
 const searchInput =
     document.getElementById("searchInput");
 
-const selectButton =
-    document.getElementById("selectButton");
 
-const selectMenu =
-    document.getElementById("selectMenu");
-
-const selectText =
-    document.getElementById("selectText");
-
-const selectIcon =
-    document.getElementById("selectIcon");
-
-const currentModeText =
-    document.getElementById("currentMode");
-
-
-/* =========================
-LOAD PLAYERS
-========================= */
+/* =========================================================
+   LOAD PLAYERS
+========================================================= */
 
 async function loadPlayers() {
+
+    if (!leaderboardList) return;
 
     leaderboardList.innerHTML =
         '<div class="loading">Loading players...</div>';
@@ -41,9 +26,7 @@ async function loadPlayers() {
                 .collection("players")
                 .get();
 
-
         allPlayers = [];
-
 
         snapshot.forEach((doc) => {
 
@@ -54,72 +37,62 @@ async function loadPlayers() {
 
         });
 
-
         renderLeaderboard();
 
     } catch (error) {
 
-        console.error(error);
+        console.error("Leaderboard error:", error);
 
         leaderboardList.innerHTML =
             '<div class="empty">Could not load leaderboard.</div>';
-
     }
-
 }
 
 
-/* =========================
-RENDER
-========================= */
+/* =========================================================
+   RENDER LEADERBOARD
+========================================================= */
 
 function renderLeaderboard() {
 
+    if (!leaderboardList) return;
+
     const search =
-        searchInput.value
-            .trim()
-            .toLowerCase();
+        searchInput
+            ? searchInput.value.trim().toLowerCase()
+            : "";
 
+    let players = allPlayers
+        .filter(player => {
 
-    let players =
-        allPlayers
-            .filter(player => {
+            const username =
+                player.username || "";
 
-                return (
-                    player.username || ""
-                )
+            return username
                 .toLowerCase()
                 .includes(search);
 
-            })
-            .map(player => {
+        })
+        .map(player => {
 
-                const stats =
-                    player[currentMode] || {};
+            const stats =
+                player[currentMode] || {};
 
+            return {
+                ...player,
 
-                return {
+                elo:
+                    Number(stats.elo) || 0,
 
-                    ...player,
+                tier:
+                    stats.tier || "UNRANKED"
+            };
 
-                    elo:
-                        Number(stats.elo) || 0,
+        });
 
-                    tier:
-                        stats.tier || "UNRANKED"
-
-                };
-
-            });
-
-
-    players.sort(
-        (a, b) => b.elo - a.elo
-    );
-
+    players.sort((a, b) => b.elo - a.elo);
 
     leaderboardList.innerHTML = "";
-
 
     if (players.length === 0) {
 
@@ -127,26 +100,30 @@ function renderLeaderboard() {
             '<div class="empty">No players found.</div>';
 
         return;
-
     }
-
 
     players.forEach((player, index) => {
 
         const row =
             document.createElement("div");
 
-        row.className = "player-row";
+        row.className =
+            "player-row";
 
+
+        /* RANK */
 
         const rank =
             document.createElement("div");
 
-        rank.className = "rank";
+        rank.className =
+            "rank";
 
         rank.textContent =
             "#" + (index + 1);
 
+
+        /* PLAYER */
 
         const name =
             document.createElement("div");
@@ -162,7 +139,7 @@ function renderLeaderboard() {
             "player-avatar";
 
         avatar.textContent =
-            player.username
+            (player.username || "?")
                 .charAt(0)
                 .toUpperCase();
 
@@ -171,13 +148,14 @@ function renderLeaderboard() {
             document.createElement("span");
 
         username.textContent =
-            player.username;
+            player.username || "Unknown";
 
 
         name.appendChild(avatar);
-
         name.appendChild(username);
 
+
+        /* TIER */
 
         const tier =
             document.createElement("div");
@@ -190,6 +168,8 @@ function renderLeaderboard() {
             player.tier;
 
 
+        /* ELO */
+
         const elo =
             document.createElement("div");
 
@@ -201,38 +181,31 @@ function renderLeaderboard() {
 
 
         row.appendChild(rank);
-
         row.appendChild(name);
-
         row.appendChild(tier);
-
         row.appendChild(elo);
 
 
-        row.addEventListener(
-            "click",
-            () => {
+        /* PLAYER PROFILE */
 
-                window.location.href =
-                    "player.html?player=" +
-                    encodeURIComponent(
-                        player.id
-                    );
+        row.addEventListener("click", () => {
 
-            }
-        );
+            window.location.href =
+                "player.html?player=" +
+                encodeURIComponent(player.id);
+
+        });
 
 
         leaderboardList.appendChild(row);
 
     });
-
 }
 
 
-/* =========================
-TIER COLORS
-========================= */
+/* =========================================================
+   TIER CLASS
+========================================================= */
 
 function getTierClass(tier) {
 
@@ -240,127 +213,72 @@ function getTierClass(tier) {
         return "tier-unranked";
     }
 
-
     return (
         "tier-" +
         tier
             .toLowerCase()
-            .replaceAll(" ", "-")
+            .replace(/\s+/g, "-")
+    );
+}
+
+
+/* =========================================================
+   GAME MODE BUTTONS
+========================================================= */
+
+const modeButtons =
+    document.querySelectorAll(".mode");
+
+modeButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        const selectedMode =
+            button.dataset.mode;
+
+        if (!selectedMode) return;
+
+        currentMode =
+            selectedMode;
+
+
+        modeButtons.forEach(btn => {
+
+            btn.classList.remove("active");
+
+        });
+
+
+        button.classList.add("active");
+
+
+        renderLeaderboard();
+
+    });
+
+});
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+if (searchInput) {
+
+    searchInput.addEventListener(
+        "input",
+        () => {
+
+            renderLeaderboard();
+
+        }
     );
 
 }
 
 
-/* =========================
-DROPDOWN
-========================= */
-
-selectButton.addEventListener(
-    "click",
-    (event) => {
-
-        event.stopPropagation();
-
-        selectMenu.classList.toggle("open");
-
-        selectButton.classList.toggle(
-            "open"
-        );
-
-    }
-);
-
-
-document
-    .querySelectorAll(".select-option")
-    .forEach(option => {
-
-        option.addEventListener(
-            "click",
-            () => {
-
-                currentMode =
-                    option.dataset.mode;
-
-
-                selectText.textContent =
-                    option.querySelector(
-                        "strong"
-                    ).textContent;
-
-
-                selectIcon.textContent =
-                    option.dataset.icon;
-
-
-                currentModeText.textContent =
-                    currentMode.toUpperCase();
-
-
-                document
-                    .querySelectorAll(
-                        ".select-option"
-                    )
-                    .forEach(item => {
-
-                        item.classList.remove(
-                            "active"
-                        );
-
-                    });
-
-
-                option.classList.add(
-                    "active"
-                );
-
-
-                selectMenu.classList.remove(
-                    "open"
-                );
-
-
-                selectButton.classList.remove(
-                    "open"
-                );
-
-
-                renderLeaderboard();
-
-            }
-        );
-
-    });
-
-
-document.addEventListener(
-    "click",
-    () => {
-
-        selectMenu.classList.remove(
-            "open"
-        );
-
-        selectButton.classList.remove(
-            "open"
-        );
-
-    }
-);
-
-
-/* =========================
-SEARCH
-========================= */
-
-searchInput.addEventListener(
-    "input",
-    renderLeaderboard
-);
-
-
-/* =========================
-START
-========================= */
+/* =========================================================
+   START
+========================================================= */
 
 loadPlayers();
