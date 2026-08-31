@@ -3,10 +3,9 @@
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>SpicyTiers — Leaderboard</title>
+    <title>Leaderboard — SpicyTiers</title>
 
     <link rel="stylesheet" href="style.css">
 
@@ -20,207 +19,152 @@
 
 <div class="site">
 
-    <header class="topbar">
+<header class="topbar">
 
-        <a href="index.html" class="logo">
-            <span>⚡</span> SpicyTiers
+    <a href="index.html" class="logo">
+        <span>⚡</span> SpicyTiers
+    </a>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="leaderboard.html" class="active">Leaderboard</a>
+        <a href="rules.html">Rules</a>
+        <a href="connect.html">Connect</a>
+    </nav>
+
+    <div id="accountArea">
+        <a href="connect.html" class="account-button">
+            Connect Account
         </a>
+    </div>
 
-        <nav>
-
-            <a href="index.html">
-                Home
-            </a>
-
-            <a href="leaderboard.html" class="active">
-                Leaderboard
-            </a>
-
-            <a href="client.html">
-                Client
-            </a>
-
-            <a href="rules.html">
-                Rules
-            </a>
-
-        </nav>
-
-        <a href="login.html" class="login-button">
-            Login
-        </a>
-
-    </header>
+</header>
 
 
-    <main>
+<main>
 
-        <section class="leaderboard-page">
+<section class="leaderboard-page">
 
-            <div class="leaderboard-intro">
+    <div class="leaderboard-title">
 
-                <div class="section-label">
-                    SPICYTIERS RANKINGS
-                </div>
+        <div>
 
-                <h1>
-                    Global
-                    <span>Leaderboard</span>
-                </h1>
-
-                <p>
-                    See the best PvP players across every
-                    SpicyTiers game mode.
-                </p>
-
+            <div class="section-label">
+                SPICYTIERS RANKINGS
             </div>
 
+            <h1>
+                Global Leaderboard
+            </h1>
 
-            <div class="leaderboard-controls">
+            <p>
+                The best PvP players in SpicyTiers.
+            </p>
 
-                <div class="game-selector">
-
-                    <button class="mode active" data-mode="sword">
-                        ⚔ Sword
-                    </button>
-
-                    <button class="mode" data-mode="axe">
-                        🪓 Axe
-                    </button>
-
-                    <button class="mode" data-mode="vanilla">
-                        Vanilla
-                    </button>
-
-                    <button class="mode" data-mode="uhc">
-                        UHC
-                    </button>
-
-                    <button class="mode" data-mode="smp">
-                        SMP
-                    </button>
-
-                    <button class="mode" data-mode="netheriteop">
-                        Netherite OP
-                    </button>
-
-                    <button class="mode" data-mode="pot">
-                        Pot
-                    </button>
-
-                    <button class="mode" data-mode="mace">
-                        Mace
-                    </button>
-
-                </div>
+        </div>
 
 
-                <input
-                    id="searchInput"
-                    type="text"
-                    placeholder="Search player..."
-                    autocomplete="off"
-                >
+        <div class="search-box">
 
-            </div>
+            <span>⌕</span>
 
+            <input
+                id="searchInput"
+                type="text"
+                placeholder="Search player..."
+                autocomplete="off"
+            >
 
-            <div class="leaderboard">
+        </div>
 
-                <div class="leaderboard-head">
-
-                    <span>#</span>
-                    <span>PLAYER</span>
-                    <span>TIER</span>
-                    <span>ELO</span>
-
-                </div>
+    </div>
 
 
-                <div id="leaderboardList">
+    <div class="mode-selector">
 
-                    <div class="loading">
-                        Loading players...
-                    </div>
+        <button class="mode active" data-mode="sword">
+            <strong>⚔</strong>
+            <span>Sword</span>
+        </button>
 
-                </div>
+        <button class="mode" data-mode="axe">
+            <strong>🪓</strong>
+            <span>Axe</span>
+        </button>
 
-            </div>
+        <button class="mode" data-mode="vanilla">
+            <strong>◆</strong>
+            <span>Vanilla</span>
+        </button>
 
-        </section>
+        <button class="mode" data-mode="uhc">
+            <strong>◇</strong>
+            <span>UHC</span>
+        </button>
 
-    </main>
+        <button class="mode" data-mode="smp">
+            <strong>✦</strong>
+            <span>SMP</span>
+        </button>
 
+        <button class="mode" data-mode="netheriteop">
+            <strong>⬟</strong>
+            <span>Netherite OP</span>
+        </button>
 
-    <footer>
+        <button class="mode" data-mode="pot">
+            <strong>♜</strong>
+            <span>Pot</span>
+        </button>
 
-        <div class="footer-top">
+        <button class="mode" data-mode="mace">
+            <strong>◆</strong>
+            <span>Mace</span>
+        </button>
 
-            <div class="footer-brand">
-
-                <div class="footer-logo">
-                    ⚡ SpicyTiers
-                </div>
-
-                <p>
-                    The future of Minecraft PvP.
-                </p>
-
-            </div>
-
-
-            <div class="footer-links">
-
-                <div>
-
-                    <h4>
-                        SpicyTiers
-                    </h4>
-
-                    <a href="index.html">
-                        Home
-                    </a>
-
-                    <a href="leaderboard.html">
-                        Leaderboard
-                    </a>
-
-                    <a href="client.html">
-                        Client
-                    </a>
-
-                    <a href="rules.html">
-                        Rules
-                    </a>
-
-                </div>
+    </div>
 
 
-                <div>
+    <div class="leaderboard-card">
 
-                    <h4>
-                        Information
-                    </h4>
+        <div class="leaderboard-head">
 
-                    <a href="faq.html">
-                        FAQ
-                    </a>
+            <span>RANK</span>
+            <span>PLAYER</span>
+            <span>TIER</span>
+            <span>ELO</span>
 
-                    <a href="about.html">
-                        About Us
-                    </a>
+        </div>
 
-                    <a href="terms.html">
-                        Terms of Service
-                    </a>
+        <div id="leaderboardList">
 
-                </div>
-
+            <div class="loading">
+                Loading leaderboard...
             </div>
 
         </div>
 
-    </footer>
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <div class="footer-brand">
+        ⚡ SpicyTiers
+    </div>
+
+    <div class="footer-links">
+        <a href="faq.html">FAQ</a>
+        <a href="about.html">About Us</a>
+        <a href="rules.html">Rules</a>
+        <a href="terms.html">Terms Of Service</a>
+    </div>
+
+</footer>
 
 </div>
 
