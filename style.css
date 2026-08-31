@@ -1,8 +1,353 @@
 /* =========================
-LEADERBOARD TOP
+NEW MODERN PAGES
 ========================= */
 
-.leaderboard-top {
+.home-hero {
+
+    min-height: 600px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 100px 8%;
+
+    position: relative;
+
+    overflow: hidden;
+
+}
+
+
+.hero-glow {
+
+    position: absolute;
+
+    width: 700px;
+    height: 700px;
+
+    left: 35%;
+    top: -400px;
+
+    background:
+        rgba(255,40,40,0.15);
+
+    filter: blur(140px);
+
+    pointer-events: none;
+
+}
+
+
+.hero-content {
+
+    max-width: 850px;
+
+    position: relative;
+
+}
+
+
+.hero-content h1 {
+
+    font-size:
+        clamp(55px, 8vw, 100px);
+
+    line-height: 0.95;
+
+    letter-spacing: -5px;
+
+    font-weight: 950;
+
+    margin-bottom: 25px;
+
+}
+
+
+.hero-content h1 span,
+.download-page h1 span,
+.discord-card h1 span {
+
+    color: var(--red);
+
+}
+
+
+.hero-content p {
+
+    max-width: 620px;
+
+    color: #858a99;
+
+    font-size: 18px;
+
+    line-height: 1.7;
+
+}
+
+
+.hero-buttons {
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 32px;
+
+}
+
+
+.primary-button,
+.secondary-button,
+.login-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 8px;
+
+    padding: 13px 20px;
+
+    font-size: 13px;
+
+    font-weight: 850;
+
+    transition: 0.2s;
+
+}
+
+
+.primary-button {
+
+    background: var(--red);
+
+    color: white;
+
+    box-shadow:
+        0 10px 35px rgba(255,48,48,0.2);
+
+}
+
+
+.primary-button:hover {
+
+    transform: translateY(-2px);
+
+    background: var(--red2);
+
+}
+
+
+.secondary-button {
+
+    border: 1px solid #292d39;
+
+    background: #14161d;
+
+    color: #e9e9ec;
+
+}
+
+
+.secondary-button:hover {
+
+    border-color: #414654;
+
+    background: #191c24;
+
+}
+
+
+.login-button {
+
+    padding: 9px 15px;
+
+    background: rgba(255,48,48,0.1);
+
+    border: 1px solid rgba(255,48,48,0.3);
+
+    color: #ff7777;
+
+}
+
+
+.login-button:hover {
+
+    background: rgba(255,48,48,0.17);
+
+}
+
+
+/* =========================
+HOME FEATURES
+========================= */
+
+.home-section {
+
+    width: 86%;
+
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding:
+        80px 0 110px;
+
+}
+
+
+.section-heading span {
+
+    color: var(--red);
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    letter-spacing: 2px;
+
+}
+
+
+.section-heading h2 {
+
+    font-size: 34px;
+
+    margin-top: 8px;
+
+}
+
+
+.feature-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+
+    margin-top: 35px;
+
+}
+
+
+.feature-card {
+
+    padding: 28px;
+
+    min-height: 210px;
+
+    border: 1px solid #242733;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #13151c,
+            #0e1016
+        );
+
+    transition: 0.2s;
+
+}
+
+
+.feature-card:hover {
+
+    transform: translateY(-4px);
+
+    border-color: #343846;
+
+}
+
+
+.feature-icon {
+
+    width: 45px;
+
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background:
+        rgba(255,48,48,0.1);
+
+    border:
+        1px solid rgba(255,48,48,0.18);
+
+    margin-bottom: 22px;
+
+}
+
+
+.feature-card h3 {
+
+    font-size: 16px;
+
+    margin-bottom: 9px;
+
+}
+
+
+.feature-card p {
+
+    color: #727786;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+}
+
+
+/* =========================
+LEADERBOARD PAGE
+========================= */
+
+.leaderboard-page {
+
+    width: 86%;
+
+    max-width: 1250px;
+
+    margin:
+        75px auto 110px;
+
+}
+
+
+.leaderboard-heading h1 {
+
+    font-size: 42px;
+
+    margin-top: 7px;
+
+    letter-spacing: -1.5px;
+
+}
+
+
+.leaderboard-heading p {
+
+    color: #6f7482;
+
+    margin-top: 8px;
+
+}
+
+
+.leaderboard-controls {
 
     display: flex;
 
@@ -10,157 +355,280 @@ LEADERBOARD TOP
 
     justify-content: space-between;
 
-    gap: 30px;
+    margin-top: 35px;
 
-    margin-bottom: 28px;
-}
+    margin-bottom: 14px;
 
-.section-description {
-
-    color: #686d7c;
-
-    font-size: 13px;
-
-    margin-top: 8px;
+    gap: 15px;
 
 }
 
 
 /* =========================
-CONTROLS
+CUSTOM DROPDOWN
 ========================= */
 
-.controls {
+.custom-select {
+
+    width: 245px;
+
+    position: relative;
+
+}
+
+
+.select-button {
+
+    width: 100%;
+
+    height: 60px;
 
     display: flex;
 
-    align-items: flex-end;
+    align-items: center;
 
-    gap: 12px;
-}
+    justify-content: space-between;
 
+    padding: 0 17px;
 
-/* =========================
-MODE SELECT
-========================= */
-
-.mode-select {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 7px;
-}
-
-.mode-select-label {
-
-    color: #777d8b;
-
-    font-size: 9px;
-
-    font-weight: 900;
-
-    letter-spacing: 1.5px;
-
-    padding-left: 2px;
-}
-
-
-.mode-select select {
-
-    appearance: none;
-
-    -webkit-appearance: none;
-
-    min-width: 190px;
-
-    padding: 13px 42px 13px 16px;
-
-    border-radius: 9px;
+    border-radius: 10px;
 
     border: 1px solid #292d39;
 
     background:
         linear-gradient(
-            135deg,
-            #171a23,
+            145deg,
+            #171a22,
             #101218
         );
 
-    color: #f5f5f7;
-
-    font-size: 13px;
-
-    font-weight: 750;
-
-    outline: none;
+    color: white;
 
     cursor: pointer;
 
+    transition: 0.2s;
+
+}
+
+
+.select-button:hover,
+.select-button.open {
+
+    border-color:
+        rgba(255,48,48,0.5);
+
     box-shadow:
-        0 8px 25px rgba(0,0,0,0.18);
+        0 0 0 3px
+        rgba(255,48,48,0.06);
 
-    transition:
-        border-color 0.2s,
-        background 0.2s,
-        box-shadow 0.2s;
 }
 
 
-.mode-select {
+.select-left {
 
-    position: relative;
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
 }
 
 
-.mode-select::after {
+.select-icon {
 
-    content: "⌄";
+    width: 34px;
+
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 7px;
+
+    background:
+        rgba(255,48,48,0.09);
+
+    color: #ff6868;
+
+    font-size: 15px;
+
+}
+
+
+.select-left small {
+
+    display: block;
+
+    color: #686e7d;
+
+    font-size: 8px;
+
+    font-weight: 900;
+
+    letter-spacing: 1.4px;
+
+    margin-bottom: 3px;
+
+}
+
+
+.select-left strong {
+
+    display: block;
+
+    font-size: 13px;
+
+}
+
+
+.select-arrow {
+
+    color: #727786;
+
+    font-size: 18px;
+
+    transition: 0.2s;
+
+}
+
+
+.select-button.open .select-arrow {
+
+    transform:
+        rotate(180deg);
+
+}
+
+
+.select-menu {
 
     position: absolute;
 
-    right: 15px;
+    left: 0;
 
-    bottom: 11px;
+    right: 0;
 
-    color: #777d8b;
+    top: calc(100% + 8px);
 
-    font-size: 16px;
+    padding: 6px;
 
-    pointer-events: none;
+    border-radius: 11px;
 
-    transition: 0.2s;
-}
-
-
-.mode-select:hover select {
-
-    border-color: #3b404e;
+    border: 1px solid #2a2e3a;
 
     background:
-        linear-gradient(
-            135deg,
-            #1b1e28,
-            #12151c
-        );
-}
-
-
-.mode-select select:focus {
-
-    border-color: rgba(255,48,48,0.65);
+        #11131a;
 
     box-shadow:
-        0 0 0 3px rgba(255,48,48,0.08);
+        0 20px 50px rgba(0,0,0,0.45);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform:
+        translateY(-7px)
+        scale(0.98);
+
+    transition: 0.16s;
+
+    z-index: 200;
+
 }
 
 
-.mode-select select option {
+.select-menu.open {
 
-    background: #12141b;
+    opacity: 1;
 
-    color: white;
+    visibility: visible;
+
+    transform:
+        translateY(0)
+        scale(1);
+
+}
+
+
+.select-option {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 10px;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    transition: 0.15s;
+
+}
+
+
+.select-option:hover {
+
+    background: #191c25;
+
+}
+
+
+.select-option.active {
+
+    background:
+        rgba(255,48,48,0.09);
+
+}
+
+
+.select-option > span {
+
+    width: 32px;
+
+    height: 32px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 6px;
+
+    background: #191c24;
+
+    color: #ff6a6a;
+
+}
+
+
+.select-option strong {
+
+    display: block;
+
+    color: #e9e9ed;
+
+    font-size: 12px;
+
+}
+
+
+.select-option small {
+
+    display: block;
+
+    color: #626877;
+
+    font-size: 9px;
+
+    margin-top: 3px;
 
 }
 
@@ -169,83 +637,91 @@ MODE SELECT
 SEARCH
 ========================= */
 
-.search-wrapper input {
+.search-box {
 
-    width: 235px;
+    width: 250px;
 
-    padding: 13px 16px;
+    height: 60px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #151821,
-            #101218
-        );
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 0 15px;
 
     border: 1px solid #292d39;
 
-    border-radius: 9px;
-
-    color: white;
-
-    outline: none;
-
-    transition: 0.2s;
-
-    box-shadow:
-        0 8px 25px rgba(0,0,0,0.15);
-}
-
-
-.search-wrapper input:focus {
-
-    border-color:
-        rgba(255,60,60,0.65);
-
-    box-shadow:
-        0 0 0 3px rgba(255,48,48,0.08);
-}
-
-
-.search-wrapper input::placeholder {
-
-    color: #626776;
-}
-
-
-/* =========================
-LEADERBOARD
-========================= */
-
-.leaderboard {
-
-    border: 1px solid #242733;
-
-    border-radius: 14px;
-
-    overflow: hidden;
+    border-radius: 10px;
 
     background:
         linear-gradient(
             145deg,
-            #12141b,
-            #0f1117
+            #151821,
+            #101218
         );
 
-    box-shadow:
-        0 25px 70px rgba(0,0,0,0.22);
+}
+
+
+.search-box > span {
+
+    color: #707685;
+
+    font-size: 21px;
+
+}
+
+
+.search-box input {
+
+    width: 100%;
+
+    border: 0;
+
+    outline: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 13px;
+
+}
+
+
+.search-box:focus-within {
+
+    border-color:
+        rgba(255,48,48,0.5);
+
 }
 
 
 /* =========================
-TITLE BAR
+LEADERBOARD CARD
 ========================= */
 
-.leaderboard-titlebar {
+.leaderboard-card {
+
+    overflow: hidden;
+
+    border-radius: 13px;
+
+    border: 1px solid #242733;
+
+    background: #11131a;
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,0.2);
+
+}
+
+
+.leaderboard-bar {
 
     height: 48px;
-
-    padding: 0 25px;
 
     display: flex;
 
@@ -253,31 +729,33 @@ TITLE BAR
 
     justify-content: space-between;
 
-    border-bottom: 1px solid #20232d;
+    padding: 0 24px;
 
-    background: rgba(255,255,255,0.015);
+    border-bottom: 1px solid #22252e;
 
-    color: #777d8b;
+    color: #707684;
 
     font-size: 9px;
 
     font-weight: 900;
 
-    letter-spacing: 1.5px;
+    letter-spacing: 1.4px;
+
 }
 
 
-.leaderboard-titlebar > div {
+.leaderboard-bar > div {
 
     display: flex;
 
     align-items: center;
 
-    gap: 9px;
+    gap: 8px;
+
 }
 
 
-.live-dot {
+.online-dot {
 
     width: 6px;
 
@@ -288,150 +766,95 @@ TITLE BAR
     background: #4ade80;
 
     box-shadow:
-        0 0 9px rgba(74,222,128,0.7);
-}
-
-
-/* =========================
-TABLE HEADER
-========================= */
-
-.leaderboard-head,
-.player-row {
-
-    display: grid;
-
-    grid-template-columns:
-        75px
-        minmax(180px, 1fr)
-        180px
-        130px;
-
-    align-items: center;
-}
-
-
-.leaderboard-head {
-
-    min-height: 52px;
-
-    background: #0d0f14;
-
-    border-bottom: 1px solid #242733;
-
-    color: #666b79;
-
-    font-size: 9px;
-
-    font-weight: 900;
-
-    letter-spacing: 1.5px;
-
-    padding: 0 25px;
-}
-
-
-/* =========================
-PLAYER ROW
-========================= */
-
-.player-row {
-
-    min-height: 76px;
-
-    padding: 0 25px;
-
-    border-bottom: 1px solid #1d2029;
-
-    cursor: pointer;
-
-    transition:
-        background 0.15s,
-        transform 0.15s;
-}
-
-
-.player-row:last-child {
-
-    border-bottom: none;
-}
-
-
-.player-row:hover {
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(255,48,48,0.045),
-            rgba(255,255,255,0.015)
-        );
-}
-
-
-.player-row:hover .player-avatar {
-
-    border-color:
-        rgba(255,70,70,0.45);
-
-    transform: translateY(-1px);
-}
-
-
-/* =========================
-RANK
-========================= */
-
-.rank {
-
-    color: #6f7482;
-
-    font-weight: 850;
-
-    font-size: 13px;
-}
-
-
-.rank-first {
-
-    color: #f5b942;
+        0 0 9px #4ade80;
 
 }
 
 
 /* =========================
-PLAYER
+DOWNLOAD / DISCORD / LOGIN
 ========================= */
 
-.player-name {
+.download-page,
+.discord-page,
+.login-page {
+
+    width: 86%;
+
+    max-width: 1000px;
+
+    margin:
+        100px auto;
+
+}
+
+
+.download-page h1,
+.discord-card h1 {
+
+    font-size: 65px;
+
+    letter-spacing: -3px;
+
+    line-height: 1;
+
+    max-width: 800px;
+
+    margin: 20px 0;
+
+}
+
+
+.download-page > p,
+.discord-card > p {
+
+    color: #777d8b;
+
+    max-width: 600px;
+
+    line-height: 1.7;
+
+}
+
+
+.download-card {
+
+    margin-top: 45px;
+
+    padding: 25px;
 
     display: flex;
 
     align-items: center;
 
-    gap: 13px;
+    gap: 20px;
 
-    font-weight: 750;
+    border: 1px solid #292d39;
 
-    font-size: 14px;
-}
-
-
-.player-avatar {
-
-    width: 39px;
-
-    height: 39px;
-
-    border-radius: 8px;
+    border-radius: 13px;
 
     background:
         linear-gradient(
-            135deg,
-            #242833,
-            #14161d
+            145deg,
+            #151821,
+            #101218
         );
 
-    border: 1px solid #303440;
+}
+
+
+.download-card > div:nth-child(2) {
+
+    flex: 1;
+
+}
+
+
+.download-icon {
+
+    width: 55px;
+
+    height: 55px;
 
     display: flex;
 
@@ -439,56 +862,222 @@ PLAYER
 
     justify-content: center;
 
-    font-size: 13px;
+    border-radius: 10px;
 
-    font-weight: 900;
+    background:
+        rgba(255,48,48,0.1);
 
-    transition: 0.15s;
+    font-size: 24px;
+
 }
 
 
-/* =========================
-TIER
-========================= */
+.download-card h2 {
 
-.player-tier {
+    font-size: 17px;
 
-    font-weight: 900;
-
-    letter-spacing: 0.7px;
-
-    font-size: 13px;
 }
 
 
-/* =========================
-ELO
-========================= */
+.download-card p {
 
-.player-elo {
+    color: #6f7482;
 
-    font-weight: 850;
+    font-size: 12px;
 
-    font-size: 13px;
+    margin-top: 5px;
 
-    color: #d8dae0;
 }
 
 
-/* =========================
-LOADING
-========================= */
+.discord-page {
 
-.loading,
-.empty {
+    display: flex;
 
-    padding: 60px;
+    justify-content: center;
 
     text-align: center;
 
-    color: #686d7c;
+}
+
+
+.discord-card {
+
+    max-width: 700px;
+
+}
+
+
+.discord-card > p {
+
+    margin: auto;
+
+}
+
+
+.discord-card .primary-button {
+
+    margin-top: 30px;
+
+}
+
+
+.discord-logo {
+
+    width: 70px;
+
+    height: 70px;
+
+    margin: 0 auto 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background: #191c25;
+
+    font-size: 30px;
+
+}
+
+
+.login-page {
+
+    display: flex;
+
+    justify-content: center;
+
+}
+
+
+.login-card {
+
+    width: 430px;
+
+    padding: 35px;
+
+    border: 1px solid #292d39;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #151821,
+            #101218
+        );
+
+}
+
+
+.login-card h1 {
+
+    font-size: 32px;
+
+    margin: 18px 0 8px;
+
+}
+
+
+.login-card > p {
+
+    color: #707685;
 
     font-size: 13px;
+
+    margin-bottom: 28px;
+
+}
+
+
+.google-login {
+
+    width: 100%;
+
+    height: 48px;
+
+    border: 1px solid #303440;
+
+    border-radius: 8px;
+
+    background: #1b1e27;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-weight: 750;
+
+}
+
+
+.google-login span {
+
+    margin-right: 8px;
+
+}
+
+
+.login-divider {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: #4e5360;
+
+    font-size: 9px;
+
+    margin: 22px 0;
+
+}
+
+
+.login-divider::before,
+.login-divider::after {
+
+    content: "";
+
+    height: 1px;
+
+    flex: 1;
+
+    background: #282b35;
+
+}
+
+
+.login-card .secondary-button {
+
+    width: 100%;
+
+    cursor: pointer;
+
+}
+
+
+.login-info {
+
+    margin-top: 20px;
+
+    padding: 13px;
+
+    border-radius: 8px;
+
+    background: #0d0f14;
+
+    color: #5e6472;
+
+    font-size: 10px;
+
+    line-height: 1.6;
+
 }
 
 
@@ -498,68 +1087,120 @@ MOBILE
 
 @media (max-width: 750px) {
 
-    .leaderboard-top {
+    .topbar {
 
-        flex-direction: column;
+        height: auto;
 
-        align-items: stretch;
+        min-height: 70px;
+
+        flex-wrap: wrap;
+
+        gap: 15px;
+
+        padding: 15px 5%;
+
     }
 
 
-    .controls {
+    .topbar nav {
 
-        flex-direction: column;
-
-        align-items: stretch;
-    }
-
-
-    .mode-select select,
-    .search-wrapper input {
+        order: 3;
 
         width: 100%;
+
+        justify-content: center;
+
+        gap: 15px;
+
+        overflow-x: auto;
+
     }
 
 
-    .leaderboard-head,
-    .player-row {
+    .login-button {
 
-        grid-template-columns:
-            45px
-            minmax(130px, 1fr)
-            85px
-            80px;
+        margin-left: auto;
 
-        padding: 0 13px;
     }
 
 
-    .player-row {
+    .home-hero {
 
-        min-height: 68px;
+        min-height: 520px;
+
+        padding: 70px 7%;
+
     }
 
 
-    .player-avatar {
+    .hero-content h1 {
 
-        width: 32px;
+        font-size: 55px;
 
-        height: 32px;
+        letter-spacing: -3px;
+
     }
 
 
-    .player-name {
+    .hero-buttons {
 
-        gap: 9px;
+        flex-direction: column;
 
-        font-size: 12px;
     }
 
 
-    .player-tier,
-    .player-elo {
+    .feature-grid {
 
-        font-size: 11px;
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .leaderboard-page {
+
+        width: 92%;
+
+        margin-top: 50px;
+
+    }
+
+
+    .leaderboard-controls {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+
+    .custom-select,
+    .search-box {
+
+        width: 100%;
+
+    }
+
+
+    .download-page h1,
+    .discord-card h1 {
+
+        font-size: 48px;
+
+    }
+
+
+    .download-card {
+
+        flex-wrap: wrap;
+
+    }
+
+
+    .download-card .primary-button {
+
+        width: 100%;
+
     }
 
 }
