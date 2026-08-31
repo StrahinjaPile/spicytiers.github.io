@@ -1,1 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SpicyTiers Admin</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>
+        ⚡ <span>Spicy</span>Tiers
+    </h1>
+
+    <h2>ADMIN PANEL</h2>
+
+
+    <!-- LOGIN -->
+
+    <div id="loginPanel">
+
+        <input
+                id="email"
+                type="email"
+                placeholder="Email"
+        >
+
+        <input
+                id="password"
+                type="password"
+                placeholder="Password"
+        >
+
+        <button onclick="login()">
+            LOGIN
+        </button>
+
+    </div>
+
+
+    <!-- ADMIN PANEL -->
+
+    <div id="adminPanel" style="display:none">
+
+        <h3>Edit Player</h3>
+
+
+        <input
+                id="username"
+                placeholder="Minecraft Username"
+        >
+
+
+        <input
+                id="elo"
+                type="number"
+                placeholder="ELO"
+        >
+
+
+        <select id="tier">
+
+            <option value="LT5">LT5</option>
+            <option value="HT5">HT5</option>
+
+            <option value="LT4">LT4</option>
+            <option value="HT4">HT4</option>
+
+            <option value="LT3">LT3</option>
+            <option value="HT3">HT3</option>
+
+            <option value="LT2">LT2</option>
+            <option value="HT2">HT2</option>
+
+            <option value="LT1">LT1</option>
+            <option value="HT1">HT1</option>
+
+        </select>
+
+
+        <button onclick="savePlayer()">
+            SAVE PLAYER
+        </button>
+
+
+        <button onclick="deletePlayer()">
+            DELETE PLAYER
+        </button>
+
+
+        <button onclick="logout()">
+            LOGOUT
+        </button>
+
+    </div>
+
+</div>
+
+
+<script src="firebase-config.js"></script>
+
+<script>
+
+    auth.onAuthStateChanged(user => {
+
+        if (user) {
+
+            document.getElementById("loginPanel").style.display = "none";
+
+            document.getElementById("adminPanel").style.display = "block";
+
+        } else {
+
+            document.getElementById("loginPanel").style.display = "block";
+
+            document.getElementById("adminPanel").style.display = "none";
+
+        }
+
+    });
+
+
+    async function login() {
+
+        const email =
+            document.getElementById("email").value;
+
+        const password =
+            document.getElementById("password").value;
+
+        try {
+
+            await auth.signInWithEmailAndPassword(
+                email,
+                password
+            );
+
+        } catch (error) {
+
+            alert(error.message);
+
+        }
+
+    }
+
+
+    async function logout() {
+
+        await auth.signOut();
+
+    }
+
+
+    async function savePlayer() {
+
+        const username =
+            document.getElementById("username").value.trim();
+
+        const elo =
+            Number(document.getElementById("elo").value);
+
+        const tier =
+            document.getElementById("tier").value;
+
+
+        if (!username) {
+
+            alert("Enter a username!");
+
+            return;
+
+        }
+
+
+        await db.collection("players")
+            .doc(username.toLowerCase())
+            .set({
+
+                username: username,
+
+                elo: elo,
+
+                tier: tier
+
+            });
+
+
+        alert("Player saved!");
+
+    }
+
+
+    async function deletePlayer() {
+
+        const username =
+            document.getElementById("username").value.trim();
+
+
+        if (!username) {
+
+            alert("Enter a username!");
+
+            return;
+
+        }
+
+
+        await db.collection("players")
+            .doc(username.toLowerCase())
+            .delete();
+
+
+        alert("Player deleted!");
+
+    }
+
+</script>
+
+</body>
+
+</html>
