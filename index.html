@@ -1,23 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>SpicyTiers Leaderboard</title>
+    <title>SpicyTiers — PvP Leaderboard</title>
 
     <link rel="stylesheet" href="style.css">
 
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-
 </head>
 
 <body>
@@ -26,15 +19,14 @@
 
     <header class="topbar">
 
-        <div class="brand">
-            <span>⚡</span>
-            <strong><b>Spicy</b>Tiers</strong>
-        </div>
+        <a href="index.html" class="logo">
+            <span>⚡</span> SpicyTiers
+        </a>
 
-        <div class="status">
-            <span class="status-dot"></span>
-            LIVE LEADERBOARD
-        </div>
+        <nav>
+            <a href="index.html" class="active">Leaderboard</a>
+            <a href="admin.html">Admin</a>
+        </nav>
 
     </header>
 
@@ -43,19 +35,19 @@
 
         <section class="hero">
 
-            <div>
+            <div class="hero-content">
 
-                <div class="eyebrow">
-                    OFFICIAL SPICYTIERS RANKINGS
+                <div class="hero-badge">
+                    SPICYTIERS
                 </div>
 
                 <h1>
-                    Global PvP
+                    Minecraft PvP<br>
                     <span>Leaderboard</span>
                 </h1>
 
                 <p>
-                    Compete across every SpicyTiers PvP gamemode.
+                    Compete. Rank up. Become the best.
                 </p>
 
             </div>
@@ -63,78 +55,65 @@
         </section>
 
 
-        <section class="mode-section">
+        <section class="leaderboard-section">
 
-            <div class="section-top">
+            <div class="section-title">
 
                 <div>
-
-                    <div class="section-label">
-                        GAMEMODE
+                    <div class="small-title">
+                        GLOBAL RANKINGS
                     </div>
 
-                    <h2 id="modeTitle">
-                        ⚔ Sword
+                    <h2>
+                        Leaderboard
                     </h2>
-
                 </div>
 
-
-                <select id="modeSelect">
-
-                    <option value="sword">
-                        ⚔ Sword
-                    </option>
-
-                    <option value="axe">
-                        🪓 Axe
-                    </option>
-
-                    <option value="vanilla">
-                        🟫 Vanilla
-                    </option>
-
-                    <option value="uhc">
-                        ❤️ UHC
-                    </option>
-
-                    <option value="smp">
-                        🌍 SMP
-                    </option>
-
-                    <option value="netheriteop">
-                        💎 Netherite OP
-                    </option>
-
-                    <option value="pot">
-                        🧪 Pot
-                    </option>
-
-                    <option value="mace">
-                        🔨 Mace
-                    </option>
-
-                </select>
+                <div class="search-wrapper">
+                    <input
+                        id="searchInput"
+                        type="text"
+                        placeholder="Search player..."
+                        autocomplete="off"
+                    >
+                </div>
 
             </div>
 
 
-            <div class="stats">
+            <div class="gamemode-tabs">
 
-                <div class="stat">
-                    <span>PLAYERS</span>
-                    <strong id="playerCount">0</strong>
-                </div>
+                <button class="mode active" data-mode="sword">
+                    ⚔ Sword
+                </button>
 
-                <div class="stat">
-                    <span>TOP ELO</span>
-                    <strong id="topElo">0</strong>
-                </div>
+                <button class="mode" data-mode="axe">
+                    🪓 Axe
+                </button>
 
-                <div class="stat">
-                    <span>MODE</span>
-                    <strong id="statMode">SWORD</strong>
-                </div>
+                <button class="mode" data-mode="vanilla">
+                    Vanilla
+                </button>
+
+                <button class="mode" data-mode="uhc">
+                    UHC
+                </button>
+
+                <button class="mode" data-mode="smp">
+                    SMP
+                </button>
+
+                <button class="mode" data-mode="netheriteop">
+                    Netherite OP
+                </button>
+
+                <button class="mode" data-mode="pot">
+                    Pot
+                </button>
+
+                <button class="mode" data-mode="mace">
+                    Mace
+                </button>
 
             </div>
 
@@ -142,18 +121,16 @@
             <div class="leaderboard">
 
                 <div class="leaderboard-head">
-
                     <span>#</span>
                     <span>PLAYER</span>
                     <span>TIER</span>
                     <span>ELO</span>
-
                 </div>
 
-                <div id="leaderboardRows">
+                <div id="leaderboardList">
 
                     <div class="loading">
-                        Loading leaderboard...
+                        Loading players...
                     </div>
 
                 </div>
@@ -167,104 +144,15 @@
 
     <footer>
 
-        <span>
+        <div>
             ⚡ SpicyTiers
+        </div>
+
+        <span>
+            Minecraft PvP Ranking System
         </span>
 
-        <a href="admin.html">
-            Admin Panel
-        </a>
-
     </footer>
-
-</div>
-
-
-<!-- PLAYER MODAL -->
-
-<div
-    id="playerModal"
-    class="modal"
->
-
-    <div
-        class="modal-background"
-        id="modalBackground"
-    ></div>
-
-    <div class="player-modal">
-
-        <button
-            class="modal-close"
-            id="modalClose"
-        >
-            ×
-        </button>
-
-        <div class="player-icon">
-            ⚡
-        </div>
-
-        <div
-            class="player-name"
-            id="modalPlayerName"
-        >
-            Player
-        </div>
-
-        <div
-            class="player-subtitle"
-            id="modalPlayerSubtitle"
-        >
-            SpicyTiers Player
-        </div>
-
-
-        <div class="selected-mode-card">
-
-            <div class="mode-card-title">
-                CURRENT MODE
-            </div>
-
-            <div
-                class="mode-card-name"
-                id="modalModeName"
-            >
-                ⚔ Sword
-            </div>
-
-            <div class="mode-card-stats">
-
-                <div>
-                    <span>TIER</span>
-                    <strong id="modalTier">
-                        UNRANKED
-                    </strong>
-                </div>
-
-                <div>
-                    <span>ELO</span>
-                    <strong id="modalElo">
-                        0
-                    </strong>
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="all-modes">
-
-            <h3>
-                ALL GAMEMODES
-            </h3>
-
-            <div id="modalModes"></div>
-
-        </div>
-
-    </div>
 
 </div>
 
