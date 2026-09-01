@@ -623,7 +623,7 @@ function renderLeaderboard() {
 
                         window.location.href =
 
-                            "player.html?player=" +
+                            "player.html?uuid=" +
 
                             encodeURIComponent(
                                 player.uuid
