@@ -1212,6 +1212,61 @@ select {
 
 
 /* =====================================================
+   OVERALL LEADERBOARD
+===================================================== */
+
+.overall-row {
+    grid-template-columns:
+        70px
+        minmax(180px, 1fr)
+        minmax(430px, 1.5fr)
+        130px;
+}
+
+.player-tiers {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+    min-width: 0;
+}
+
+.overall-tier {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 4px;
+
+    font-size: 13px;
+
+    font-weight: 950;
+
+    white-space: nowrap;
+
+    line-height: 1.2;
+}
+
+.tier-icon {
+    font-size: 14px;
+
+    line-height: 1;
+
+    filter:
+        drop-shadow(
+            0 0 5px
+            rgba(255,255,255,.08)
+        );
+}
+
+
+/* =====================================================
    TIER COLORS
 ===================================================== */
 
@@ -2045,6 +2100,30 @@ footer {
    MOBILE
 ===================================================== */
 
+@media (max-width: 900px) {
+
+    .overall-row {
+        grid-template-columns:
+            40px
+            minmax(125px, 1fr)
+            minmax(250px, 1fr)
+            75px;
+    }
+
+    .player-tiers {
+        gap: 7px;
+    }
+
+    .overall-tier {
+        font-size: 11px;
+    }
+
+    .tier-icon {
+        font-size: 12px;
+    }
+}
+
+
 @media (max-width: 850px) {
 
     .topbar {
@@ -2154,6 +2233,30 @@ footer {
             75px;
 
         padding: 0 12px;
+    }
+
+    /*
+       Overall na telefonu mora imati dovoljno prostora
+       za svih 8 tierova, pa koristi širu kolonu.
+    */
+    .overall-row {
+        grid-template-columns:
+            40px
+            minmax(125px, 1fr)
+            minmax(240px, 1fr)
+            75px;
+    }
+
+    .player-tiers {
+        gap: 6px;
+    }
+
+    .overall-tier {
+        font-size: 10px;
+    }
+
+    .tier-icon {
+        font-size: 11px;
     }
 
     .player-row {
