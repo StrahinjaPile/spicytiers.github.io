@@ -1,8 +1,7 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -10,388 +9,227 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>
-        SpicyTiers - Leaderboard
-    </title>
+    <title>SpicyTiers - Leaderboard</title>
 
     <link
         rel="stylesheet"
         href="style.css"
     >
-
 </head>
-
 
 <body>
 
+    <!-- =========================
+         TOPBAR
+    ========================== -->
 
-<header class="topbar">
+    <header class="topbar">
 
-    <a
-        href="index.html"
-        class="logo"
-    >
-        SPICY<span>TIERS</span>
-    </a>
+        <div class="topbar-inner">
 
-
-    <nav>
-
-        <a href="index.html">
-            Home
-        </a>
-
-        <a href="client.html">
-            Client
-        </a>
-
-        <a
-            href="leaderboard.html"
-            class="active"
-        >
-            Leaderboard
-        </a>
-
-        <a href="rules.html">
-            Rules
-        </a>
-
-        <a href="discord.html">
-            Discord
-        </a>
-
-    </nav>
+            <a
+                href="index.html"
+                class="logo"
+            >
+                <span class="logo-red">
+                    Spicy
+                </span>
+                <span class="logo-white">
+                    Tiers
+                </span>
+            </a>
 
 
-    <a
-        href="login.html"
-        class="account-button"
-    >
-        <span class="badge-dot"></span>
+            <nav class="nav">
 
-        ACCOUNT
-    </a>
+                <a href="index.html">
+                    Home
+                </a>
 
+                <a href="client.html">
+                    Client
+                </a>
 
-</header>
-
-
-
-<main>
-
-
-    <!-- HERO -->
-
-    <section class="leaderboard-hero">
-
-        <div class="section-label">
-
-            COMPETITIVE RANKINGS
-
-        </div>
-
-
-        <h1>
-
-            The
-            <span>
-                Leaderboard
-            </span>
-
-        </h1>
-
-
-        <p>
-
-            See the best SpicyTiers players
-            and compare your ELO.
-
-        </p>
-
-    </section>
-
-
-
-    <!-- LEADERBOARD -->
-
-    <section class="leaderboard-section">
-
-
-        <div class="leaderboard-toolbar">
-
-
-            <!-- LEFT -->
-
-            <div>
-
-                <div class="section-label">
-
-                    GLOBAL RANKINGS
-
-                </div>
-
-
-                <h2>
-
-                    <span id="currentModeTitle">
-                        Overall
-                    </span>
-
+                <a
+                    href="leaderboard.html"
+                    class="active"
+                >
                     Leaderboard
+                </a>
 
-                </h2>
+                <a href="rules.html">
+                    Rules
+                </a>
+
+                <a
+                    href="https://discord.gg/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Discord
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <main>
+
+        <section class="leaderboard-hero">
+
+            <div class="hero-content">
+
+                <div class="hero-label">
+                    SPICYTIERS RANKED
+                </div>
+
+                <h1>
+                    The Leaderboard
+                </h1>
+
+                <p>
+                    See the best SpicyTiers players
+                    and compare their ELO.
+                </p>
 
             </div>
 
+        </section>
 
 
-            <!-- RIGHT -->
+        <!-- =========================
+             LEADERBOARD
+        ========================== -->
 
-            <div class="leaderboard-actions">
+        <section class="leaderboard-section">
+
+            <div class="leaderboard-container">
+
+                <!-- TOOLBAR -->
+
+                <div class="leaderboard-toolbar">
+
+                    <div class="search-wrapper">
+
+                        <input
+                            id="searchInput"
+                            type="text"
+                            placeholder="Search player..."
+                            autocomplete="off"
+                        >
+
+                    </div>
 
 
-                <!-- SEARCH -->
+                    <div class="mode-wrapper">
 
-                <div class="search-box">
+                        <select id="modeSelect">
 
-                    <span>
-                        ⌕
-                    </span>
+                            <option value="overall">
+                                🏆 Overall
+                            </option>
 
+                            <option value="sword">
+                                ⚔ Sword
+                            </option>
 
-                    <input
+                            <option value="axe">
+                                🪓 Axe
+                            </option>
 
-                        type="text"
+                            <option value="mace">
+                                🔨 Mace
+                            </option>
 
-                        id="searchInput"
+                            <option value="pot">
+                                🧪 Pot
+                            </option>
 
-                        placeholder="Search player..."
+                            <option value="uhc">
+                                ❤ UHC
+                            </option>
 
-                    >
+                            <option value="vanilla">
+                                ✦ Vanilla
+                            </option>
+
+                            <option value="smp">
+                                ⛊ SMP
+                            </option>
+
+                            <option value="nethop">
+                                ⚔ Netherite OP
+                            </option>
+
+                        </select>
+
+                    </div>
 
                 </div>
 
 
+                <!-- CURRENT MODE -->
 
-                <!-- MODE DROPDOWN -->
+                <div class="leaderboard-title">
 
-                <div class="mode-select-wrapper">
-
-
-                    <span
-                        class="mode-select-icon"
-                    >
-                        🏆
-                    </span>
-
-
-                    <select
-                        id="modeSelect"
-                    >
-
-
-                        <option value="overall">
-
-                            🏆 Overall
-
-                        </option>
-
-
-                        <option value="sword">
-
-                            ⚔ Sword
-
-                        </option>
-
-
-                        <option value="axe">
-
-                            🪓 Axe
-
-                        </option>
-
-
-                        <option value="mace">
-
-                            🔨 Mace
-
-                        </option>
-
-
-                        <option value="pot">
-
-                            🧪 Pot
-
-                        </option>
-
-
-                        <option value="uhc">
-
-                            🏹 UHC
-
-                        </option>
-
-
-                        <option value="vanilla">
-
-                            ⛏ Vanilla
-
-                        </option>
-
-
-                        <option value="smp">
-
-                            🌍 SMP
-
-                        </option>
-
-
-                        <option value="nethop">
-
-                            🔥 Netherite OP
-
-                        </option>
-
-
-                    </select>
-
-
-                    <span
-                        class="select-arrow"
-                    >
-                        ▾
-                    </span>
-
+                    <h2 id="currentModeTitle">
+                        Overall
+                    </h2>
 
                 </div>
 
 
-            </div>
+                <!-- TABLE -->
+
+                <div class="leaderboard">
+
+                    <div class="leaderboard-head">
+
+                        <div>
+                            Rank
+                        </div>
+
+                        <div>
+                            Player
+                        </div>
+
+                        <div>
+                            Tiers
+                        </div>
+
+                        <div>
+                            ELO
+                        </div>
+
+                    </div>
 
 
-        </div>
+                    <div id="leaderboardList">
 
+                        <div class="leaderboard-loading">
+                            Loading leaderboard...
+                        </div>
 
+                    </div>
 
-        <!-- TABLE HEADER -->
-
-        <div
-            class="leaderboard-head"
-        >
-
-            <div>
-
-                Rank
-
-            </div>
-
-
-            <div>
-
-                Player
-
-            </div>
-
-
-            <div>
-
-                Tier
-
-            </div>
-
-
-            <div>
-
-                ELO
+                </div>
 
             </div>
 
+        </section>
 
-        </div>
-
-
-
-        <!-- PLAYERS -->
-
-        <div
-            id="leaderboardList"
-            class="leaderboard-list"
-        >
+    </main>
 
 
-            <div class="loading">
-
-                Loading leaderboard...
-
-            </div>
-
-
-        </div>
-
-
-    </section>
-
-
-</main>
-
-
-
-<footer>
-
-
-    <div class="footer-brand">
-
-        <strong>
-
-            SPICYTIERS
-
-        </strong>
-
-
-        <span>
-
-            The future of Minecraft PvP.
-
-        </span>
-
-    </div>
-
-
-
-    <div class="footer-links">
-
-        <a href="faq.html">
-            FAQ
-        </a>
-
-
-        <a href="about.html">
-            About Us
-        </a>
-
-
-        <a href="terms.html">
-            Terms Of Service
-        </a>
-
-    </div>
-
-
-
-    <div class="footer-copy">
-
-        © 2026 SpicyTiers
-
-    </div>
-
-
-</footer>
-
-
-
-<script src="leaderboard.js"></script>
-
+    <script src="leaderboard.js"></script>
 
 </body>
-
 </html>
+```
